@@ -1,0 +1,172 @@
+<link rel="stylesheet" href="/css/services.css">
+
+<div class="container" id="ContainerSalesRegistration">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-9 col-lg-9 mt-5">
+            <div class="container-form">
+
+                <form id="form_Register">
+                    <div class="form-group">
+                        <label>Tipo Servicio</label>
+                        <div class="d-flex gap-2">
+                            <button type="button" name="button-service"
+                                class="btn btn-outline-primary btn-outline-selected flex-grow-1 p-3">Tienda</button>
+                            <button type="button" name="button-service"
+                                class="btn btn-outline-primary flex-grow-1 p-3">Envios</button>
+                        </div>
+                    </div>
+
+                    <!--Accion para a seleccion de cliente mediante un modal-->
+                    <div class="form-group">
+                        <label>Cliente<span class="required"></span></label>
+                        <div class="input-icon" data-bs-toggle="modal" data-bs-target="#userModal">
+                            <input type="text" id="usuario" class="form-control" placeholder="Selecciona el cliente"
+                                readonly style="cursor:pointer;" />
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+
+                    <!--Nombre de cliente-->
+                    <div class="form-group">
+                        <label for="name">Nombre <span class="required"></span> </label>
+                        <input type="text" id="name" class="form-control" placeholder="Ingrese el nombre del cliente"
+                            required />
+                    </div>
+                    <!--Observacion-->
+                    <div class="form-group">
+                        <label for="observacion">Observacion</label>
+                        <input type="text" id="observacion" class="form-control" placeholder="Añada una observación" />
+                    </div>
+
+
+                    <!--Seleccion de Servicio -->
+                    <div class="form-group">
+                        <label for="name">Registrar Servicio<span class="required"></span> </label>
+                        <!--Tabla de Registro de Servicios-->
+                        <div class="table-container d-none" id="tableContainer">
+                            <div class="table-responsive">
+                                <table id="tableService" class="table">
+                                    <thead class="table-header">
+                                        <tr>
+                                            <th scope="col" class="table-column">
+                                                Cantidad
+                                            </th>
+                                            <th scope="col" class="table-column w-50">
+                                                Servicio
+                                            </th>
+                                            <th scope="col" class="table-column">
+                                                Precio Unitario
+                                            </th>
+                                            <th scope="col" class="table-column">
+                                                Sub Total
+                                                <span class="resizerTable"></span>
+                                            </th>
+                                            <th scope="col" class="table-column w-25">
+                                                Detallar Color - Marca
+                                            </th>
+                                            <th scope="col" class="table-column">
+                                                Acciones
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--Contenido de la tabla-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="text-end mt-1">
+                            <button type="button" class="btn btn-outline-light w-100" id="BtnNuevoServicio"
+                                onclick="showServiceSelection()">Nuevo</button>
+                        </div>
+                    </div>
+
+                    <!-- Total del Servicio -->
+                    <div class="form-group">
+                        <label for="totalServicio">Total Servicio</label>
+                        <input type="number" id="totalServicio" class="form-control"
+                            placeholder="Ingrese el total del servicio" required />
+                    </div>
+
+                    <!-- Total Cobro -->
+                    <div class="form-group">
+                        <label for="totalCobro">Total Cobro</label>
+                        <input type="number" id="totalCobro" class="form-control"
+                            placeholder="Ingrese el total a cobrar" required />
+                    </div>
+
+                    <!--Metodo de pagos-->
+                    <div class="form-group">
+                        <label class="mb-2">Métodos de Cobro:</label>
+                        <div class="payment-group">
+                            <button type="button" class="btn btn-outline-primary" data-value="10" name="payment-button">
+                                <i class="fas fa-money-bill-wave"></i> <span class="ms-2">Efectivo</span>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary" data-value="15" name="payment-button">
+                                <i class="fas fa-wallet"></i> <span class="ms-2">Yape</span>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary" data-value="5" name="payment-button">
+                                <i class="fas fa-wallet"></i> <span class="ms-2">Plin</span>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary" data-value="20" name="payment-button">
+                                <i class="fas fa-credit-card"></i> <span class="ms-2">Pos</span>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary" data-value="12" name="payment-button">
+                                <i class="fas fa-exchange-alt"></i> <span class="ms-2">Transferencia</span>
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <!--Descuento de servicio-->
+                    <div class="form-group">
+                        <label for="descuento">Descuento</label>
+                        <input type="number" id="descuento" class="form-control"
+                            placeholder="Ingrese el descuento (opcional)" />
+                    </div>
+                    <!--Total del servicio -->
+                    <div class="form-group">
+                        <label for="totalCobrar">Total a Cobrar</label>
+                        <input type="number" id="totalCobrar" class="form-control"
+                            placeholder="Ingrese el total a cobrar" required />
+                    </div>
+
+                    <!--button-->
+                    <button type="submit" class="btn-submit w-100" id="asa">Enviar</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Modal se muestra una ventana flotante para  la busqueda de usuario-->
+
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content p-3">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">Seleccionar Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="userListContainer">
+                <!-- Aquí se cargara la vista parcial con la lista de usuarios -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Vista parcial de La selección de servicio -->
+<div id="ContainerServiceSelection" class="d-none">
+    <!-- Vista servicio -->
+</div>
+
+
+<!-- Script de Apariencia -->
+<script src="/js/servicesLaundry/apperence.js"></script>
+<!-- Script de funcionalidades -->
+<script src="/js/servicesLaundry/funcionality.js"></script>

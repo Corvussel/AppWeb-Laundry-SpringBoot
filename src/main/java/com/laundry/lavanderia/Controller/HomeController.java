@@ -6,27 +6,33 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping; 
 
 @Controller
+@RequestMapping("/") //nombre del mapping
 public class HomeController {
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String getLayout(Model model) {
 
-        model.addAttribute("content", "Home/index.html");
-        return "Shared/_Layout";
-    }
+        model.addAttribute("content", "home/index.html");
+        return "shared/layout";
+    } 
 
-    @GetMapping("/home")
+    @GetMapping("/home-page")
     public String getHome(Model model) {
-        model.addAttribute("content", "Home/index.html");
-        return "Shared/_Layout";
+        model.addAttribute("content", "home/index.html");
+        return "shared/layout";
     }
 
-    @GetMapping("/DeliveryLaundry")
-    public String getDeliveryLaundry(Model model) {
+    @GetMapping("/delivery-page")
+    public String getDeliveryPage(Model model) {
  
-        model.addAttribute("content", "DeliveryLaundry/index.html");
-        return "Shared/_Layout";
+        model.addAttribute("content", "delivery/index.html");
+        return "shared/layout";
     }
+    
+    @GetMapping("/services-page")
+    public String getServicesPage(Model model) {
  
-
+        model.addAttribute("content", "services-laundry/index.html");
+        return "shared/layout";
+    }
 }

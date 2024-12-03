@@ -1,0 +1,351 @@
+:root {
+    --gradient: linear-gradient(135deg, #4a6fff 0%, #4a6fff 100%);
+    --white-color: linear-gradient(135deg, #ffffff 100%, #ffffff 100%);
+    --border-color: #e4e4e7;
+}
+
+body {
+    background: #ffffff;
+    min-height: 100vh;
+    padding-bottom: 30px;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/*contenedor pricipal*/
+.container-form {
+    background: rgba(255, 255, 255, 255);
+    border-radius: 20px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 14px 32px rgba(31, 38, 135, 0.15);
+    padding: 2.5rem;
+    margin-bottom: 50px;
+    position: relative;
+    overflow: hidden;
+}
+
+.container-form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--gradient);
+    opacity: 0.8;
+}
+
+.form-group {
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.8rem;
+    color: #1E293B;
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+label::after {
+    content: '';
+    bottom: -4px;
+    position: absolute;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gradient);
+    transition: width 0.3s ease;
+}
+
+.form-group:focus-within label::after {
+    width: 40px;
+}
+
+/* Indicador de campo requerdio*/
+
+.required:after {
+    position: relative;
+    left: 2px;
+    content: '*';
+    color: #e74c3c;
+    background: white;
+    font-weight: bold;
+}
+
+
+/*personalizacion para los inputs*/
+.form-control {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--white-color);
+    box-sizing: border-box;
+    font-family: inherit;
+    position: relative;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 4px rgb(6, 151, 198, 0.1);
+    background: #ffffff;
+    transform: translateY(-2px);
+}
+
+.form-control::placeholder {
+    color: #71717a;
+}
+
+.input-icon {
+    position: relative;
+}
+
+.input-icon i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+}
+
+
+/*personalizacion para los buttons*/
+.btn {
+    padding: 1rem 1.8rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: 0.3px;
+    position: relative;
+    overflow: hidden;
+    font-family: inherit;
+}
+
+
+.btn-outline-primary {
+    background: #f0f9ff;
+    color: #0891b2;
+    border: none;
+    font-weight: 200;
+    padding: 14px;
+    height: 55px;
+    font-size: 0.9rem;
+    border-radius: 15px;
+    transition: all 0.2s cubic-bezier(0.15, 0.1, 0.5, 0.4);
+    font-weight: 600;
+}
+
+.btn-outline-primary:hover {
+    background: #e0f2fe;
+    color: #0891b2;
+}
+
+.payment-group .btn-outline-primary {
+    border-radius: 27px;
+}
+
+/*estilo cuando un button esta seleccionado*/
+.btn-outline-selected {
+    background: var(--gradient) !important;
+    color: white !important;
+    border-color: transparent !important;
+    transform: translateY(-4px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+/*button param a seleccion de servicio*/
+
+.btn-outline-light {
+    color: #0891b2;
+    border: none;
+    background: #f0f9ff;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-outline-light:hover {
+    transform: translateY(-1px);
+    background: #06778bcc;
+    color: white;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+/* button de envio de formulario */
+.btn-submit {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(41, 128, 185, 0.3);
+}
+
+/*personalizacion de contenedor de buttons*/
+.payment-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+    padding: 0.5rem 0;
+}
+
+
+/*personalizamos los inputs de tipo number*/
+input[type="number"] {
+    appearance: none;
+    -moz-appearance: textfield;
+    position: relative;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+
+/* Personalizacion de la Tabla */
+
+.table-container {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 0.2rem;
+    margin: 1rem auto;
+    width: 100%;
+}
+
+.table-responsive {
+    border-radius: 5px;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.table {
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 99%;
+}
+
+
+.table-header {
+    background: #77a3bf;
+}
+
+.table-column {
+    position: relative;
+    padding: 0.95rem 1.2rem !important;
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: 0.025em;
+    color: #ffffff;
+    border: none !important;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    user-select: none;
+}
+
+
+.table-row {
+    padding: 1rem !important;
+    font-size: 0.875rem;
+    color: #333333;
+    border-bottom: 1px solid #eaeaea !important;
+    transition: all 0.4s ease;
+    background: white;
+}
+
+tbody tr {
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+tbody tr:hover {
+    background-color: #f9fafb;
+    transform: translateX(4px);
+}
+
+.nombre-servicio {
+    font-weight: 500;
+    color: #666;
+}
+
+.precio {
+    font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    color: #666;
+}
+
+.detalles {
+    color: #666;
+    font-size: 0.8125rem;
+}
+
+.btn-table-edit,
+.btn-table-delete {
+    margin: 5px 2px;
+    background: #f0f9ff;
+    padding: 5px 12px;
+    border: none;
+    border-radius: 5px;
+}
+
+.btn-table-edit :hover,
+.btn-table-delete :hover {
+    color: #666;
+}
+
+/*ajuste acorde a diferentes tipos de tamaños*/
+
+@media (max-width: 550px) {
+
+    body {
+        background: #ffffff !important;
+        min-height: 100vh;
+        padding-bottom: 10px;
+    }
+
+    .container-form {
+        background: #ffffff;
+        border-radius: 10px;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 14px 32px rgba(31, 38, 135, 0.15);
+        padding: 2.4rem;
+    }
+
+    .container-form {
+        border-radius: 10px;
+    }
+
+    .form-control {
+        font-size: 0.9rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+    .payment-group {
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    }
+
+    .btn-outline-primary {
+        padding: 5px 0;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+}
