@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -10,27 +10,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <style>
-        body {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-  
+        /*Header*/
         .navbar-toggler:focus {
             border: 0.2px solid #a8b9ca;
             box-shadow: 0 2px 6px rgba(201, 178, 178, 0.2);
-        }
-
-        .navbar-collapse.show {
-            left: 0;
-        }
-
-        .footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            white-space: nowrap;
-            line-height: 60px;
         }
 
         .button-link {
@@ -38,7 +21,26 @@
             background: transparent;
         }
 
+        .navbar-collapse {
+            z-index: 1024;
+        }
 
+        .navbar-collapse.show {
+            left: 0;
+        }
+
+        /*Contenedor-pricipal*/
+        .container-main {
+            min-height: 100vh;
+        }
+
+        /*Pie de pagina*/
+        .footer {
+            margin-bottom: auto;
+            padding: 0.5rem;
+        }
+
+        /*Menu de navegacion al desplegar*/
         @media (max-width: 575px) {
             .navbar-collapse {
                 position: fixed;
@@ -57,11 +59,11 @@
 
 <body>
 
-    <!-- Header: barra de navegación -->
+    <!-- Header- barra de navegacion -->
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/home">Laundry</a> 
+                <a class="navbar-brand" href="/home">Laundry</a>
                 <!--Boton para desplegar menu en dispositivos moviles-->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"
                     aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,54 +81,30 @@
 
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <button type="button" class="nav-link button-link" data-url="/home">Inicio</button>
+                            <a class="nav-link" href="/home">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <button type="button" class="nav-link button-link" data-url="/DeliveryLaundry"
-                                aria-label="Close" data-bs-toggle="collapse" data-bs-target="#menu">Ajustes</button>
-                        </li>
+                            <a class="nav-link" href="/DeliveryLaundry">Ajustes</a>
+                        </li> 
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- Contenedor principal para el contenido dinámico -->
-    <div class="container">
-        <main id="main-content">
+    <!-- Contenedor principal para el contenido dinamico -->
+    <div class="container container-main">
+        <main th:replace="${content}">
 
         </main>
     </div>
 
     <!-- Footer -->
-    <footer class="border-top footer text-muted">
+    <footer class="border-top text-muted footer">
         <div class="container pb-3 text-center">
             <p>© 2024 Lavandería. Todos los derechos reservados.</p>
         </div>
     </footer>
-
-    <script>
-
-        document.querySelectorAll('.button-link').forEach((button_link) => {
-
-            button_link.addEventListener('click', function (e) {
-
-                const url_ = button_link.getAttribute('data-url'); // Url 
-
-                $.ajax({
-                    url: url_,
-                    type: 'get',
-                    success: function (data) {
-                        $('#main-content').html(data);
-                    },
-                    error: function () {
-                        $('#main-content').html('<p>Ocurrio un error</p>');
-                    }
-                });
-            });
-        });
-
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

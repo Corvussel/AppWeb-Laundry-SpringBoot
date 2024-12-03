@@ -1,0 +1,212 @@
+:root {
+    --primary: #E0E9FF;
+    --accent: #7B9EFF;
+    --color-oro: #FFD700;
+    --light: #ffffff;
+    --text: #2A2B3D;
+    --gradient: linear-gradient(135deg, #FFFFFF, #F0F4FF);
+}
+
+body {
+    background: #fdfeff;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--text);
+}
+
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(250px, 1fr));
+    gap: 0.7rem;
+}
+
+/*Encabezado del Dasboard*/
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    position: relative;
+}
+
+.dashboard-title {
+    font-size: clamp(1rem, 2vw, 3.5rem);
+    font-weight: 200;
+    letter-spacing: 8px;
+    color: var(--text);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+}
+
+.dashboard-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+
+/*Tarjeta*/
+.service-card {
+    background: white;
+    border-radius: 10px;
+    padding: 3rem 1rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 3px 8px rgb(128, 128, 128, 0.3);
+    cursor: pointer;
+}
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-20px);
+    box-shadow: 0 10px 20px rgba(123, 158, 255, 0.15), 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.service-card:hover::before {
+    opacity: 1;
+}
+
+/*Delineado del icono*/
+.icon-card {
+    background: var(--light);
+    width: 110px;
+    height: 110px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    position: relative;
+    transition: all 0.5s ease;
+    box-shadow: 0 10px 30px rgba(123, 158, 255, 0.2), inset 0 -5px 15px rgba(123, 158, 255, 0.1);
+}
+
+/*Icono*/
+.icon-card i {
+    font-size: 2.5rem;
+    color: var(--accent);
+    transition: all 0.5s ease;
+}
+
+.service-card:hover .icon-card {
+    transform: scale(1.0) rotate(5deg);
+    box-shadow: 0 20px 40px rgba(123, 158, 255, 0.3), inset 0 -5px 15px rgba(123, 158, 255, 0.2);
+}
+
+.service-card:hover .icon-card i {
+    transform: scale(1.1);
+    color: #4A6FFF;
+}
+
+/*Texto de la tarjeta*/
+.card-subtitle {
+    color: var(--accent);
+    text-align: center;
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+    font-weight: 500;
+}
+
+/*Lista oculto*/
+.feature-list {
+    margin-top: 2rem;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+
+.feature-item {
+    margin: 1rem 0;
+    font-size: clamp(0.7rem, 2vw, 0.8rem);
+    opacity: 0.8;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.service-card:hover .feature-item {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.service-card:hover .feature-item:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+
+
+/*ajuste para  pantallas */
+
+/*grande-lg*/
+@media (max-width: 1100px) {
+    .grid {
+        grid-template-columns: repeat(3, minmax(210px, 1fr));
+        gap: 0.6rem;
+    }
+
+    .service-card {
+        padding: 3rem 1rem;
+    }
+
+    .icon-wrapper {
+        width: 75px;
+        height: 75px;
+    }
+
+    .icon-wrapper i {
+        font-size: 1.9rem;
+    }
+}
+
+/*mediano-md */
+@media (max-width: 700px) {
+    .grid {
+        grid-template-columns: repeat(2, minmax(150px, 1fr));
+        gap: 0.5rem;
+    }
+
+    .service-card {
+        padding: 2rem 1rem;
+    }
+
+    .icon-wrapper {
+        width: 70px;
+        height: 70px;
+    }
+
+    .icon-wrapper i {
+        font-size: 1.5rem;
+    }
+}
+
+/*mediano-sm */
+@media (max-width: 300px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
