@@ -195,7 +195,8 @@ function registrarServicio() {
             subTotal: spanSubTotal.textContent,
             detalle: spanDetalles.textContent
         };
-        
+        console.log("Datos de la fila: ", datos);
+        alert(JSON.stringify(datos, null, 2));
     });
     celdaAcciones.appendChild(btnEditar); // Añadimos el botón a la celda de acciones
 
