@@ -22,10 +22,10 @@ public class HomeController {
         return "shared/layout";
     }
 
-    @GetMapping("/delivery-page")
+    @GetMapping("/deliveries-page")
     public String getDeliveryPage(Model model) {
  
-        model.addAttribute("content", "delivery/index.html");
+        model.addAttribute("content", "deliveries/index.html");
         return "shared/layout";
     }
     
