@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="/css/services-laundry/user-list.css"> 
+
+<div class="container">
+
+    <!--input para busqueda de usuario-->
+    <div class="icon mb-4">
+        <input type="text" class="input-search	" id="searchInput" placeholder="Buscar usuario por nombre">
+        <i class="fas fa-search"></i>
+    </div>
+
+    <!--Lista de  Usuarios-->
+    <div>
+        <ul id="userList" class="list">
+            <li class="list-item" onclick="selectUser('Russel FLores')">
+                <i class="fas fa-user user-icon"></i> <!-- Ícono de usuario -->
+                Russel FLores
+            </li>
+        </ul>
+    </div>
+
+     <!--button para Mostrar la vista Registrar Nuevo Usuario-->
+    <div class="mt-5"> 
+        <a class="btn-new-user" asp-controller="Sales" asp-action="GetNewUser">
+            <i class="fa fa-user-plus"></i>
+            Añadir Usuario
+        </a>
+    </div>
+
+</div>
+ 
+<script src="/js/services-laundry/user-list/funcionality.js"></script>
+ 
