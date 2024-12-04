@@ -11,6 +11,7 @@ public class ServiceController {
     @GetMapping("/user-list-fragment")
     public String getListUserFragment() {
 
-        return "services-laundry/userListFragment";
+        return "services-laundry/user-list";
     }
+    
 }

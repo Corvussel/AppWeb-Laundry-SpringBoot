@@ -30,16 +30,7 @@ document.getElementById('userModal').addEventListener('show.bs.modal', function 
         }
     });
 });
-
-// Evento para asignar el valor al input usuario, interaccion entre vista parcial
-function selectUser(userName) {
-    document.getElementById('usuario').value = userName;
-    var modal = bootstrap.Modal.getInstance(document.getElementById('userModal'));
-    modal.hide();
-}
-
-
-
+ 
 
 // Eventos y interaccion entre vista seleccion de servicio
 
