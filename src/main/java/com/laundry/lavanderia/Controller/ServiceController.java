@@ -14,4 +14,10 @@ public class ServiceController {
         return "services-laundry/user-list";
     }
     
+    @GetMapping("/service-selection-fragment")
+    public String getServiceSelectionFragment() {
+        
+        return "services-laundry/service-selection";
+    }
+
 }

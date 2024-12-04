@@ -37,10 +37,9 @@ document.getElementById('userModal').addEventListener('show.bs.modal', function 
 document.addEventListener('DOMContentLoaded', function () {
 
     $.ajax({
-        url: '/Sales/GetServiceSelectionPartial',
-        type: 'GET',
-        success: function (data) {
-            // html en el contenedor del modal
+        url: '/services-laundry/service-selection-fragment',
+        type: 'get',
+        success: function (data) {            
             $('#ContainerServiceSelection').html(data);
 
             const buttonCancelar = document.getElementById('btnCancelarRegistroServicio');
@@ -71,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         error: function () {
             console.error('Error al cargar la vista parcial.');
-            $('#userListContainer').html('<p>Error al cargar la vista parcial.</p>');
+            $('#ContainerServiceSelection').html('<p>Error al cargar la vista.</p>');
         }
     });
 });
