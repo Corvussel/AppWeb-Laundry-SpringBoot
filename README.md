@@ -46,12 +46,14 @@
      git pull origin main
 > [!NOTE]
 >  Crea ramas específicas para cada tarea
-   -Usa un nombre descriptivo para la rama, como feature/nueva-funcionalidad o bugfix/correccion-error.
+   -Usa un nombre descriptivo para la rama, como flores o algo relacionado al dessarrollo
+
 > [!NOTE]
 > Subir cambios al repositorio
   - Añade los archivos modificados al área de preparación.
     ```bash
     git add
+    
 > [!NOTE]
 > Crea un commit descriptivo
 
