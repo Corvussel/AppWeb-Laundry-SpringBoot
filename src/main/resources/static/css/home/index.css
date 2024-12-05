@@ -173,12 +173,12 @@ body {
         padding: 3rem 1rem;
     }
 
-    .icon-wrapper {
+    .icon-card {
         width: 75px;
         height: 75px;
     }
 
-    .icon-wrapper i {
+    .icon-card i {
         font-size: 1.9rem;
     }
 }
@@ -194,12 +194,12 @@ body {
         padding: 2rem 1rem;
     }
 
-    .icon-wrapper {
+    .icon-card {
         width: 70px;
         height: 70px;
     }
 
-    .icon-wrapper i {
+    .icon-card i {
         font-size: 1.5rem;
     }
 }
@@ -208,5 +208,5 @@ body {
 @media (max-width: 300px) {
     .grid {
         grid-template-columns: 1fr;
-    }
+    } 
 }
