@@ -86,7 +86,7 @@
 > [!NOTE]
 >  Actualiza tu repositorio local:
 
-    ```bash
+  ```bash
     git pull origin main
     
 > [!NOTE]
