@@ -63,8 +63,14 @@
  
 
 
-<h2 style="color: #FF6347; text-align: center; font-size: 2em;">🌟 Ejemplo Completo de Flujo de Trabajo en Git 🌟</h2>
+ 
+<h2 style="color: #FF6347; text-align: center; font-size: 2.5em; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
+  🌟 Pasos para Trabajar con GitHub 🌟
+</h2>
 
+<p style="text-align: center; font-size: 1.2em; color: #333; margin-top: 20px;">
+  Sigue estos pasos para colaborar eficazmente en el repositorio de GitHub:
+</p>
 
 > [!IMPORTANT]
 >  Actualiza tu repositorio local:
