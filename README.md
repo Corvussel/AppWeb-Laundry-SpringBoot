@@ -86,8 +86,8 @@
 > [!NOTE]
 >  Actualiza tu repositorio local:
 
-  ```bash
-    git pull origin main
+     ```bash
+     git pull origin main
     
 > [!NOTE]
 > Crea y cambia a una nueva rama:
