@@ -39,7 +39,7 @@ public class HomeController {
         model.addAttribute("content", "services-laundry/index.html");
         return "shared/layout";
     }
-    // Estoy creando la nueva redireccion para Login - Caballero
+    // Redireccion para Login
     @GetMapping("/login")
     public String getLoginPage(Model model) {
         model.addAttribute("login", new login()); // Pasamos un objeto vacío de Login
