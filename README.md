@@ -56,11 +56,11 @@
 > Subir cambios al repositorio
   - Añade los archivos modificados al área de preparación.
     ```bash
-    git add
+    git add .
     
 > [!NOTE]
 > Crea un commit descriptivo
- - Importante que tu commit describa un cambio realizados
+ - Importante que tu commit describa un cambio realizado
     ```bash
     git commit -m "Descripción de los cambios realizados" 
 
