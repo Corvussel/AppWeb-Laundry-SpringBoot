@@ -19,7 +19,7 @@
 ---
 
 <div align="center">
-  <h2>🛠️ Tecnologías en Uso</h2>
+  <h2>🛠️ Tecnologías a Utilizar</h2>
 </div>
 
 <div align="center">
@@ -44,49 +44,67 @@
    - Antes de realizar cambios, asegúrate de estar en tu rama y de actualizarla con la rama principal.
      ```bash
      git pull origin main
-2.  Crea ramas específicas para cada tarea:
-
+> [!NOTE]
+>  Crea ramas específicas para cada tarea
    -Usa un nombre descriptivo para la rama, como feature/nueva-funcionalidad o bugfix/correccion-error.
+> [!NOTE]
+> Subir cambios al repositorio
+  - Añade los archivos modificados al área de preparación.
+    ```bash
+    git add
+> [!NOTE]
+> Crea un commit descriptivo
 
-3. *Subir cambios al repositorio** 
-   - Añade los archivos modificados al área de preparación.
-   ```bash
-   git add 
-5. *Crea un commit descriptivo**
-   ```bash
-   git commit -m "Descripción de los cambios realizados" 
+    ```bash
+    git commit -m "Descripción de los cambios realizados" 
 
-4. Envía los cambios a tu rama remota:
-   ```bash
-   git push origin <nombre-de-tu-rama>
+> [!NOTE]
+> Envía los cambios a tu rama remota
+> 
+    ```bash
+     git push origin <nombre-de-tu-rama>
 
-6. Evita conflictos:
-Antes de hacer push, actualiza tu rama con los cambios más recientes de main:
-   ```bash
-   git pull origin main
+> [!IMPORTANT]
+> Evita conflictos 
+  Antes de hacer push, actualiza tu rama con los cambios más recientes de main:
 
-8. Buena práctica:
-Siempre verifica el estado del repositorio antes de realizar cualquier cambio:
-   ```bash
-   git status
+     ```bash
+        git pull origin main
+        
+> [!TIP]
+> Buena práctica 
+ Siempre verifica el estado del repositorio antes de realizar cualquier cambio:
+
+    ```bash
+     git status
+
 
 ✨ Ejemplo Completo de Flujo de Trabajo en Git
 
-1. Actualiza tu repositorio local:
+> [!NOTE]
+>  Actualiza tu repositorio local:
+
     ```bash
     git pull origin main
     
-2. Crea y cambia a una nueva rama:
-   ```bash
-   git checkout -b  ejemploFlores
-3. Realiza cambios en tu código y guárdalos.
-  Añade los archivos modificados y haz un commit:
-   ```bash
-   git add .
-   git commit -m "Añadida nueva funcionalidad de ejemplo"
-4. Sube tu rama al repositorio remoto:
+> [!NOTE]
+> Crea y cambia a una nueva rama:
+
     ```bash
-   git push origin ejemploFlores
+    git checkout -b  ejemploFlores
+
+> [!TIP]
+> Realiza cambios en tu código y guárdalos. 
+  Añade los archivos modificados y haz un commit:
+
+    ```bash
+    git add .
+    git commit -m "Añadida nueva funcionalidad de ejemplo"
+> [!TIP]
+>  Sube tu rama al repositorio remoto:
+
+    ```bash
+    git push origin ejemploFlores
 Crea un Pull Request desde la interfaz de git bash.
 
 🛡️ Recomendaciones
