@@ -96,7 +96,7 @@
     
 > [!TIP]
 > Crea y cambia a una nueva rama:
-- cambia o crea a tu rama
+- crea o cambia a tu rama
     ```bash
     git checkout -b  ejemploFlores
 
