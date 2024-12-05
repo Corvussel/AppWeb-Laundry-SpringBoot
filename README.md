@@ -1,61 +1,92 @@
-Proyecto de Gestión de Lavandería 🧼
-<div align="centro">
- <p>Desarrollo de un software para la venta de lavanderías 🌍 </p>
+<div align="center">
+  <h1>🌍 Reglas del Repositorio</h1>
 </div>
-💡 Detalles del Proyecto
 
-🎯 Reglas: Reglas para el uso de repositorio
-🌱 Framework de trabajo: Spring Boot
-💬 Seguir las reglas estrictamente
-
-🛠️ Tecnologías en Uso
-<div align="centro">
- <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white">
- <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
- <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
- <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+<div align="center">
+  <p>Desarrollo de un software para la venta de lavanderías.</p>
 </div>
-📝 Comandos de Git
-Flujo de Trabajo Recomendado
 
-Antes de comenzar:
-bashCopy# Actualizar rama local con cambios remotos
-git pull origin main
+---
 
-Trabajar en tu rama:
-bashCopy# Cambiar a tu rama de trabajo
-git checkout -b nombre-de-tu-rama
+<div align="center">
+  <h2>💡 Detalles</h2>
+</div>
 
-Subir cambios:
-bashCopy# Añadir archivos modificados
+- 🎯 **Reglas:** Directrices para el uso del repositorio.
+- 🌱 **Framework de trabajo:** **Spring Boot**.
+- 💬 **Seguir las reglas para mantener el orden y la colaboración.**
+
+---
+
+<div align="center">
+  <h2>🛠️ Tecnologías en Uso</h2>
+</div>
+
+<div align="center">
+  <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+</div>
+
+---
+
+<div align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&color=36BCF7&width=435&lines=🌟+Transformando+ideas+en+código+🌟;💻+Desarrollo+tecnológico+con+propósito+💻;🚀+Reglas+y+creatividad+🚀;" alt="Typing SVG">
+</div>
+
+---
+
+## 📚 Reglas para el Uso del Repositorio
+
+1. **Mantén tu rama actualizada:**
+   - Antes de realizar cambios, asegúrate de estar en tu rama y de actualizarla con la rama principal.
+   ```bash
+   git pull origin main
+2.  Crea ramas específicas para cada tarea:
+
+   -Usa un nombre descriptivo para la rama, como feature/nueva-funcionalidad o bugfix/correccion-error.
+   
+3 .Subir cambios al repositorio:
+- Añade los archivos modificados al área de preparación:
+```bash
 git add .
 
-# Crear commit con mensaje descriptivo
-git commit -m "Descripción clara de los cambios"
+Crea un commit descriptivo:
+git commit -m "Descripción de los cambios realizados"
 
-# Subir cambios a tu rama remota
-git push origin nombre-de-tu-rama
+4. Envía los cambios a tu rama remota:
+git push origin <nombre-de-tu-rama>
 
-Crear Solicitud de Incorporación de Cambios:
+5. Evita conflictos:
+Antes de hacer push, actualiza tu rama con los cambios más recientes de main:
+git pull origin main
 
-Ir a GitHub
-Seleccionar tu rama
-Crear Pull Request hacia main
-Esperar revisión de equipo
+6. Buena práctica:
+Siempre verifica el estado del repositorio antes de realizar cualquier cambio:
+git status
 
+✨ Ejemplo Completo de Flujo de Trabajo en Git
+Actualiza tu repositorio local:
 
+git pull origin main
+Crea y cambia a una nueva rama:
 
-🚨 Reglas Importantes
+git checkout -b feature/nueva-funcionalidad
+Realiza cambios en tu código y guárdalos.
 
-Nunca hacer push directamente a main
-Siempre crear una rama para nuevas características
-Escribir mensajes de commit claros y concisos
-Revisar cambios antes de hacer commit
-Mantener el código limpio y documentado
+Añade los archivos modificados y haz un commit:
 
-🌟 Inspiración
-<div align="centro">
- <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pauuse=1000&color=36BCF7&width=435&lines=🌟+Transformando+ideas+en+código+🌟; 💻 +Desarrollo+tecnológico+con+propósito+💻; 🚀 +Reglas+y+creatividad+🚀;" alt="Escribiendo SVG">
-</div>
-📞 Contacto
-Si tienes dudas sobre el flujo de trabajo, contacta con el líder del proyecto.
+git add .
+git commit -m "Añadida nueva funcionalidad de ejemplo"
+Sube tu rama al repositorio remoto:
+
+git push origin feature/nueva-funcionalidad
+Crea un Pull Request desde la interfaz de git bash.
+
+🛡️ Recomendaciones
+Frecuencia: Haz commits pequeños y frecuentes.
+Comentarios: Proporciona mensajes claros y significativos en tus commits.
+Colaboración: Comunica cualquier problema o duda con el equipo.
+
+   
