@@ -39,10 +39,11 @@
 
 ## 📚 Reglas para el Uso del Repositorio
 
-1. **Mantén tu rama actualizada:**
+> .[!NOTE].
+>  **Mantén tu rama actualizada:**
    - Antes de realizar cambios, asegúrate de estar en tu rama y de actualizarla con la rama principal.
-   ```bash
-   git pull origin main
+     ```bash
+     git pull origin main
 2.  Crea ramas específicas para cada tarea:
 
    -Usa un nombre descriptivo para la rama, como feature/nueva-funcionalidad o bugfix/correccion-error.
