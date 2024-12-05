@@ -12,7 +12,7 @@ public class HomeController {
     @GetMapping("/")
     public String getLayout(Model model) {
 
-        model.addAttribute("content", "home/index.html");
+        //model.addAttribute("content", "home/index.html");
         return "shared/layout";
     } 
 
