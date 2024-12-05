@@ -39,7 +39,7 @@
 
 ## 📚 Reglas para el Uso del Repositorio
 
-> .[!NOTE].
+> [!NOTE]
 >  **Mantén tu rama actualizada:**
    - Antes de realizar cambios, asegúrate de estar en tu rama y de actualizarla con la rama principal.
      ```bash
