@@ -38,69 +38,47 @@
 ---
 
 ## 📚 Reglas para el Uso del Repositorio
-
-> [!IMPORTANT]
->  **Mantén tu rama actualizada:**
-   - Antes de realizar cambios, asegúrate de estar en tu rama y de actualizarla con la rama principal.
-     ```bash
-     git pull origin main
-     
+ 
 > [!NOTE]
 > Consejo: Usa nombres claros que describan la tarea para la que estás creando la rama, como "feature" o "bugfix".
    Usa nombres descriptivos y consistentes para tus ramas. Algunos ejemplos:
    feature/nueva-funcionalidad
    bugfix/correccion-error
    hotfix/ajuste-urgente
-
-> [!NOTE]
-> Subir cambios al repositorio
-  - Añade los archivos modificados al área de preparación.
-    ```bash
-    git add .
-    
-> [!NOTE]
-> Crea un commit descriptivo
- - Importante que tu commit describa un cambio realizado
-    ```bash
-    git commit -m "Descripción de los cambios realizados" 
-
-> [!NOTE]
-> Envía los cambios a tu rama remota
-- una rama descriptiva
-    ```bash
-     git push origin <nombre-de-tu-rama>
-
-> [!IMPORTANT]
-> Evita conflictos 
--  Antes de hacer push, actualiza tu rama con los cambios más recientes de main:
-
-     ```bash
-        git pull origin main
-        
-> [!TIP]
-> Buena práctica 
-- Siempre verifica el estado del repositorio antes de realizar cualquier cambio:
-
-    ```bash
-     git status
+ 
+ > [!IMPORTANT]
+> **Utiliza nombres descriptivos para la creación de archivos en el proyecto:**
+> - Utiliza la **nomenclatura kebab-case** para los nombres de archivos largos. Este formato se aplica para carpetas, archivos HTML, JavaScript, CSS y otros archivos relacionados con el proyecto.
+> - Para los archivos **Java**, utiliza **camelCase**. En este estilo, la primera palabra empieza con minúscula y las siguientes palabras con mayúscula.
+> - Ejemplo de **kebab-case**:
+>    - **html**: `pagina-principal.html`
+>    - **javascript**: `funciones-utiles.js`
+>    - **css**: `estilos-pagina.css`
+> - Ejemplo de **camelCase** para archivos **Java**:
+>    - **Java**: `miClasePrincipal.java`
+>    - **Java**: `controladorUsuarios.java`
+>    - **Java**: `funcionesDeValidacion.java`
+> - La nomenclatura **kebab-case** y **camelCase** se utilizan dependiendo del tipo de archivo. 
+ 
+ 
 
 
 <h2 style="color: #FF6347; text-align: center; font-size: 2em;">🌟 Ejemplo Completo de Flujo de Trabajo en Git 🌟</h2>
 
 
-> [!TIP]
+> [!IMPORTANT]
 >  Actualiza tu repositorio local:
--  obtener lo ultimos cambios de repositorio principal - main
+-  obtener lo ultimos cambios de repositorio principal - main para evitar conflictos
      ```bash
      git pull origin main
     
-> [!TIP]
+> [!NOTE]
 > Crea y cambia a una nueva rama:
 - crea o cambia a tu rama
     ```bash
     git checkout -b  ejemploFlores
 
-> [!TIP]
+> [!NOTE]
 > Realiza cambios en tu código y guárdalos. 
 - Añade los archivos modificados y haz un commit:
 
@@ -108,11 +86,18 @@
     git add .
     git commit -m "Añadida nueva funcionalidad de ejemplo"
     
-> [!TIP]
+> [!NOTE]
 >  Sube tu rama al repositorio remoto:
 -  recuerda que el push sea realizado de tu rama
     ```bash
       git push origin ejemploFlores
+    
+> [!TIP]
+> Buena práctica 
+- Siempre verifica el estado del repositorio antes de realizar cualquier cambio:
+
+    ```bash
+     git status
 
 Crea un Pull Request desde la interfaz de git bash.
 
