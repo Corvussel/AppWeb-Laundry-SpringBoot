@@ -313,8 +313,7 @@ tbody tr:hover {
 
 @media (max-width: 550px) {
 
-    body {
-        background: #ffffff !important;
+    body { 
         min-height: 100vh;
         padding-bottom: 10px;
     }
