@@ -9,18 +9,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.laundry.lavanderia.Model.Login.login;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
-@RequestMapping("/userAuth") 
+@RequestMapping("/userAuth")
+@RequiredArgsConstructor
 public class UserAuthController {
-    
-      // Redireccion para Login
+
+    // Redireccion para Login
     @GetMapping("/login")
     public String getLoginPage(Model model) {
-        model.addAttribute("login", new login());  
+        model.addAttribute("login", new login());
         return "login/index";
     }
-  
-    // Con autenticacion 
+
+    // Con autenticacion
     @PostMapping("/authenticate")
     public String authenticate(@ModelAttribute("login") login login, Model model) {
         // Simulación de validación
@@ -33,4 +36,5 @@ public class UserAuthController {
         }
         return "authenticate";
     }
+ 
 }
