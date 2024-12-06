@@ -32,7 +32,14 @@ public class HomeController {
         model.addAttribute("content", "deliveries/index.html");
         return "shared/layout";
     }
-    
+    //agregue este nuevo controlador --Guillermo
+    @GetMapping({"/deliveries/pedidos-entregados"})
+    public String getPedidosEntregadosPage(Model model) {
+        // Aquí le indicamos al modelo la ubicación de la nueva página de "Pedidos Entregados"
+        model.addAttribute("content", "deliveries/PedidosEntregados.html");
+        return "shared/layout";
+    }
+    //..
     @GetMapping("/services-page")
     public String getServicesPage(Model model) {
  
