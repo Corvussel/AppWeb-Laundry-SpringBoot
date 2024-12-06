@@ -1,3 +1,1 @@
-<div>Reglas , hola soy gullermo , prueba de cmabios 
- hola flores  </div>
-    
+<div>Reglas</div>

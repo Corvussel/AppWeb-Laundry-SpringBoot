@@ -28,9 +28,38 @@
             max-width: 400px;
         }
 
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: all 0.3s ease;
+        }
+
+        .form-control {
+            padding: 0.5rem;
+            outline: none;
+            transition: all 0.3s ease;
+            padding-left: 40px;
+        }
+
+        .form-control:focus+i {
+            color: rgb(10, 146, 226);
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0px 3px rgb(10, 146, 226, 0.2);
+            transform: translateY(-2px);
+        }
+
         .login-card .btn-primary {
             background-color: #343a40;
             border-color: #343a40;
+            padding: 0.7rem;
         }
 
         .login-card .btn-primary:hover {
@@ -43,19 +72,21 @@
 <body>
     <div class="login-card">
         <h2 class="text-center mb-4">Iniciar Sesión</h2>
-        <form action="/login" method="POST">
+        <form action="/userAuth/login" method="POST">
             <div class="mb-3">
                 <label for="email" class="form-label">Correo Electrónico</label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="correo@ejemplo.com" required>
+                <div class="input-icon">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="correo@ejemplo.com"
+                        required>
+                    <i class="fas fa-envelope"></i>
                 </div>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="********" required>
+                <div class="input-icon">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="********"
+                        required>
+                    <i class="fas fa-lock"></i>
                 </div>
             </div>
             <div class="mb-3 form-check">
