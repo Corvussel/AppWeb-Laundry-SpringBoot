@@ -45,8 +45,8 @@ input[type="number"]::-webkit-inner-spin-button {
 .btn-submit {
     width: auto;
     padding: 1rem 2rem;
-    border-radius: 1rem;
-    background: #227bef;
+    border-radius: 10px;
+    background: #1e1411;
     border: none;
     color: white;
     font-size: 1.1rem;
@@ -62,10 +62,10 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .btn-cancelar { 
     padding: 1rem 2rem;
-    border-radius: 1rem;
-    background: #1d284e;
-    border: none;
-    color: white;
+    border-radius: 10px;
+    border: 1px solid #1d284e; 
+    background-color: white;
+    color: #1d284e;
     font-size: 1.1rem;
     font-weight: 600;
     margin-top: 1rem;
@@ -74,7 +74,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .btn-cancelar:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(230, 126, 34, 0.3);
+    box-shadow: 0 5px 15px rgba(73, 72, 71, 0.3);
 }
 
 /*Personalizacion de al modal -Botstrap*/
