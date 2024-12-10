@@ -1,0 +1,158 @@
+body {
+    background: rgb(255, 255, 255);
+    min-height: 100vh;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.main-container {
+    padding: 0 2.5rem;
+    min-height: 100vh;
+    transition: all 0.3s ease;
+}
+
+.form-header {
+    width: 100%;
+    display: flex;
+    justify-content: center; 
+    position: relative;
+    margin-bottom: 10px;
+    color: #132b50;
+}
+
+.form-header::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    background: #0891b2;
+    height: 2px;
+    border-radius: 15px;
+    width: 90px;
+}
+
+/*input de busqueda de servicio*/
+
+.input-search {
+    border: none;
+    background: #f3f3f6;
+    padding: 0.8rem;
+    padding-left: 55px;
+    border-radius: 45px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    margin-right: 15px;
+    max-width: 400px;
+    margin-top: 0.2rem;
+}
+
+.input-search:focus {
+    outline: none;
+}
+
+.input-search:focus+i {
+    background: #ec5e95;
+}
+
+.icon {
+    position: relative;
+    margin: 1rem;
+}
+
+.icon i {
+    position: absolute;
+    font-size: 20px;
+    left: 8px;
+    top: 50%;
+    color: #ffffff;
+    background: #ea4c89;
+    transition: all 0.3s ease-in-out;
+    padding: 0.6rem;
+    border-radius: 1.5rem;
+    transform: translateY(-50%);
+}
+
+.container-cards {
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    padding: 0.2rem 0.9rem; 
+    margin-top: 2rem; 
+}
+
+/*Card de servicio*/
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 8px 10px rgba(31, 38, 135, 0.15);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    padding: 0.5rem 0.7rem;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.card:hover {
+    box-shadow: 4px 10px 12px rgba(31, 88, 135, 0.2);
+    transform: translateY(-4px);
+    background: rgb(252, 251, 251);
+}
+
+/*Estilo para el contenido de card*/
+.icon-container {
+    margin-right: 15px;
+    color: #7a7e7e;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.detail-text {
+    font-size: 1rem;
+    color: #45446e; 
+}
+
+.payment {
+    background: #f3f3f6;
+    border-radius: 0.5rem;
+    padding: 0 0.7rem;
+}
+
+.payment .text-muted {
+    font-weight: bold;
+}
+
+.payment p {
+    color: #047738;
+}
+
+.debt p {
+    color: #f84a4a;
+}
+
+
+/*Estilo para dispostivos moviles */
+@media(max-width:500px) {
+
+    .main-container {
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    /* card - servicio*/
+    .card {
+        padding: 0.5rem;
+        border-radius: 10px;
+    }
+
+    .detail-text {
+        font-size: 0.8rem;
+    }
+
+    .price {
+        font-size: 0.8rem;
+    }
+}

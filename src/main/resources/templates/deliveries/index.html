@@ -1,6 +1,116 @@
-<div class="page-content">
-    <h1>Ajustes</h1>
-    <form>
-        <h2>Modulo Entrega</h2>
-    </form>
+<link rel="stylesheet" href="/css/deliveries/index.css">
+
+
+<div class="row justify-content-center">
+    <div class="col-12">
+        <div class="main-container">
+            <!--Encabezado-->
+            <div class="form-header">
+                <h2>Entregar Pedidos</h2>
+            </div>
+            <!--campo de busqueda de entregas-->
+            <div class="icon">
+                <input type="text" class="input-search w-50" id="searchInput" placeholder="Buscar Usuario...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="container-cards">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="card" data-usuario="flores" data-bs-toggle="modal" data-bs-target="#detallesModal">
+                            <div class="card-body d-flex justify-content-between flex-wrap">
+                                <div>
+                                    <div class="detail-item">
+                                        <div class="icon-container"><i class="fas fa-calendar"></i></div>
+                                        <div class="detail-text">09/12/2024</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="icon-container"><i class="fas fa-receipt"></i></div>
+                                        <div class="detail-text">B0003</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="icon-container"><i class="fas fa-user"></i></div>
+                                        <div class="detail-text">Flores solano russel 2</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="icon-container"><i class="fas fa-phone"></i></div>
+                                        <div class="detail-text">99267698</div>
+                                    </div>
+                                </div>
+                                <div class="detail-price">
+                                    <div>
+                                        <small class="text-muted">Pagado</small>
+                                        <p class="price">1299 $</p>
+                                    </div>
+                                    <div class="debt">
+                                        <small class="text-muted">Por cobrar</small>
+                                        <p class="price">0$</p>
+                                    </div>
+                                    <div class="payment">
+                                        <small class="text-muted">Total venta</small>
+                                        <p class="price">1299 $</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="card" data-usuario="flores" data-bs-toggle="modal" data-bs-target="#detallesModal">
+                            <div class="card-body d-flex justify-content-between flex-wrap">
+                                <div>
+                                    <div class="detail-item">
+                                        <div class="icon-container"><i class="fas fa-calendar"></i></div>
+                                        <div class="detail-text">09/12/2024</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="icon-container"><i class="fas fa-receipt"></i></div>
+                                        <div class="detail-text">B0003</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="icon-container"><i class="fas fa-user"></i></div>
+                                        <div class="detail-text">Flores solano Russel</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="icon-container"><i class="fas fa-phone"></i></div>
+                                        <div class="detail-text">99267698</div>
+                                    </div>
+                                </div>
+                                <div class="detail-price">
+                                    <div>
+                                        <small class="text-muted">Pagado</small>
+                                        <p class="price">1299 $</p>
+                                    </div>
+                                    <div class="debt">
+                                        <small class="text-muted">Por cobrar</small>
+                                        <p class="price">0$</p>
+                                    </div>
+                                    <div class="payment">
+                                        <small class="text-muted">Total venta</small>
+                                        <p class="price">1299 $</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+<!--Modal para visualizar detalles del servicio-->
+<div class="modal fade" aria-hidden="true" aria-labelledby="modalDetallesServicio" tabindex="-1" id="detallesModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h2>Detalles del servicio</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/deliveries/funcionality.js"></script>

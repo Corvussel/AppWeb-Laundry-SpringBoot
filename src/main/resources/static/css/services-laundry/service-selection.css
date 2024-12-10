@@ -22,6 +22,8 @@ body {
     display: flex;
     justify-content: center;
     position: relative;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #132b50;
 }
 
 .form-header::after {
@@ -41,10 +43,10 @@ input[type="number"]::-webkit-inner-spin-button {
 
 
 .btn-submit {
-    width: 50%;
-    padding: 1rem;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #3498db, #2980b9);
+    width: auto;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    background: #227bef;
     border: none;
     color: white;
     font-size: 1.1rem;
@@ -58,11 +60,10 @@ input[type="number"]::-webkit-inner-spin-button {
     box-shadow: 0 5px 15px rgba(41, 128, 185, 0.3);
 }
 
-.btn-cancelar {
-    width: 50%;
-    padding: 1rem;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #f13a3a, #da3c0c);
+.btn-cancelar { 
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    background: #1d284e;
     border: none;
     color: white;
     font-size: 1.1rem;
@@ -135,35 +136,40 @@ input[type="number"]::-webkit-inner-spin-button {
 /*input de busqueda de servicio*/
 
 .input-search {
-    border: 1px solid #ced4da;
-    padding: 0.7rem;
-    padding-left: 45px;
+    border: none;
+    background: #f3f3f6;
+    padding: 0.8rem;
+    padding-left: 55px;
     border-radius: 45px;
     width: 100%;
     box-sizing: border-box;
-    transition: all 0.3s ease;
-    margin-right: 15px;
+    transition: all 0.3s ease; 
+    max-width: 300px;
+    min-width: 250px;
 }
 
 .input-search:focus {
-    border-color: #0891b2;
     outline: none;
 }
 
 .input-search:focus+i {
-    color: #0891b2;
+    background: #ec5e95;
 }
 
 .icon {
-    position: relative;
+    position: relative; 
 }
 
 .icon i {
     position: absolute;
     font-size: 20px;
-    left: 15px;
+    left: 8px;
     top: 50%;
-    color: #6a6a6a;
+    color: #ffffff;
+    background: #ea4c89;
+    transition: all 0.3s ease-in-out;
+    padding: 0.6rem;
+    border-radius: 1.5rem;
     transform: translateY(-50%);
 }
 
@@ -200,7 +206,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .card-active {
-    background: #0891b2 !important;
+    background: #202142 !important;
     color: #f0effd;
 }
 
@@ -243,10 +249,11 @@ input[type="number"]::-webkit-inner-spin-button {
 /*Estilo para el resumen de servicio*/
 
 .summary-container {
-    background: #f0f9ff;
+    background: #b0b6cb11;
     border-radius: 15px;
     padding: 2rem;
     margin: 2rem 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 
