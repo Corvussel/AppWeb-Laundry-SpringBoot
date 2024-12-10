@@ -1,40 +1,55 @@
 package com.laundry.lavanderia.Controller;
 
- 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;  
-import org.springframework.web.bind.annotation.RequestMapping; 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")  
+@RequestMapping("/")
 public class HomeController {
 
-    @GetMapping("/")
-    public String getLayout(Model model) {
+    private static final String SHARED_LAYOUT = "shared/layout";
 
+    // menu principal por defecto
+    @GetMapping
+    public String showHomePage(Model model) {
         model.addAttribute("content", "home/index.html");
-        return "shared/layout";
-    } 
-
-    @GetMapping("/home-page")
-    public String getHome(Model model) {
-        model.addAttribute("content", "home/index.html");
-        return "shared/layout";
+        return SHARED_LAYOUT;
     }
 
-    @GetMapping("/deliveries-page")
-    public String getDeliveryPage(Model model) {
- 
+    // menu principal
+    @GetMapping("/home")
+    public String showHomePageAlternate(Model model) {
+        model.addAttribute("content", "home/index.html");
+        return SHARED_LAYOUT;
+    }
+
+    // entregas
+    @GetMapping("/deliveries")
+    public String showDeliveriesPage(Model model) {
         model.addAttribute("content", "deliveries/index.html");
-        return "shared/layout";
+        return SHARED_LAYOUT;
     }
-    
-    @GetMapping("/services-page")
-    public String getServicesPage(Model model) {
- 
+
+    // registro de servicio
+    @GetMapping("/services")
+    public String showServicesPage(Model model) {
         model.addAttribute("content", "services-laundry/index.html");
-        return "shared/layout";
+        return SHARED_LAYOUT;
     }
-   
+
+    // pedidos entregados
+    @GetMapping("/orders/delivered")
+    public String showDeliveredOrdersPage(Model model) {
+        model.addAttribute("content", "deliveries/PedidosEntregados.html");
+        return SHARED_LAYOUT;
+    }
+
+    // clientes
+    @GetMapping("/clients")
+    public String showClientsPage(Model model) {
+        model.addAttribute("content", "clients/cliente.html");
+        return SHARED_LAYOUT;
+    }
 }
