@@ -13,12 +13,12 @@ btn.addEventListener('click', function () {
 });
 
 
-// Eventos y interaccin entre vista parcia de usuario
+// Eventos y interaccion entre vista parcial de usuario
 // Evento cuando se muestra la modal
 document.getElementById('userModal').addEventListener('show.bs.modal', function () {
 
     $.ajax({
-        url: '/services-laundry/user-list-fragment',
+        url: '/services/ListUsers',
         type: 'get',
         success: function (data) {
             // insertarr el html en el contenedor del modal
@@ -37,7 +37,7 @@ document.getElementById('userModal').addEventListener('show.bs.modal', function 
 document.addEventListener('DOMContentLoaded', function () {
 
     $.ajax({
-        url: '/services-laundry/service-selection-fragment',
+        url: '/services/selection',
         type: 'get',
         success: function (data) {            
             $('#ContainerServiceSelection').html(data);

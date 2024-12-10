@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/client")
 public class ClientController {
 
-    @GetMapping("/register-client")
-    public String getRegisterClient(Model model) {
+    @GetMapping("/register")
+    public String showRegisterClientPage(Model model) {
         model.addAttribute("content", "clients/register-client.html");
         return "shared/layout";
-    }
- 
+    } 
 }
