@@ -1,0 +1,382 @@
+body {
+    background: linear-gradient(135deg, #F8FAFF 0%, #F0F4FF 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.main-container {
+    background: rgb(253, 254, 255, 0.9);
+    border-radius: 20px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 14px 32px rgba(31, 38, 135, 0.15);
+    padding: 2.5rem;
+    margin: 4rem 0;
+}
+
+.main-container:hover {
+    transform: translateY(-5px);
+}
+
+.form-header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #132b50;
+}
+
+.form-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    background: #0891b2;
+    height: 3px;
+    border-radius: 5px;
+    width: 90px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+
+.btn-submit {
+    width: auto;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    background: #227bef;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(41, 128, 185, 0.3);
+}
+
+.btn-cancelar { 
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    background: #1d284e;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-cancelar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(230, 126, 34, 0.3);
+}
+
+/*Personalizacion de al modal -Botstrap*/
+
+.modal-content {
+    border-radius: 25px;
+}
+
+.modal-dialog {
+    padding: 10px;
+}
+
+/*Estilo para contenedor btn categoria*/
+.category-container {
+    display: flex;
+    background: #fcfdff;
+    padding: 10px 5px;
+    overflow-x: auto;
+    max-height: 110px;
+}
+
+.nav {
+    flex-wrap: nowrap;
+}
+
+/*btn categoria */
+
+.nav-pills .nav-link {
+    background: #f0f9ff;
+    height: 80px;
+    padding: 2rem;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    color: #0891b2;
+    font-size: 1rem;
+    font-weight: 600;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+    max-height: 80px;
+    max-width: 200px;
+    min-width: 100px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.nav-pills .nav-link:hover {
+    background: #e0f2fe;
+}
+
+.nav-pills .nav-link.active {
+    background: #ffffff;
+    color: #0891b2;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/*input de busqueda de servicio*/
+
+.input-search {
+    border: none;
+    background: #f3f3f6;
+    padding: 0.8rem;
+    padding-left: 55px;
+    border-radius: 45px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s ease; 
+    max-width: 300px;
+    min-width: 250px;
+}
+
+.input-search:focus {
+    outline: none;
+}
+
+.input-search:focus+i {
+    background: #ec5e95;
+}
+
+.icon {
+    position: relative; 
+}
+
+.icon i {
+    position: absolute;
+    font-size: 20px;
+    left: 8px;
+    top: 50%;
+    color: #ffffff;
+    background: #ea4c89;
+    transition: all 0.3s ease-in-out;
+    padding: 0.6rem;
+    border-radius: 1.5rem;
+    transform: translateY(-50%);
+}
+
+/*contenedror de pestañas*/
+.tab-content {
+    margin-top: 2rem;
+    margin-top: 1.5rem;
+}
+
+/*pestañas*/
+.tab-pane {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 280px;
+    height: 280px;
+    padding: 5px;
+}
+
+/*Card de servicio*/
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    padding: 1.5rem 0.7rem;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.card:hover {
+    background: #eef2ff;
+    transform: scale(1.03);
+}
+
+.card-active {
+    background: #202142 !important;
+    color: #f0effd;
+}
+
+.card-active:hover {
+    background: #4f46e5;
+}
+
+.card-active .card-price {
+    background: #f0effd;
+    color: #1e1e1e;
+}
+
+.card-active .title-service {
+    color: #f0effd;
+}
+
+
+
+.title-service {
+    font-size: 1.2rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    display: inline-block;
+    color: #427e92;
+}
+
+.card-price {
+    color: #28282c;
+    border-radius: 0.9rem;
+    border: 1px solid #dbe2f5;
+    text-align: center;
+    font-weight: 650;
+    padding: 1px 0.9rem;
+    height: 25px;
+    user-select: none;
+}
+
+/*Estilo para el resumen de servicio*/
+
+.summary-container {
+    background: #b0b6cb11;
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+
+.title-summary-service {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #427e92;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.service-summary {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.label {
+    color: rgba(0, 0, 0, 0.8);
+    margin: 0;
+    font-weight: 500;
+}
+
+.value {
+    font-size: 1rem;
+    color: #212529;
+}
+
+.quantity-control .counter {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-decrement,
+.btn-increment {
+    background-color: white;
+    color: #000000;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-decrement:hover,
+.btn-increment:hover {
+    background-color: #f0effd;
+}
+
+#spinner {
+    width: 45px;
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 0px;
+    background-color: white;
+    outline: none;
+    user-select: none;
+}
+
+.details-control .input-details {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid rgba(31, 38, 135, 0.15);
+    border-radius: 12px;
+    transition: border-color 0.3s;
+    background: #F8FAFF;
+}
+
+.details-control .input-details:focus {
+    border-color: #f0f9ff;
+    outline: none;
+}
+
+.total-control .value {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+
+/*Estilo para dispostivos moviles */
+@media(max-width:500px) {
+
+    .form-header h2 {
+        font-size: 1.5rem;
+    }
+
+    /*categoria*/
+    .nav-pills .nav-link {
+        padding: 1rem;
+        border-radius: 15px;
+        font-size: 0.9rem;
+        max-height: 70px;
+    }
+
+    /* card - servicio*/
+    .card {
+        padding: 0.7rem 0.5rem;
+        border-radius: 10px;
+    }
+
+    .title-service {
+        font-size: 1.1rem;
+    }
+
+    .card-price {
+        padding: 0 0.4rem;
+        height: 20px;
+    }
+
+    /*contenedor resumen servicio*/
+    .title-summary-service {
+        font-size: 1.2rem;
+        font-weight: 450;
+    }
+
+    .summary-container {
+        padding: 1rem;
+    }
+
+}

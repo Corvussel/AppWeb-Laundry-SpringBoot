@@ -2,7 +2,7 @@
 
 <div class="container" id="ContainerSalesRegistration">
     <div class="row justify-content-center">
-        <div class="col-12 col-md-9 col-lg-9 mt-5">
+        <div class="col-12 col-md-12 col-lg-9 mt-5">
             <div class="container-form">
 
                 <form id="form_Register">
@@ -33,7 +33,7 @@
                             required />
                     </div>
                     <!--Observacion-->
-                    <div class="form-group"> 
+                    <div class="form-group">
                         <label for="observacion">Observacion</label>
                         <input type="text" id="observacion" class="form-control" placeholder="Añada una observación" />
                     </div>
@@ -75,7 +75,8 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="text-end mt-1">
+                        <div class="text-end mt-1 me-1">
+                            <!--button para mostrar la seleccion de servicio-->
                             <button type="button" class="btn btn-outline-light w-100" id="BtnNuevoServicio"
                                 onclick="showServiceSelection()">Nuevo</button>
                         </div>
@@ -152,8 +153,10 @@
                 <h5 class="modal-title" id="ModalLabel">Seleccionar Usuario</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="userListContainer">
-                <!-- Aquí se cargara la vista parcial con la lista de usuarios -->
+            <div class="modal-body">
+                <div id="userListContainer">
+                    <!-- se cargara la vista parcial con la lista de usuarios -->
+                </div>
             </div>
         </div>
     </div>
@@ -164,7 +167,8 @@
 <div id="ContainerServiceSelection" class="d-none">
     <!-- Vista servicio -->
 </div>
- 
+
+
 <!-- Script de Apariencia -->
 <script src="/js/services-laundry/index/apperence.js"></script>
 <!-- Script de funcionalidades -->
