@@ -1,0 +1,176 @@
+:root {
+    --primary-color: #2c3e50;
+    --accent-color: #3498db;
+}
+
+body {
+    background: linear-gradient(135deg, #F8FAFF 0%, #F0F4FF 100%);
+    min-height: 100vh;
+    padding-bottom: 40px;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.main-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+    padding: 2.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    transition: transform 0.3s ease;
+}
+
+.main-container:hover {
+    transform: translateY(-5px);
+}
+
+/* encabezado  */
+.form-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+/* linea de encabezado */
+.form-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    border-radius: 2px;
+}
+
+.form-header h2 {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1.7rem;
+    margin-bottom: 0.5rem;
+}
+
+
+.form-floating {
+    margin-bottom: 1.5rem;
+}
+
+/* campo de entrada personalizado */
+.form-control {
+    border: 2px solid #e0e0e0;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.form-control:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+    transform: translateY(-2px);
+}
+
+
+.gender-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.gender-option {
+    flex: 1;
+    position: relative;
+}
+
+.gender-option button {
+    display: none;
+}
+
+.button-outline {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.button-outline-select {
+    display: flex;
+    background: var(--accent-color);
+    flex-grow: 1;
+    color: white;
+    border-color: var(--accent-color);
+    transform: scale(1.05);
+}
+
+
+/* button de envio de formulario */
+.btn-submit {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent-color), #2980b9);
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(41, 128, 185, 0.3);
+}
+
+.form-floating label {
+    padding: 1rem;
+}
+
+/* Campos de Entrada-input con icono */
+.input-icon {
+    position: relative;
+}
+
+.input-icon i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+
+/* Indicador de campo requerdio*/
+.required::after {
+    content: " *";
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.was-validated .form-control:valid,
+.was-validated .form-control:invalid {
+    background-image: none !important;
+    /* Remueve la imagen de validación */
+}
+
+/*personalizamos los inputs de typo number*/
+input[type="number"] {
+    appearance: none;
+    -moz-appearance: textfield;
+    position: relative;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
