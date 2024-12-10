@@ -5,19 +5,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/services-laundry")
+@RequestMapping("/services")
 public class ServiceController {
 
-    @GetMapping("/user-list-fragment")
-    public String getListUserFragment() {
-
+    @GetMapping("/ListUsers")
+    public String showUserListFragment() {
         return "services-laundry/user-list";
     }
-    
-    @GetMapping("/service-selection-fragment")
-    public String getServiceSelectionFragment() {
-        
+
+    @GetMapping("/selection")
+    public String showServiceSelectionFragment() {
         return "services-laundry/service-selection";
     }
-    
 }
