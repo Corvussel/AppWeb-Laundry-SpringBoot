@@ -1,22 +1,10 @@
-
-// Validacion de Formulario principal
-const btn = document.getElementById('asa');
-const form_Register = document.getElementById('form_Register');
-
-btn.addEventListener('click', function () {
-
-    if (!form_Register.checkValidity()) {
-        form_Register.classList.add('was-validated');
-    } else {
-        form_Register.classList.remove('was-validated');
-    } 
-});
-
-
+  
 // Eventos y interaccion entre vista parcial de usuario
-// Evento cuando se muestra la modal
-document.getElementById('userModal').addEventListener('show.bs.modal', function () {
+// Evento cuando se muestra la modal 
+const openModalButton = document.getElementById('openModalButton');
 
+// Evento para abrir el modal
+openModalButton.addEventListener('click', () => {
     $.ajax({
         url: '/services/ListUsers',
         type: 'get',
@@ -30,7 +18,7 @@ document.getElementById('userModal').addEventListener('show.bs.modal', function 
         }
     });
 });
- 
+
 
 // Eventos y interaccion entre vista seleccion de servicio
 
@@ -39,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $.ajax({
         url: '/services/selection',
         type: 'get',
-        success: function (data) {            
+        success: function (data) {
             $('#ContainerServiceSelection').html(data);
 
             const buttonCancelar = document.getElementById('btnCancelarRegistroServicio');
@@ -108,7 +96,7 @@ function registrarServicio() {
     // Mostramos el contenedor La tabla
     document.getElementById('tableContainer').classList.remove('d-none');
     // Modificamos el tamaño de button BtnNuevoServicio
-    document.getElementById('BtnNuevoServicio').classList.remove('w-100'); 
+    document.getElementById('BtnNuevoServicio').classList.remove('w-100');
 
     // Referencia a la tabla y al tbody
     const tablaServicio = document.getElementById('tableService').getElementsByTagName("tbody")[0];

@@ -19,7 +19,7 @@
                     <!--Accion para a seleccion de cliente mediante un modal-->
                     <div class="form-group">
                         <label>Cliente<span class="required"></span></label>
-                        <div class="input-icon" data-bs-toggle="modal" data-bs-target="#userModal">
+                        <div class="input-icon" id="openModalButton" data-modal-target="userModal" data-modal-toggle="userModal">
                             <input type="text" id="usuario" class="form-control" placeholder="Selecciona el cliente"
                                 readonly style="cursor:pointer;" />
                             <i class="fas fa-chevron-down"></i>
@@ -43,46 +43,34 @@
                     <div class="form-group">
                         <label for="name">Registrar Servicio<span class="required"></span> </label>
                         <!--Tabla de Registro de Servicios-->
-                        <div class="table-container hidden" id="tableContainer">
+                        <div class="table-container d-none" id="tableContainer">
                             <div class="table-responsive">
                                 <table id="tableService" class="table">
                                     <thead class="table-header">
                                         <tr>
-                                            <th scope="col" class="table-column">
+                                            <th scope="col" class="text-red-300">
                                                 Cantidad
                                             </th>
-                                            <th scope="col" class="table-column w-50">
+                                            <th scope="col" class="">
                                                 Servicio
                                             </th>
-                                            <th scope="col" class="table-column">
+                                            <th scope="col" class="">
                                                 Precio Unitario
                                             </th>
-                                            <th scope="col" class="table-column">
+                                            <th scope="col" class="">
                                                 Sub Total
                                                 <span class="resizerTable"></span>
                                             </th>
-                                            <th scope="col" class="table-column w-25">
+                                            <th scope="col" class="w-25">
                                                 Detallar Color - Marca
                                             </th>
-                                            <th scope="col" class="table-column">
+                                            <th scope="col" class="">
                                                 Acciones
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <!--Contenido de la tabla-->
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Lavado Completo</td>
-                                            <td>$10</td>
-                                            <td>$10</td>
-                                            <td>Marca Nike - Rojo</td>
-                                            <td> <button
-                                                    class="bg-blue-500 text-white px-2 py-1 rounded">Editar</button>
-                                                <button
-                                                    class="bg-red-500 text-white px-2 py-1 rounded">Eliminar</button>
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -155,33 +143,34 @@
     </div>
 </div>
 
-
-
-
-<!-- Modal se muestra una ventana flotante para  la busqueda de usuario-->
-
-<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content p-3">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalLabel">Seleccionar Usuario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- Vista parcial de La selección de servicio -->
+<div id="ContainerServiceSelection" class="d-none">
+    <!-- Vista servicio -->
+</div>
+ 
+ 
+<!-- Modal -->
+<div id="userModal" tabindex="-1" aria-hidden="true"
+    class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-2xl max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Modal Controlado por Script</h3>
+                <button type="button" id="closeModalButton" class="btn-close" data-modal-hide="userModal">
+                    ✖
+                </button>
+                
             </div>
-            <div class="modal-body">
+            <div class="p-6 space-y-6">
                 <div id="userListContainer">
-                    <!-- se cargara la vista parcial con la lista de usuarios -->
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
-<!-- Vista parcial de La selección de servicio -->
-<div id="ContainerServiceSelection" class="d-none">
-    <!-- Vista servicio -->
-</div>
-
+ 
 
 <!-- Script de Apariencia -->
 <script src="/js/services-laundry/index/apperence.js"></script>

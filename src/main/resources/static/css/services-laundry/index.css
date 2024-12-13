@@ -246,7 +246,7 @@ input[type="number"]::-webkit-inner-spin-button {
     background: #77a3bf;
 }
 
-.table-column {
+thead th {
     position: relative;
     padding: 0.95rem 1.2rem !important;
     font-weight: 500;
