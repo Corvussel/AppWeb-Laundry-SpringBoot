@@ -3,13 +3,7 @@ body {
     min-height: 100vh;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-
-.main-container {
-    padding: 0 2.5rem;
-    min-height: 100vh;
-    transition: all 0.3s ease;
-}
-
+ 
 .form-header {
     width: 100%;
     display: flex;
@@ -97,8 +91,7 @@ body {
     transform: translateY(-5px); 
 }
 
-/*button para la seleccion*/
-.button-select {}
+ 
 
 /*Estilo para el contenido de card*/
 .icon-container {
