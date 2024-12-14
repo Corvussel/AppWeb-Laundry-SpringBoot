@@ -1,17 +1,8 @@
-
-let userModal;
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    const modalElement = document.getElementById('userModal');
-    userModal = new Modal(modalElement);
-});
+ 
 // Evento para asignar el valor al input usuario, interaccion entre vista index de servicio
 function selectUser(userName) {
     document.getElementById('usuario').value = userName;
-    if (userModal) {
-        userModal.hide();
-    }
+  
 }
 
 
