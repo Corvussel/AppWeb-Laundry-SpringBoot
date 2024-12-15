@@ -78,15 +78,7 @@ input[type="number"]::-webkit-inner-spin-button {
     box-shadow: 0 5px 15px rgba(73, 72, 71, 0.3);
 }
 
-/*Personalizacion de al modal -Botstrap*/
-
-.modal-content {
-    border-radius: 25px;
-}
-
-.modal-dialog {
-    padding: 10px;
-}
+ 
 
 /*Estilo para contenedor btn categoria*/
 .category-container {
@@ -175,13 +167,13 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 /*contenedror de pestañas*/
-.tab-content {
+.tab-container {
     margin-top: 2rem;
     margin-top: 1.5rem;
 }
 
 /*pestañas*/
-.tab-pane {
+.tab-panes {
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 280px;
@@ -196,14 +188,14 @@ input[type="number"]::-webkit-inner-spin-button {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
     cursor: pointer;
-    padding: 1.5rem 0.7rem;
+    padding: 2rem 0.9rem; 
     overflow: hidden;
     margin-bottom: 1rem;
 }
 
 .card:hover {
     background: #eef2ff;
-    transform: scale(1.03);
+    transform: scale(1.01);
 }
 
 .card-active {
@@ -357,17 +349,18 @@ input[type="number"]::-webkit-inner-spin-button {
 
     /* card - servicio*/
     .card {
-        padding: 0.7rem 0.5rem;
+        padding: 1.5rem 0.5rem;
         border-radius: 10px;
     }
 
     .title-service {
-        font-size: 1.1rem;
+        font-size: 0.9rem;
     }
 
     .card-price {
-        padding: 0 0.4rem;
+        padding: 0 0.4rem; 
         height: 20px;
+        font-size: 0.9rem;
     }
 
     /*contenedor resumen servicio*/
@@ -380,4 +373,16 @@ input[type="number"]::-webkit-inner-spin-button {
         padding: 1rem;
     }
 
+    .btn-submit { 
+        padding: 0.9rem 1rem;
+        font-size: 0.9rem; 
+    }
+    .btn-submit i {  
+        font-size: 0.7rem; 
+    }
+     
+    .btn-cancelar { 
+        padding: 0.9rem 1rem;
+        font-size: 0.9rem; 
+    }
 }

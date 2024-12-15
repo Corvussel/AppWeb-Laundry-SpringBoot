@@ -1,4 +1,4 @@
-  
+
 // Eventos y interaccion entre vista parcial de usuario
 // Evento cuando se muestra la modal 
 const openModalButton = document.getElementById('openModalButton');
@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const buttonCancelar = document.getElementById('btnCancelarRegistroServicio');
             const buttonRegistrar = document.getElementById('btnRealizarRegistrarServicio');
-            const formRegistroServicio = document.querySelector('.form-validation');
 
 
             if (buttonCancelar) {
@@ -43,15 +42,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (buttonRegistrar) {
                 buttonRegistrar.addEventListener('click', function (e) {
-                    // Validación de formulario
-                    if (!formRegistroServicio.checkValidity()) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        formRegistroServicio.classList.add('was-validated');
-                    } else {
-                        hideServiceSelection();
-                        registrarServicio();
-                    }
+
+                    hideServiceSelection();
+                    registrarServicio();
                 });
             }
 
