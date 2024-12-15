@@ -77,7 +77,7 @@ label::after {
 
 
 /*personalizacion para los inputs*/
-.form-control {
+.form-control { 
     width: 100%;
     padding: 0.8rem 1rem;
     border: 1px solid var(--border-color);

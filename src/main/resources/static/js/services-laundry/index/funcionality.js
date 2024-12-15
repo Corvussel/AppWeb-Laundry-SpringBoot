@@ -81,7 +81,7 @@ function registrarServicio() {
 
     // Valores De la vista Parcial Seleccion de Servicios
     const cantidad = document.getElementById('spinner').value;
-    const servicio = document.getElementById('servicio').value;
+    const servicio = document.getElementById('servicio').textContent;
     const precioUnidad = document.getElementById('precioUnidad').textContent;
     const subTotal = document.getElementById('total').textContent;
     const detalle = document.getElementById('detalles').value;
