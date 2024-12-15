@@ -71,14 +71,14 @@ const registroVentaContainer = document.getElementById('ContainerSalesRegistrati
 
 // Evento para mostrar la vista parcial de selección de servicio
 function showServiceSelection() {
-    serviceSelectionContainer.classList.remove('d-none');
-    registroVentaContainer.classList.add('d-none');
+    serviceSelectionContainer.classList.remove('hidden');
+    registroVentaContainer.classList.add('hidden');
 };
 
 // Evento para ocultar la vista parcial de selección de servicio
 function hideServiceSelection() {
-    serviceSelectionContainer.classList.add('d-none');
-    registroVentaContainer.classList.remove('d-none');
+    serviceSelectionContainer.classList.add('hidden');
+    registroVentaContainer.classList.remove('hidden');
 };
 
 
@@ -94,7 +94,7 @@ function registrarServicio() {
     const detalle = document.getElementById('detalles').value;
 
     // Mostramos el contenedor La tabla
-    document.getElementById('tableContainer').classList.remove('d-none');
+    document.getElementById('tableContainer').classList.remove('hidden');
     // Modificamos el tamaño de button BtnNuevoServicio
     document.getElementById('BtnNuevoServicio').classList.remove('w-100');
 

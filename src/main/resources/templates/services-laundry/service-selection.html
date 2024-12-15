@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="/css/services-laundry/service-selection.css">
 
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+    <div class="flex justify-center">
+        <div class="w-11/12 md:w-11/12 lg:w-11/12">
             <div class="main-container">
                 <!--Encabezado-->
                 <div class="form-header">
@@ -24,8 +24,7 @@
                                 </button>
                             </li>
                             <li class="nav-item">
-                                <button type="button" class="nav-link" data-bs-toggle="pill"
-                                    data-bs-target="#prueba2">
+                                <button type="button" class="nav-link" data-bs-toggle="pill" data-bs-target="#prueba2">
                                     Planchado
                                 </button>
                             </li>
@@ -120,5 +119,27 @@
     </div>
 </div>
 
-<script src="/js/services-laundry/service-selection/apparence.js"></script>  
-<script src="/js/services-laundry/service-selection/funcionality.js"></script>   
+
+<!-- Tabs -->
+<div class="category-container mt-3">
+    <!-- Pestañas de navegación -->
+    <ul class="nav nav-pills gap-2" id="categoriasTabs">
+        <div th:each="categoria : ${categorias}">
+            <li class="nav-item">
+                <button type="button" 
+                        th:text="${categoria.nombre}" 
+                        class="nav-link active" 
+                        th:id="${categoria.nombre}" 
+                        th:value="${categoria.nombre}" 
+                        data-bs-toggle="pill" 
+                        th:data-bs-target="'#' + ${categoria.nombre}" 
+                        >
+                </button>
+            </li>
+        </div>
+    </ul>
+</div>
+
+ 
+<script src="/js/services-laundry/service-selection/apparence.js"></script>
+<script src="/js/services-laundry/service-selection/funcionality.js"></script>
