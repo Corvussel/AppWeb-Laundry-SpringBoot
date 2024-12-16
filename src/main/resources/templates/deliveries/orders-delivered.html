@@ -7,7 +7,7 @@
         <div class="h-full min-h-[500px] w-ful">
             <!--Encabezado-->
             <div class="form-header">
-                <h2 class="text-3xl">Entregar Pedidos</h2>
+                <h2 class="text-3xl">Entregados</h2>
             </div>
             <!--campo de busqueda de entregas-->
             <div class="icon">
@@ -16,7 +16,7 @@
                 <i class="fas fa-search"></i>
             </div>
 
-            <div class="container-card w-full ">
+            <div class="container-card w-full">
                 <div class="px-3 gap-4 grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 "> 
                     <div class="card w-full" data-usuario="flores" @click="openModal = true">
                         <div class="lg:p-5 md:p-4 p-5 sm:p-0">
@@ -44,16 +44,12 @@
                                 </div>
                                 <div class="detail-price text-center">
                                     <div class="mb-2">
-                                        <small class="earring-service">Pendiente</small>
+                                        <small class="px-2 py-1 rounded-full bg-green-600 text-white">Entregado</small>
                                     </div>
                                     <div>
-                                        <small class="text-muted">Pagado</small>
-                                        <p class="price">1299 $</p>
-                                    </div>
-                                    <div class="debt">
-                                        <small class="text-muted">Por cobrar</small>
-                                        <p class="price">0$</p>
-                                    </div>
+                                        <small class="text-muted">Tipo de pago</small>
+                                        <p class="price">Efectivo</p>
+                                    </div> 
                                     <div class="payment">
                                         <small class="text-muted">Total venta</small>
                                         <p class="price">1299 $</p>
@@ -63,7 +59,7 @@
                         </div>
                     </div>
 
-                    <div class="card w-full" data-usuario="flores" @click="openModal = true">
+                    <div class="card w-full" data-usuario="clark" @click="openModal = true">
                         <div class="lg:p-5 md:p-4 p-5 sm:p-0">
                             <div class="text-end mb-3">
                                 <i class="fas fa-ellipsis-h"></i>
@@ -89,16 +85,12 @@
                                 </div>
                                 <div class="detail-price text-center">
                                     <div class="mb-2">
-                                        <small class="earring-service">Pendiente</small>
+                                        <small class="px-2 py-1 rounded-full bg-green-600 text-white">Entregado</small>
                                     </div>
                                     <div>
-                                        <small class="text-muted">Pagado</small>
-                                        <p class="price">1299 $</p>
-                                    </div>
-                                    <div class="debt">
-                                        <small class="text-muted">Por cobrar</small>
-                                        <p class="price">0$</p>
-                                    </div>
+                                        <small class="text-muted">Tipo de pago</small>
+                                        <p class="price">Efectivo</p>
+                                    </div> 
                                     <div class="payment">
                                         <small class="text-muted">Total venta</small>
                                         <p class="price">1299 $</p>
@@ -119,7 +111,7 @@
         x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" @click="openModal = false">
-        <div class="bg-white p-6 rounded-lg shadow-lg lg:max-w-lg lg:w-full sm:w-11/12 w-11/12 relative h-[550px]">
+        <div class="bg-white p-6 rounded-lg shadow-lg lg:max-w-lg lg:w-full sm:w-11/12 w-11/12 relative h-[530px]">
             <!--Header--> 
             <div class="flex justify-between mb-2">
                 <div class="flex items-center flex-grow ml-2">
@@ -131,7 +123,7 @@
             </div>
             <!--body-->
             <div>
-                <div class="overflow-auto h-[410px] px-2 pb-2 flex gap-2 flex-col">
+                <div class="overflow-auto h-[420px] px-2 pb-2 flex gap-2 flex-col">
                     <article
                         class="bg-white border border-blue-200  rounded-lg  p-6 hover:bg-gray-50 hover:shadow-xl  transition-all duration-300 ">
                         <div class="flex justify-end mb-4">
@@ -187,14 +179,7 @@
                             <span class="text-gray-600 text-sm">$10</span>
                         </div>
                     </article>
-                </div>
-                <div class="flex justify-center mt-3">
-                    <button
-                        class="border border-blue-950 p-2 text-blue-950 rounded-lg hover:bg-[#2ca060] hover:text-white transition duration-300">
-                        <i class="fas fa-check-circle"></i>
-                        Marcar Como Entregado
-                    </button>
-                </div>
+                </div> 
             </div>
         </div>
     </div>
