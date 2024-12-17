@@ -1,12 +1,11 @@
 <link rel="stylesheet" href="/css/home/index.css">
-
-  
-<div class="container">
-    <div class="container mb-5">
+<div class="p-4 lg:p-0">
+    <div class="mb-5">
         <div class="dashboard-header">
-            <h1 class="dashboard-title">Luxury Laundry - Panel de Operaciones</h1>
+            <h1 class="dashboard-title">Luxury Lavanderia - Panel de Operaciones</h1>
         </div>
         <div class="grid">
+
             <!--Seccion para La realizacion de venta -->
             <a class="text-decoration-none" href="/services">
                 <div class="service-card">
@@ -18,7 +17,6 @@
                     <ul class="feature-list">
                         <li class="feature-item">Registrar transacciones de servicios</li>
                     </ul>
-
                 </div>
             </a>
             <!--Seccion de entrega de pedidos-->
@@ -28,33 +26,37 @@
                         <i class="fas fa-user"></i>
                         <i class="fas fa-box-open"></i>
                     </div>
-                    <div class="card-subtitle">Entrega de Pedidos</div>
+                    <div class="card-subtitle">Entregar</div>
                     <ul class="feature-list">
                         <li class="feature-item">Gestionar entregas prioritarias</li>
                     </ul>
                 </div>
             </a>
-
-            <div class="service-card">
-                <div class="icon-card">
-                    <i class="fas fa-chart-line"></i>
+            <!--Seccion de gestion de gastos-->
+            <a href="/spending">
+                <div class="service-card">
+                    <div class="icon-card">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="card-subtitle">Control de Gasto</div>
+                    <ul class="feature-list">
+                        <li class="feature-item">Acceso a ventas y gastos</li>
+                    </ul>
                 </div>
-                <div class="card-subtitle">Control de Gasto</div>
-                <ul class="feature-list">
-                    <li class="feature-item">Acceso a ventas y gastos</li>
-                </ul>
-            </div>
-
-            <div class="service-card" href="">
-                <div class="icon-card">
-                    <i class="fas fa-star"></i>
+            </a>
+            <!--Seccion detalles de venta-->
+            <a href="/detailSales">
+                <div class="service-card" href="">
+                    <div class="icon-card">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="card-subtitle">Detalles de Ventas</div>
+                    <ul class="feature-list">
+                        <li class="feature-item">Detalles de las ventas </li>
+                    </ul>
                 </div>
-                <div class="card-subtitle">Detalles de Ventas</div>
-                <ul class="feature-list">
-                    <li class="feature-item">Detalles de las ventas </li>
-                </ul>
-            </div>
-
+            </a>
+            <!--Seccion de Cierre de caja-->
             <div class="service-card" href="">
                 <div class="icon-card">
                     <i class="fas fa-cash-register"></i>
@@ -64,37 +66,43 @@
                     <li class="feature-item">Cierre de operaciones diarias</li>
                 </ul>
             </div>
-
-            <div class="service-card" href="">
-                <div class="icon-card">
-                    <i class="fas fa-users"></i>
+            <!--Seccion de gestion de clientes-->
+            <a class="text-decoration-none" href="/clients">
+                <div class="service-card">
+                    <div class="icon-card">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="card-subtitle">Gestión de Clientes</div>
+                    <ul class="feature-list">
+                        <li class="feature-item">Revisión y actualización de clientes</li>
+                    </ul>
                 </div>
-                <div class="card-subtitle">Gestión de Clientes</div>
-                <ul class="feature-list">
-                    <li class="feature-item">Revisión y actualización de clientes</li>
-                </ul>
-            </div>
-
-            <div class="service-card" href="">
-                <div class="icon-card">
-                    <i class="fas fa-check-circle"></i>
+            </a>
+            <!--Seccion de pedidos entregados-->
+            <a href="/orders/delivered" class="text-decoration-none">
+                <div class="service-card">
+                    <div class="icon-card">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="card-subtitle">Entregados</div>
+                    <ul class="feature-list">
+                        <li class="feature-item">Registro de pedidos completados</li>
+                    </ul>
                 </div>
-                <div class="card-subtitle">Pedidos Entregados</div>
-                <ul class="feature-list">
-                    <li class="feature-item">Registro de pedidos completados</li>
-                </ul>
-            </div>
-
-            <div class="service-card" href="">
-                <div class="icon-card">
-                    <i class="fab fa-whatsapp" style="color:green;"></i>
+            </a>
+            <!--Seccion WhatsApp-->
+            <a href="https://chat.whatsapp.com/JWBFa4jFXRb4foOtoQiYen" target="_blank" class="text-decoration-none">
+                <div class="service-card">
+                    <div class="icon-card">
+                        <i class="fab fa-whatsapp" style="color:green;"></i>
+                    </div>
+                    <div class="card-subtitle">Comunicación WhatsApp</div>
+                    <ul class="feature-list">
+                        <li class="feature-item">WhatsApp de Usuarios</li>
+                    </ul>
                 </div>
-                <div class="card-subtitle">Comunicación WhatsApp</div>
-                <ul class="feature-list">
-                    <li class="feature-item">WhatsApp de Usuarios</li>
-                </ul>
-            </div>
-
+            </a>
+            <!--Recojo y entrega-->
             <div class="service-card" href="">
                 <div class="icon-card">
                     <i class="fas fa-exchange-alt"></i>
@@ -106,4 +114,3 @@
             </div>
         </div>
     </div>
-</div>

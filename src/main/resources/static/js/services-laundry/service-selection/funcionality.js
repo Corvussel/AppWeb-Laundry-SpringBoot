@@ -1,3 +1,73 @@
+ //evento cuando se presiona un button-categoria
+ const container_btnCategorias = document.querySelector('#categoriasTabsButton');
+
+ container_btnCategorias.addEventListener('click', function (e) {
+
+     const button_presionado = e.target.closest('.nav-link');
+
+     if (button_presionado) {
+         const value = button_presionado.value;
+         removerActiveButtons();
+         mostrarTabPestaña(value);
+         button_presionado.classList.add('active');
+
+     }
+ });
+
+ function removerActiveButtons() {
+     document.querySelectorAll('.nav-link').forEach(btn => { btn.classList.remove('active') });
+ }
+
+ function mostrarTabPestaña(tabCategoria) {
+     // Se Itera por todas las pestañas
+     document.querySelectorAll('.tab-panes').forEach(tabPage => {
+         const value = tabPage.id; // el Id de la pestaña
+         // Mostrar u ocultar la pestaña segun coincida con la categoria
+         if (value.includes(tabCategoria)) {
+             tabPage.classList.add('hidden');
+         } else {
+             tabPage.classList.remove('hidden');
+         }
+     });
+ }
+
+
+// Evento para la activacion y seleccion de servicio - card
+const cardContainer = document.getElementById('card-container');
+
+cardContainer.addEventListener('click', (event) => {
+
+    // Verificar si el clic ocurrio en una tarjeta
+    const card = event.target.closest('.card');
+
+    if (card) {
+
+        desmarcarTarjetas();//Desmarcar tarjetas anteriores
+        card.classList.add('card-active');//Marcar Tarjeta actual
+
+        // Obtener el servicio desde el atributo data-servicio
+        const servicio = card.dataset.servicio;
+        // Llamar a la función de seleccion
+        seleccionarServicio(servicio);
+    }
+
+});
+
+// función para desmarcar todas las tarjetas
+function desmarcarTarjetas() {
+    const cards = document.querySelectorAll('.card-active');
+    cards.forEach(card => { card.classList.remove('card-active') });
+};
+
+// función para seleccion de servicio
+function seleccionarServicio(servicio) {
+    document.getElementById('resumenServicio').classList.remove('hidden');
+    document.getElementById('detalleServicio').textContent = servicio; 
+
+}
+
+
+
 // Evento Relacionado al Spinner
 
 const spinner = document.getElementById("spinner");
@@ -26,7 +96,7 @@ btnDecrement.addEventListener('click', () => {
 });
 
 
-//Evento Relacionado ala Busqueda de Servicio
+//Evento Relacionado a la Busqueda de Servicio
 
 const searchInput = document.getElementById('searchInput');
 searchInput.addEventListener('input', filterCards);

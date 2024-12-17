@@ -28,7 +28,7 @@ public class HomeController {
     // entregas
     @GetMapping("/deliveries")
     public String showDeliveriesPage(Model model) {
-        model.addAttribute("content", "deliveries/index.html");
+        model.addAttribute("content", "deliveries/order-delivery.html");
         return SHARED_LAYOUT;
     }
 
@@ -42,7 +42,7 @@ public class HomeController {
     // pedidos entregados
     @GetMapping("/orders/delivered")
     public String showDeliveredOrdersPage(Model model) {
-        model.addAttribute("content", "deliveries/PedidosEntregados.html");
+        model.addAttribute("content", "deliveries/orders-delivered.html");
         return SHARED_LAYOUT;
     }
 
@@ -50,6 +50,20 @@ public class HomeController {
     @GetMapping("/clients")
     public String showClientsPage(Model model) {
         model.addAttribute("content", "clients/cliente.html");
+        return SHARED_LAYOUT;
+    }
+
+    // gastos
+    @GetMapping("/spending")
+    public String showExpenseControlPage(Model model) {
+        model.addAttribute("content", "spending/expense-control.html");
+        return SHARED_LAYOUT;
+    }
+
+    // detalles ventas
+    @GetMapping("/detailSales")
+    public String showDetailsPage(Model model) {
+        model.addAttribute("content", "details-sales/index.html");
         return SHARED_LAYOUT;
     }
 }
