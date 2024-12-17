@@ -53,10 +53,17 @@ public class HomeController {
         return SHARED_LAYOUT;
     }
 
-     // clientes
-     @GetMapping("/spending")
-     public String showExpenseControlPage(Model model) {
-         model.addAttribute("content", "spending/expense-control.html");
-         return SHARED_LAYOUT;
-     }
+    // gastos
+    @GetMapping("/spending")
+    public String showExpenseControlPage(Model model) {
+        model.addAttribute("content", "spending/expense-control.html");
+        return SHARED_LAYOUT;
+    }
+
+    // detalles ventas
+    @GetMapping("/detailSales")
+    public String showDetailsPage(Model model) {
+        model.addAttribute("content", "details-sales/index.html");
+        return SHARED_LAYOUT;
+    }
 }
