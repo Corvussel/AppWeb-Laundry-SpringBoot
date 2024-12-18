@@ -1,46 +1,62 @@
-<div class="container mt-5">
-    <h2 class="text-center">Lista de Clientes</h2>
+<style>
+    body {
+        background-color: rgb(248 250 252 / 0.3);
+    }
+</style>
 
-    <!-- Tabla con los datos de los clientes -->
-    <table class="table table-bordered table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>#</th>
-                <th>Nombre y Apellido</th>
-                <th>Correo Electrónico</th>
-                <th>Teléfono</th>
-                <th>Observación</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Supongamos que pasamos una lista de clientes desde el controlador -->
-            <tr>
-                <td>1</td>
-                <td>palacios</td>
-                <td>pala@pnpdelperu</td>
-                <td>+123456789</td>
-                <td><input type="text" class="form-control" placeholder="Escribe una observación"></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>caballero</td>
-                <td>caba@pnpdelperu</td>
-                <td>+987654321</td>
-                <td><input type="text" class="form-control" placeholder="Escribe una observación"></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>velezmoro </td>
-                <td>velez@pnpdelperu</td>
-                <td>+912345678</td>
-                <td><input type="text" class="form-control" placeholder="Escribe una observación"></td>
-            </tr>
-            <!-- Más clientes... -->
-        </tbody>
-    </table>
-
-    <!-- Botón para regresar al Menú Principal -->
-    <div class="text-center mt-3">
-        <a href="/home" class="btn btn-primary">Regresar al Menú Principal</a>
+<div class="p-5 h-screen mx-auto max-w-screen-lg flex flex-col gap-3 ">
+    <div class="my-3 relative">
+        <input type="text " placeholder="buscar usuario ..."
+            class="p-3 pl-12 outline-none rounded-full md:w-5/12 shadow">
+        <i
+            class="absolute top-[50%] translate-y-[-50%]  left-2 fas fa-search bg-rose-600 p-2 rounded-full text-white"></i>
+    </div>
+    <div class="mb-3 text-end">
+        <a href="/client/register"
+            class="py-3 px-6  bg-[#319db8] rounded-full text-white transition-colors hover:bg-[#2b9aa8]">
+            <i class="fas fa-user-plus mx-1"></i>
+            <span>añadir</span>
+        </a>
+    </div>
+    <div class="overflow-y-auto h-full px-1 ">
+        <div class="grid md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-3">
+            <article
+                class="bg-white shadow-lg p-8 rounded-lg md:h-56 flex flex-col hover:shadow-xl transition-all duration-300">
+                <h2 class="font-semibold text-gray-700 md:text-xl text-base mb-2">Russel flores solano</h2>
+                <div class="flex gap-2 items-center">
+                    <i class="fas fa-phone text-gray-500 text-base"></i>
+                    <span class="text-gray-500 text-sm"> 92676985</span>
+                </div>
+                <div class="flex gap-2 justify-end items-end flex-grow">
+                    <a href="" class="p-3 hover:bg-slate-50 transition-colors rounded-xl">
+                        <i class="fas fa-pencil-alt text-gray-500"></i>
+                        <span>Editar</span>
+                    </a>
+                    <a href="" class="p-3 hover:bg-slate-50 transition-colors rounded-xl">
+                        <i class="far fa-trash-alt text-gray-500"></i>
+                        <span>Eliminar</span>
+                    </a>
+                </div>
+            </article>
+            <article
+                class="bg-white shadow-lg p-8 rounded-md md:h-56 flex flex-col hover:shadow-xl transition-all duration-300">
+                <h2 class="font-semibold text-gray-600 md:text-xl text-base mb-2">Russel flores solano</h2>
+                <div class="flex gap-2 items-center">
+                    <i class="fas fa-phone text-gray-500 text-base"></i>
+                    <span class="text-gray-500 text-sm"> 92676985</span>
+                </div>
+                <div class="flex gap-2 justify-end items-end flex-grow">
+                    <a href="" class="p-3 hover:bg-slate-50 transition-colors rounded-xl">
+                        <i class="fas fa-pencil-alt text-gray-500"></i>
+                        <span class="text-base">Editar</span>
+                    </a>
+                    <a href="" class="p-3 hover:bg-slate-50 transition-colors rounded-xl">
+                        <i class="far fa-trash-alt text-gray-500"></i>
+                        <span>Eliminar</span>
+                    </a>
+                </div>
+            </article>
+        </div>
     </div>
 </div>
+ 
