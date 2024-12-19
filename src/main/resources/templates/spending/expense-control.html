@@ -1,54 +1,97 @@
 <style>
     body {
-        background-color: white;
+        background-color: rgb(255, 255, 255);
     }
 </style>
-<div class="p-4">
-    <div class="">
-        <div class="border border-gray-200 rounded-md min-h-[80vh]">
-            <div class="p-5 pt-8 lg:p-8 lg:pt-10 min-h-[80vh]">
-                <div class="flex justify-between gap-7 flex-wrap">
-                    <div>
-                        <h2 class="font-semibold text-lg mb-1">Gasto</h2>
-                        <p class="text-gray-500 text-base">Gastos Realizados en Materiales u otro
-                        </p>
-                    </div>
-                    <div>
-                        <a href="/spending/register"
-                            class="bg-blue-600 rounded-md  text-white cursor-pointer hover:bg-blue-900 transition duration-300 px-3 py-2">
-                            <i class="far fa-plus-square"></i>
-                            <span>Agregar</span>
-                        </a>
 
-                    </div>
-                </div>
-                <div class="mt-10 overflow-x-auto min-h-[70vh]">
-                    <table class="w-full">
-                        <thead>
-                            <tr class="border-b border-gray-300 text-gray-700">
-                                <th class="text-start font-semibold min-w-24 flex-grow py-4">Fecha</th>
-                                <th class="text-start font-semibold min-w-24 flex-grow py-4">Total</th>
-                                <th class="text-start font-semibold min-w-24 flex-grow py-4">Descripcion</th>
-                                <th class="text-start font-semibold min-w-40 flex-grow py-4">Tipo de gasto</th>
-                            </tr>    
-                        </thead>
-                        <tbody>
-                            <tr class="border-b border-gray-200 text-gray-600 text-base font-normal">
-                                <td class="py-3 text-sm">12/05/2024</td>
-                                <td class="py-3 text-sm">1200</td>
-                                <td class="py-3 text-sm">Detergente Suavisante</td>
-                                <td class="py-3 text-sm">Materiales</td>
-                            </tr>
-                            <tr class="border-b border-gray-200 text-gray-600 text-base font-normal">
-                                <td class="py-3 text-sm">12/05/2024</td>
-                                <td class="py-3 text-sm">1200</td>
-                                <td class="py-3 text-sm">Detergente Suavisante</td>
-                                <td class="py-3 text-sm">Materiales</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+<div class="sm:px-6 w-full pb-5"> 
+    <div class="bg-white rounded-md py-4 md:py-7 px-4 md:px-8 xl:px-10">
+        <div class="flex justify-between">
+            <div class="flex-grow">
+                <a href="/spending/register"
+                    class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 mt-4 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-indigo-700 hover:bg-indigo-600 focus:outline-none rounded">
+                    <p class="text-sm font-medium leading-none text-white">Añadir</p>
+                </a>
             </div>
+            <div
+                class="py-3 px-4 flex items-center text-sm font-medium leading-none text-gray-600 bg-gray-200 hover:bg-gray-300 cursor-pointer rounded">
+                <p>Ordenar por:</p>
+                <select aria-label="select" class="focus:text-indigo-600 focus:outline-none bg-transparent ml-1">
+                    <option class="text-sm text-indigo-800">Reciente</option>
+                    <option class="text-sm text-indigo-800">Antiguo</option>
+                </select>
+            </div>
+        </div>
+        <div class="mt-7 overflow-x-auto min-h-[70vh]">
+            <table class="w-full whitespace-nowrap">
+                <thead>
+                    <tr>
+                        <th class="text-start mr-2 pl-5 py-5 font-medium leading-none text-gray-700">Fecha</th>
+                        <th class="text-start mr-2 pl-5 py-5 font-medium leading-none text-gray-700">Descripcion</th>
+                        <th class="text-start mr-2 pl-5 font-medium leading-none text-gray-700">Tipo de gasto</th>
+                        <th class="text-start mr-2 pl-3 py-5 font-medium leading-none text-gray-700">Monto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr tabindex="0" class="focus:outline-none h-16 border border-gray-100 rounded">
+                        <td>
+                            <div class="ml-5">
+                                <div class="w-16 h-5 flex flex-shrink-0 justify-center items-center">
+                                    <p class="text-sm leading-none text-gray-600 ml-2">04/07/2024</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex items-center pl-5">
+                                <p class="text-base font-medium leading-none text-gray-700 mr-2">
+                                    Detergente ariel
+                                </p>
+                            </div>
+                        </td>
+
+                        <td class="pl-4">
+                            <p
+                                class="focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none">
+                                Materiales</p>
+                        </td>
+                        <td class="pl-3">
+                            <div class="flex items-center">
+                                <span class="text-sm leading-none text-gray-600 ml-2">S/</span>
+                                <p class="text-sm leading-none text-gray-600 ml-2">20</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="h-3"></tr>
+                    <tr tabindex="0" class="focus:outline-none h-16 border border-gray-100 rounded">
+                        <td>
+                            <div class="ml-5">
+                                <div class="w-16 h-5 flex flex-shrink-0 justify-center items-center">
+                                    <p class="text-sm leading-none text-gray-600 ml-2">04/07/2024</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex items-center pl-5">
+                                <p class="text-base font-medium leading-none text-gray-700 mr-2">
+                                    Detergente ariel
+                                </p>
+                            </div>
+                        </td>
+
+                        <td class="pl-4">
+                            <p
+                                class="focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none">
+                                Materiales</p>
+                        </td>
+                        <td class="pl-3">
+                            <div class="flex items-center">
+                                <span class="text-sm leading-none text-gray-600 ml-2">S/</span>
+                                <p class="text-sm leading-none text-gray-600 ml-2">20</p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

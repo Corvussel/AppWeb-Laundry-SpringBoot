@@ -6,7 +6,7 @@
 <div x-data="{ openModal: false }">
 
     <!-- Contenedor Principal -->
-    <div class="max-w-5xl mx-auto space-y-4 m-2">
+    <div class="max-w-6xl mx-auto space-y-4 m-2">
         <!-- titulo -->
         <h1 class="md:text-2xl text-lg font-bold text-center mb-4 text-gray-700">Resumen Diario de Lavandería</h1>
 
@@ -53,60 +53,134 @@
                     <div class="bg-[#f0f9ff] text-purple-600 md:p-3 p-2 rounded-full ">
                         <i class="fa-solid fa-user-check fa-lg"></i>
                     </div>
-                    <div> 
+                    <div>
                         <p class="md:text-xs text-[10px] text-gray-400 uppercase">Clientes Atendidos</p>
                         <h3 class="md:text-base text-sm font-bold text-[#1798b7]">85</h3>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Tabla -->
-        <div class="m-4">
-            <h2 class="text-sm  text-center font-semibold text-gray-600 mb-2">Detalles de Servicios</h2>
-            <div class="bg-white p-4 rounded-xl shadow overflow-x-auto max-h-72">
-                <table class="table-auto w-full text-sm text-left" id="tableDetails">
-                    <thead class="bg-[#18bbcc] text-white uppercase">
-                        <tr>
-                            <th class="p-2">ID</th>
-                            <th class="p-2">Cliente</th>
-                            <th class="p-2">Servicio</th>
-                            <th class="p-2">Costo</th>
-                            <th class="p-2">Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="hover:bg-gray-50 odd:bg-slate-50/70 cursor-pointer fila"
-                            data-id-details="id de la Tabla" @click="openModal = true">
-                            <td class="p-2">001</td>
-                            <td class="p-2">Juan Pérez</td>
-                            <td class="p-2">Lavado Rápido</td>
-                            <td class="p-2">$15</td>
-                            <td class="p-2 text-green-500">Completado</td>
-                        </tr>
-                        <tr class="hover:bg-gray-50 odd:bg-slate-50/70 cursor-pointer fila"
-                            data-id-details="id de la Tabla" @click="openModal = true">
-                            <td class="p-2">002</td>
-                            <td class="p-2">María Gómez</td>
-                            <td class="p-2">Lavado en Seco</td>
-                            <td class="p-2">$25</td>
-                            <td class="p-2 text-yellow-500">Pendiente</td>
-                        </tr>
-                        <tr class="hover:bg-gray-50 odd:bg-slate-50/70 cursor-pointer fila"
-                            data-id-details="id de la Tabla" @click="openModal = true">
-                            <td class="p-2">003</td>
-                            <td class="p-2">Carlos Díaz</td>
-                            <td class="p-2">Lavado y Planchado</td>
-                            <td class="p-2">$18</td>
-                            <td class="p-2 text-green-500">Completado</td>
-                        </tr>
-                    </tbody>
-                </table>
+
+
+        <div class="sm:px-6 w-full">
+            <div class="px-4 md:px-10 py-4 md:py-4">
+                <div class="flex items-center justify-between">
+                    <p tabindex="0"
+                        class="pl-3 focus:outline-none text-base sm:text-lg md:text-lg font-bold leading-normal text-gray-800">
+                        Opciones
+                    </p>
+                    <div
+                        class="py-3 px-4 flex items-center text-sm font-medium leading-none text-gray-600 bg-gray-200 hover:bg-gray-300 cursor-pointer rounded">
+                        <p>Ordenar por:</p>
+                        <select aria-label="select"
+                            class="focus:text-indigo-600 focus:outline-none bg-transparent ml-1">
+                            <option class="text-sm text-indigo-800">Ultimo</option>
+                            <option class="text-sm text-indigo-800">Antiguo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class=" py-4 md:py-7 px-4 md:px-8 xl:px-10">
+                <div class=" overflow-x-auto  max-h-72">
+                    <table class="w-full whitespace-nowrap" id="tableDetails">
+                        <thead class="uppercase text-gray-600 ">
+                            <tr>
+                                <th class="pl-7 p-2 text-xs text-start">ID</th>
+                                <th class="pl-6 p-2 text-xs text-start">Cliente</th>
+                                <th class="pl-6 p-2 text-xs text-start">Servicio</th>
+                                <th class="pl-6 p-2 text-xs text-start">Costo</th>
+                                <th class="pl-6 p-2 text-xs text-start">Estado</th>
+                                <th class="pl-6 p-2 text-xs text-start">Accion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr tabindex="0" class="hover:bg-slate-50 h-16 border border-gray-100 rounded">
+                                <td class="pl-6">
+                                    <div class="flex items-center">
+                                        <p class="text-sm leading-none text-gray-600 ml-2">001</p>
+                                    </div>
+                                </td>
+                                <td class="pl-5">
+                                    <div class="flex items-center">
+                                        <p class="text-base font-medium leading-none text-gray-700 mr-2">
+                                            Russel Flores solano
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="pl-6">
+                                    <div class="flex items-center">
+                                        <p class="text-sm leading-none text-gray-600 ml-2">Lavado rapido</p>
+                                    </div>
+                                </td>
+
+                                <td class="pl-5">
+                                    <div class="flex items-center">
+                                        <span class="text-sm leading-none text-gray-600 ">S/</span>
+                                        <p class="text-sm leading-none text-gray-600 ml-2">23</p>
+                                    </div>
+                                </td>
+
+                                <td class="pl-5">
+                                    <p
+                                        class="py-3 px-3 text-sm focus:outline-none leading-none text-green-700 bg-green-100 rounded">
+                                        Entregado
+                                    </p>
+                                </td>
+                                <td class="pl-4">
+                                    <button
+                                        class="fila-button focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none"
+                                        data-id-details="id de la Tabla" @click="openModal = true" name="button-fila">
+                                        Ver Detalles
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="h-3"></tr>
+                            <tr tabindex="0" class="hover:bg-slate-50 h-16 border border-gray-100 rounded">
+                                <td class="pl-6">
+                                    <div class="flex items-center">
+                                        <p class="text-sm leading-none text-gray-600 ml-2">002</p>
+                                    </div>
+                                </td>
+                                <td class="pl-5">
+                                    <div class="flex items-center">
+                                        <p class="text-base font-medium leading-none text-gray-700 mr-2">
+                                            Russel Flores solano
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="pl-6">
+                                    <div class="flex items-center">
+                                        <p class="text-sm leading-none text-gray-600 ml-2">Lavado rapido</p>
+                                    </div>
+                                </td>
+
+                                <td class="pl-5">
+                                    <div class="flex items-center">
+                                        <span class="text-sm leading-none text-gray-600 ">S/</span>
+                                        <p class="text-sm leading-none text-gray-600 ml-2">23</p>
+                                    </div>
+                                </td>
+
+                                <td class="pl-5">
+                                    <p
+                                        class="py-3 px-3 text-sm focus:outline-none leading-none text-orange-700 bg-orange-100 rounded">
+                                        Pendiente
+                                    </p>
+                                </td>
+                                <td class="pl-4">
+                                    <button
+                                        class="fila-button focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none"
+                                        data-id-details="id de la Tabla" @click="openModal = true" name="button-fila">
+                                        Ver Detalles
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-
-
-
     <!--Modal-->
     <div x-show="openModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50"
         x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
@@ -166,7 +240,7 @@
 <script>
     const table = document.getElementById('tableDetails');
     table.addEventListener('click', function (e) {
-        const fila = e.target.closest('.fila');
+        const fila = e.target.closest('.fila-button');
         if (fila) {
             const mensaje = fila.getAttribute('data-id-details');
             alert(mensaje);
