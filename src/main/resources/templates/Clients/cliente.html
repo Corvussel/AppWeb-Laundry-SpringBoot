@@ -4,59 +4,82 @@
     }
 </style>
 
-<div class="p-5 h-screen mx-auto max-w-screen-lg flex flex-col gap-3 ">
-    <div class="my-3 relative">
-        <input type="text " placeholder="buscar usuario ..."
-            class="p-3 pl-12 outline-none rounded-full md:w-5/12 bg-gray-100">
-        <i
-            class="absolute top-[50%] translate-y-[-50%]  left-2 fas fa-search bg-rose-600 p-2 rounded-full text-white"></i>
+<div class="container mx-auto px-4 py-8">
+    
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold text-gray-800 mb-2">Gestion de Clientes</h1>
+        <p class="text-gray-600">Administra la información de tus clientes</p>
     </div>
-    <div class="mb-3 text-end">
+
+   
+    <div class="flex flex-wrap justify-between items-center gap-4 mb-8">
+        <div class="relative flex-grow max-w-md">
+            <input type="text" placeholder="Buscar cliente..."
+                class="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent transition-all">
+            <i class="absolute left-4 top-1/2 -translate-y-1/2 fas fa-search text-gray-400"></i>
+        </div>
         <a href="/client/register"
-            class="py-3 px-6  bg-[#319db8] rounded-full text-white transition-colors hover:bg-[#2b9aa8]">
-            <i class="fas fa-user-plus mx-1"></i>
-            <span>añadir</span>
+            class="bg-[#0891b2] text-white px-6 py-3 rounded-xl hover:bg-[#0891b2]/90 transition-colors flex items-center gap-2 shadow-lg hover:shadow-xl">
+            <i class="fas fa-user-plus"></i>
+            <span>Nuevo Cliente</span>
         </a>
     </div>
-    <div class="overflow-y-auto h-full px-1">
-        <div class="grid md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-3">
-            <article
-                class="bg-white shadow-lg p-8 rounded-lg md:h-56 flex flex-col hover:shadow-xl transition-all duration-300">
-                <h2 class="font-semibold text-gray-700 md:text-xl text-base mb-2">Russel flores solano</h2>
-                <div class="flex gap-2 items-center">
-                    <i class="fas fa-phone text-gray-500 text-base"></i>
-                    <span class="text-gray-500 text-sm"> 92676985</span>
+
+    <!-- Clientes -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+       
+        <article class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-6 border border-gray-100">
+            <div class="flex items-start justify-between mb-4">
+                <div>
+                    <h2 class="font-semibold text-gray-800 text-lg mb-1">Russel Flores Solano</h2>
+                    <div class="flex items-center gap-2 text-gray-500">
+                        <i class="fas fa-phone text-sm"></i>
+                        <span class="text-sm">992 676 985</span>
+                    </div>
                 </div>
-                <div class="flex gap-2 justify-end items-end flex-grow">
-                    <a href="" class="p-3 hover:bg-slate-50 transition-colors rounded-xl">
-                        <i class="fas fa-pencil-alt text-gray-500"></i>
+                <div class="bg-blue-50 p-2 px-3 rounded-full">
+                    <i class="fas fa-user text-[#0891b2]"></i>
+                </div>
+            </div>
+            <div class="border-t border-gray-100 pt-4 mt-4">
+                <div class="flex justify-end gap-2">
+                    <button class="text-gray-600 hover:text-[#0891b2] p-2 rounded-lg transition-colors flex items-center gap-1">
+                        <i class="fas fa-pencil-alt"></i>
                         <span>Editar</span>
-                    </a>
-                    <a href="" class="p-3 hover:bg-slate-50 transition-colors rounded-xl">
-                        <i class="far fa-trash-alt text-gray-500"></i>
+                    </button>
+                    <button class="text-gray-600 hover:text-red-500 p-2 rounded-lg transition-colors flex items-center gap-1">
+                        <i class="far fa-trash-alt"></i>
                         <span>Eliminar</span>
-                    </a>
+                    </button>
                 </div>
-            </article>
-            <article
-                class="bg-white shadow-lg p-8 rounded-md md:h-56 flex flex-col hover:shadow-xl transition-all duration-300">
-                <h2 class="font-semibold text-gray-600 md:text-xl text-base mb-2">Russel flores solano</h2>
-                <div class="flex gap-2 items-center">
-                    <i class="fas fa-phone text-gray-500 text-base"></i>
-                    <span class="text-gray-500 text-sm"> 92676985</span>
+            </div>
+        </article>
+ 
+        <article class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-6 border border-gray-100">
+            <div class="flex items-start justify-between mb-4">
+                <div>
+                    <h2 class="font-semibold text-gray-800 text-lg mb-1 text-ellipsis">Cabalero, james, palacios,mallca</h2>
+                    <div class="flex items-center gap-2 text-gray-500">
+                        <i class="fas fa-phone text-sm"></i>
+                        <span class="text-sm">987 654 321</span>
+                    </div>
                 </div>
-                <div class="flex gap-2 justify-end items-end flex-grow">
-                    <a href="" class="p-3 hover:bg-slate-50 transition-colors rounded-xl">
-                        <i class="fas fa-pencil-alt text-gray-500"></i>
-                        <span class="text-base">Editar</span>
-                    </a>
-                    <a href="" class="p-3 hover:bg-slate-50 transition-colors rounded-xl">
-                        <i class="far fa-trash-alt text-gray-500"></i>
+                <div class="bg-blue-50 p-2 px-3 rounded-full">
+                    <i class="fas fa-user text-[#0891b2]"></i>
+                </div>
+            </div>
+            <div class="border-t border-gray-100 pt-4 mt-4">
+                <div class="flex justify-end gap-2">
+                    <button class="text-gray-600 hover:text-[#0891b2] p-2 rounded-lg transition-colors flex items-center gap-1">
+                        <i class="fas fa-pencil-alt"></i>
+                        <span>Editar</span>
+                    </button>
+                    <button class="text-gray-600 hover:text-red-500 p-2 rounded-lg transition-colors flex items-center gap-1">
+                        <i class="far fa-trash-alt"></i>
                         <span>Eliminar</span>
-                    </a>
+                    </button>
                 </div>
-            </article>
-        </div>
+            </div>
+        </article>
     </div>
 </div>
- 

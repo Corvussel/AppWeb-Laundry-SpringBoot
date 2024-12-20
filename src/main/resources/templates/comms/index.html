@@ -1,0 +1,73 @@
+<div class="container mx-auto px-4 py-8">
+    <div class="bg-white rounded-xl shadow-lg p-6">
+      
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">Centro de Comunicaciones</h1>
+            <p class="text-gray-600">Gestiona la comunicación con tus clientes</p>
+        </div>
+
+        <!-- tabla Principal -->
+        <div class="overflow-x-auto">
+            <table class="w-full" id="tableComms">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-left">Cliente</th>
+                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-left">Servicio</th>
+                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-left">Estado</th>
+                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-left">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <div class="h-10 w-10 flex-shrink-0">
+                                    <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                                        <i class="fas fa-user text-gray-500"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-900">Russel Flores</div>
+                                    <div class="text-sm text-gray-500">992676862</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500">Lavado completo</td>
+                        <td class="px-6 py-4">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                Listo para entregar
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-sm font-medium">
+                            <div class="flex gap-2">
+                                <button onclick="enviarMensajeWhatsApp('992676862', 'listo')" 
+                                        class="text-white bg-green-500 hover:bg-green-600 px-3 py-2 rounded-lg flex items-center gap-2 transition-colors">
+                                    <i class="fab fa-whatsapp"></i>
+                                    Notificar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+const mensajesPredefinidos = {
+    'listo': "¡Hola! Tu servicio de lavandería está listo para recoger. ¡Te esperamoss!",
+    'recordatorio': "Recordatorio: Tienes un servicio pendiente de recoger en nuestra lavandería",
+    'promocion': "¡Oferta especial! 20% de descuento en lavado completo esta semana",
+};
+
+function enviarMensajeWhatsApp(phone, type) {
+    const mensaje = encodeURIComponent(mensajesPredefinidos[type]);
+    window.open(`https://wa.me/${phone}?text=${mensaje}`, '_blank');
+}
+
+ 
+document.addEventListener('DOMContentLoaded', function() {
+    
+});
+</script>

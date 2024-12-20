@@ -68,9 +68,21 @@ public class HomeController {
     }
     // cierre de caja 
     @GetMapping("/cashClosing")
-    public String cashClosing(Model model) {
+    public String showCashClosingPage(Model model) {
 
         model.addAttribute("content", "cash-closing/index.html");
+        return SHARED_LAYOUT;
+    }
+
+    @GetMapping("/comms")
+    public String showCommsPage(Model model) {
+        model.addAttribute("content", "comms/index.html");
+        return SHARED_LAYOUT;
+    }
+
+    @GetMapping("/setings")
+    public String showSetingsPage(Model model) {
+        model.addAttribute("content", "services/settings.html");
         return SHARED_LAYOUT;
     }
 }

@@ -1,59 +1,78 @@
 <style>
     body {
-        background-color: rgb(255, 255, 255);
+        background-color: rgb(249 250 251 / 0.5);
     }
 </style>
 
-<div x-data="{ isSelected: 1 }"> <!-- Cambié isSelected = 1 por isSelected: 1 -->
+<div class="min-h-screen">
+    <div class="p-4 md:p-8 max-w-3xl mx-auto">
 
-    <div class="p-5 flex ">
-        <div
-            class="bg-white p-5 lg:p-10 rounded-lg w-full sm:w-11/12 md:w-10/12 lg:w-9/12 mx-auto overflow-hidden">
-            <form action="">
-                <label class="pb-2">Tipo de gasto</label>
-                <div class="flex gap-2 mt-2">
-                    <button @click="isSelected = 1" type="button"
-                        class="py-4 flex-grow bg-[#f0f9ff] text-[#0e94b4] rounded-xl transition duration-300"
-                        x-bind:class="{ 'bg-white shadow-lg ': isSelected ===1 }">
-                        Pasaje
-                    </button>
-                    <button @click="isSelected = 2" type="button"
-                        class="py-4 flex-grow bg-[#f0f9ff] text-[#0e94b4] rounded-xl transition duration-300"
-                        x-bind:class="{ 'bg-white shadow-lg': isSelected ===2 }">
-                        Materiales
-                    </button>
-                    <button @click="isSelected = 3" type="button"
-                        class="py-4 flex-grow bg-[#f0f9ff] text-[#0e94b4] rounded-xl transition duration-300"
-                        x-bind:class="{ 'bg-white shadow-lg': isSelected ===3 }">
-                        Otros
-                    </button>
-                </div>
-                <div class="mt-5 flex flex-col gap-3">
-                    <div class="flex  flex-col gap-1">
-                        <label for="total" class="p-1 text-sm">Monto</label>
-                        <input type="number" id="total" placeholder="0.00" required
-                            class="w-full px-4 py-2 outline-none border rounded-xl">
-                    </div>
-                    <div class="flex  flex-col gap-1">
-                        <label for="total" class="p-1 text-sm">Descripcion</label>
-                        <textarea name="" placeholder="Detalles"
-                            class="w-full px-4 py-2 outline-none border min-h-40 rounded-2xl">
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <div class="mb-6">
+                <h2 class="md:text-2xl text-xl font-bold text-gray-800">Registrar Nuevo Gasto</h2>
+                <p class="text-gray-600 mt-1 md:text-base text-sm">Complete los detalles del gasto</p>
+            </div>
 
-                    </textarea>
+            <div>
+                <form x-data="{ category: 'materiales' }" class="space-y-6">
+
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-700">Categoría de gasto</label>
+                        <div class="grid grid-cols-3 md:gap-3 sm:gap-2 gap-1">
+                            <button type="button" @click="category = 'materiales'"
+                                :class=" category === 'materiales' ? 'bg-[#18bbcc] border-indigo-200 text-white' : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50'"
+                                class="md:text-base text-sm p-3 md:gap-2 gap-1 border md:rounded-full rounded-2xl flex items-center justify-center transition-colors">
+                                <i class="fas fa-box"></i>
+                                <span>Materiales</span>
+                            </button>
+                            <button type="button" @click="category = 'servicios'"
+                                :class=" category === 'servicios' ? 'bg-[#18bbcc] border-indigo-200 text-white' : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50'"
+                                class="md:text-base text-sm p-3 md:gap-2 gap-1 border md:rounded-full rounded-2xl flex items-center justify-center  transition-colors">
+                                <i class="fas fa-bolt"></i>
+                                <span>Servicios</span>
+                            </button>
+                            <button type="button" @click="category = 'otros'"
+                                :class=" category === 'otros' ? 'bg-[#18bbcc] border-indigo-200 text-white' : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50'"
+                                class="md:text-base text-sm p-3 md:gap-2 gap-1 border md:rounded-full rounded-2xl flex items-center justify-center transition-colors">
+                                <i class="fas fa-receipt"></i>
+                                <span>Otros</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="flex justify-center mt-5 gap-2">
-                    <a @click="isSelected = 1" href="/spending"
-                        class="py-3 px-5 bg-black/5 rounded-md hover:bg-black/10 cursor-pointer hover:border-none transition duration-300 ">
-                        Cancelar
-                    </a>
-                    <button @click="isSelected = 2" type="submit"
-                        class="py-3 px-5 bg-[#071118] text-white rounded-md hover:bg-[#061016] hover:scale-[1.02] transition duration-300">
-                        Registar
-                    </button>
-                </div>
-            </form>
+
+                    <!-- monto -->
+                    <div class="space-y-2">
+                        <label for="amount" class="text-sm font-medium text-gray-700">Monto</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">S/</span>
+                            <input type="number" id="amount"
+                                class="w-full pl-8 pr-4 py-2 border border-gray-200 rounded-lg outline-[#18bbcc]/50"
+                                placeholder="0.00" step="0.01" required>
+                        </div>
+                    </div>
+
+                    <!-- descipcion -->
+                    <div class="space-y-2">
+                        <label for="description" class="text-sm font-medium text-gray-700">Descripción</label>
+                        <textarea id="description" rows="4"
+                            class="w-full px-4 py-2 border border-gray-200 rounded-lg outline-[#18bbcc]/50 "
+                            placeholder="Detalles del gasto..."></textarea>
+                    </div>
+
+                    <!-- acciones -->
+                    <div class="flex justify-end gap-3 pt-4">
+                        <a href="/spending"
+                            class="md:px-4 sm:px-2 px-1 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                            <i class="fas fas fa-arrow-left"></i>
+                            <span>Cancelar</span> 
+                        </a>
+                        <button type="submit"
+                            class="md:px-4 sm:px-2 px-1 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                            Registrar Gasto
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-
 </div>

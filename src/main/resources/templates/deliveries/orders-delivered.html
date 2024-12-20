@@ -1,178 +1,99 @@
 <link rel="stylesheet" href="/css/deliveries/index.css">
 
 
-<div x-data="{ openModal: false }">
+<div class="container mx-auto px-4 py-8" x-data="{ openModal: false }">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold text-gray-800 mb-2">Pedidos Entregados</h1>
+        <p class="text-gray-600">Historial de entregas completadas</p>
+    </div>
 
-    <div>
-        <div class="h-full min-h-[500px] w-ful">
-            <!--Encabezado-->
-            <div class="form-header">
-                <h2 class="text-3xl">Entregados</h2>
-            </div>
-            <!--campo de busqueda de entregas-->
-            <div class="icon">
-                <input type="text" class="input-search w-full lg:w-1/2" id="searchInput"
-                    placeholder="Buscar Usuario...">
-                <i class="fas fa-search"></i>
-            </div>
+    <!-- busqueda -->
+    <div class="mb-8 max-w-xl">
+        <div class="relative">
+            <input type="text" id="searchInput"
+                class="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
+                placeholder="Buscar por cliente o número de orden...">
+            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        </div>
+    </div>
 
-            <div class="container-card w-full">
-                <div class="px-3 gap-4 grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 ">
-                    <div class="card w-full" data-usuario="flores" @click="openModal = true">
-                        <div class="lg:p-5 md:p-4 p-5 sm:p-0">
-                            <div class="flex justify-end mb-3">
-                                <i class="fas fa-ellipsis-h"></i>
-                            </div>
-                            <div class="flex justify-between flex-wrap">
-                                <div>
-                                    <div class="detail-item">
-                                        <div class="icon-container"><i class="fas fa-calendar"></i></div>
-                                        <div class="detail-text">09/12/2024</div>
-                                    </div>
-                                    <div class="detail-item">
-                                        <div class="icon-container"><i class="fas fa-receipt"></i></div>
-                                        <div class="detail-text">B0003</div>
-                                    </div>
-                                    <div class="detail-item">
-                                        <div class="icon-container"><i class="fas fa-user"></i></div>
-                                        <div class="detail-text">Flores solano russel 2</div>
-                                    </div>
-                                    <div class="detail-item">
-                                        <div class="icon-container"><i class="fas fa-phone"></i></div>
-                                        <div class="detail-text">99267698</div>
-                                    </div>
-                                </div>
-                                <div class="detail-price text-center">
-                                    <div class="mb-2">
-                                        <small class="px-2 py-1 rounded-full bg-green-600 text-white">Entregado</small>
-                                    </div>
-                                    <div>
-                                        <small class="text-muted">Tipo de pago</small>
-                                        <p class="price">Efectivo</p>
-                                    </div>
-                                    <div class="payment">
-                                        <small class="text-muted">Total venta</small>
-                                        <p class="price">1299 $</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+     
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Tarjeta de Pedido -->
+        <div class="bg-gradient-to-br from-white to-gray-50/50 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-6 cursor-pointer border border-gray-100"
+            @click="openModal = true">
+            <div class="flex justify-between items-start mb-4">
+                <div class="flex items-center gap-4">
+                    <div class="bg-gradient-to-br from-emerald-50 to-emerald-100/80 p-3 rounded-xl shadow-sm">
+                        <i class="fas fa-check text-emerald-600"></i>
                     </div>
+                    <div>
+                        <p class="text-sm text-gray-500 font-medium">#B0003</p>
+                        <h3 class="font-semibold text-gray-800 text-lg">Flores Solano Russel</h3>
+                    </div>
+                </div>
+                <span class="bg-gradient-to-r from-emerald-50 to-emerald-100/80 text-emerald-600 text-xs font-medium px-3 py-1.5 rounded-full shadow-sm">
+                    Entregado
+                </span>
+            </div>
 
-                    <div class="card w-full" data-usuario="clark" @click="openModal = true">
-                        <div class="lg:p-5 md:p-4 p-5 sm:p-0">
-                            <div class="text-end mb-3">
-                                <i class="fas fa-ellipsis-h"></i>
-                            </div>
-                            <div class="flex justify-between flex-wrap">
-                                <div>
-                                    <div class="detail-item">
-                                        <div class="icon-container"><i class="fas fa-calendar"></i></div>
-                                        <div class="detail-text">09/12/2024</div>
-                                    </div>
-                                    <div class="detail-item">
-                                        <div class="icon-container"><i class="fas fa-receipt"></i></div>
-                                        <div class="detail-text">B0003</div>
-                                    </div>
-                                    <div class="detail-item">
-                                        <div class="icon-container"><i class="fas fa-user"></i></div>
-                                        <div class="detail-text">Flores solano Russel</div>
-                                    </div>
-                                    <div class="detail-item">
-                                        <div class="icon-container"><i class="fas fa-phone"></i></div>
-                                        <div class="detail-text">99267698</div>
-                                    </div>
-                                </div>
-                                <div class="detail-price text-center">
-                                    <div class="mb-2">
-                                        <small class="px-2 py-1 rounded-full bg-green-600 text-white">Entregado</small>
-                                    </div>
-                                    <div>
-                                        <small class="text-muted">Tipo de pago</small>
-                                        <p class="price">Efectivo</p>
-                                    </div>
-                                    <div class="payment">
-                                        <small class="text-muted">Total venta</small>
-                                        <p class="price">1299 $</p>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="space-y-4 ml-[3.2rem]">
+                <div class="flex items-center gap-3 text-gray-600">
+                    <i class="fas fa-calendar text-gray-400 w-5"></i>
+                    <span class="text-sm font-medium">09/12/2024</span>
+                </div>
+                <div class="flex items-center gap-3 text-gray-600">
+                    <i class="fas fa-phone text-gray-400 w-5"></i>
+                    <span class="text-sm font-medium">992-676-986</span>
+                </div>
+                <div class="flex items-center gap-3 text-gray-600">
+                    <i class="fas fa-money-bill text-gray-400 w-5"></i>
+                    <span class="text-sm font-medium">Efectivo</span>
+                </div>
+                <div class="pt-4 border-t border-gray-100">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-gray-500">Total</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-sm text-gray-500">S/</span>
+                            <span class="text-xl font-bold bg-gradient-to-r from-[#0891b2] to-[#0284a5] bg-clip-text text-transparent">
+                                1,299.00
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+ 
     </div>
 
-
-
-    <!-- Modal -->
-    <div x-show="openModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50"
+    <!-- Modal Detalles -->
+    <div x-show="openModal" class="fixed inset-0 bg-gray-800/50 flex items-center justify-center z-50"
         x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
-        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" @click="openModal = false">
-        <div class="bg-white p-6 rounded-lg shadow-lg lg:max-w-lg lg:w-full sm:w-11/12 w-11/12 relative h-[530px]">
-            <!--Header-->
-            <div class="flex justify-between mb-2">
-                <div class="flex items-center flex-grow ml-2">
-                    <h2>Detalles del servicio</h2>
+        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-lg mx-4" @click.away="openModal = false">
+            <div class="flex justify-between items-center p-6 border-b">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800">Detalles del Pedido</h3>
+                    <p class="text-sm text-gray-500">Orden #B0003</p>
                 </div>
-                <button @click="openModal = false" class="bg-slate-50 px-2 py-1">
-                    <i class="fa fa-times"></i>
+                <button @click="openModal = false" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times"></i>
                 </button>
             </div>
-            <!--body-->
-            <div>
-                <div class="overflow-auto h-[420px] px-2 pb-2 flex gap-2 flex-col">
-                    <article
-                        class="bg-white border border-blue-200  rounded-lg  p-6 hover:bg-gray-50 hover:shadow-xl  transition-all duration-300 ">
 
-                        <div class="flex justify-between items-center mb-2">
-                            <p class="text-base font-medium text-gray-800">Servicio</p>
-                            <span class="text-gray-600 text-sm">Lavado completo</span>
-                        </div>
-                        <div class="flex justify-between items-center mb-2">
-                            <p class="text-base font-medium text-gray-800">Precio por unidad</p>
-                            <span class="text-gray-600 text-sm">$10</span>
-                        </div>
-                        <div class="flex justify-between items-center mb-2">
-                            <p class="text-base font-medium text-gray-800">Cantidad</p>
-                            <span class="text-gray-600 text-sm">1</span>
-                        </div>
-                        <div class="flex justify-between items-center mb-2">
-                            <p class="text-base font-medium text-gray-800">Detalles</p>
-                            <span class="text-gray-600 text-sm">Marca Nike</span>
-                        </div>
-                        <div class="flex justify-end items-center gap-4">
-                            <p class="text-base font-medium text-gray-800">Total</p>
-                            <span class="text-gray-600 text-sm">$10</span>
-                        </div>
-                    </article>
-
-                    <article
-                        class="bg-white border border-blue-200  rounded-lg  p-6 hover:bg-gray-50 hover:shadow-xl  transition-all duration-300 ">
-
-                        <div class="flex justify-between items-center mb-2">
-                            <p class="text-base font-medium text-gray-800">Servicio</p>
-                            <span class="text-gray-600 text-sm">Lavado completo</span>
-                        </div>
-                        <div class="flex justify-between items-center mb-2">
-                            <p class="text-base font-medium text-gray-800">Precio por unidad</p>
-                            <span class="text-gray-600 text-sm">$10</span>
-                        </div>
-                        <div class="flex justify-between items-center mb-2">
-                            <p class="text-base font-medium text-gray-800">Cantidad</p>
-                            <span class="text-gray-600 text-sm">1</span>
-                        </div>
-                        <div class="flex justify-between items-center mb-2">
-                            <p class="text-base font-medium text-gray-800">Detalles</p>
-                            <span class="text-gray-600 text-sm">Marca Nike</span>
-                        </div>
-                        <div class="flex justify-end items-center gap-4">
-                            <p class="text-base font-medium text-gray-800">Total</p>
-                            <span class="text-gray-600 text-sm">$10</span>
-                        </div>
-                    </article>
+            <div class="p-6 space-y-4 max-h-[60vh] overflow-y-auto">
+                <!-- Item del pedido -->
+                <div class="bg-gray-50 rounded-lg p-4 space-y-3">
+                    <div class="flex justify-between">
+                        <h4 class="font-medium text-gray-800">Lavado Completo</h4>
+                        <span class="text-[#0891b2] font-medium">S/ 25.00</span>
+                    </div>
+                    <div class="text-sm text-gray-600">
+                        <p>Cantidad: 2 prendas</p>
+                        <p>Detalles: Marca Nike, Color Negro</p>
+                    </div>
                 </div>
             </div>
         </div>

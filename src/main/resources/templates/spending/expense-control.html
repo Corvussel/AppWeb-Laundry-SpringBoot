@@ -4,94 +4,272 @@
     }
 </style>
 
-<div class="sm:px-6 w-full pb-5"> 
-    <div class="bg-white rounded-md py-4 md:py-7 px-4 md:px-8 xl:px-10">
-        <div class="flex justify-between">
-            <div class="flex-grow">
-                <a href="/spending/register"
-                    class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 mt-4 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-indigo-700 hover:bg-indigo-600 focus:outline-none rounded">
-                    <p class="text-sm font-medium leading-none text-white">Añadir</p>
-                </a>
+<div class="container mx-auto px-4 py-8">
+     
+    <!-- tarjeta de informacion -->
+    <div class="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <!-- Total gastos -->
+        <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 border-slate-200">
+            <div class="flex flex-col">
+                <div class="flex items-center justify-between md:mb-4 mb-2">
+                    <div class="bg-[#2563eb]/10 p-3 rounded-xl">
+                        <i class="fas fa-money-bill-wave text-[#2563eb] text-xl"></i>
+                    </div>
+                    <span class="text-xs font-medium text-[#2563eb] bg-[#2563eb]/10 px-2 py-1 rounded-full">Total</span>
+                </div>
+                <div>
+                    <p class="md:text-3xl text-2xl font-bold text-[#0891b2] mb-1">S/ 2,500.00</p>
+                    <p class="text-sm text-slate-600">Total Gastos del Mes</p>
+                </div>
             </div>
-            <div
-                class="py-3 px-4 flex items-center text-sm font-medium leading-none text-gray-600 bg-gray-200 hover:bg-gray-300 cursor-pointer rounded">
-                <p>Ordenar por:</p>
-                <select aria-label="select" class="focus:text-indigo-600 focus:outline-none bg-transparent ml-1">
-                    <option class="text-sm text-indigo-800">Reciente</option>
-                    <option class="text-sm text-indigo-800">Antiguo</option>
+        </div>
+        <!-- Gastos Materiales -->
+        <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 border-slate-200">
+            <div class="flex flex-col">
+                <div class="flex items-center justify-between md:mb-4 mb-2">
+                    <div class="bg-[#059669]/10 p-3 rounded-xl">
+                        <i class="fas fa-box text-[#059669] text-xl"></i>
+                    </div>
+                    <span class="text-xs font-medium text-[#059669] bg-[#059669]/10 px-2 py-1 rounded-full">Materiales</span>
+                </div>
+                <div>
+                    <p class="md:text-3xl text-2xl  font-bold text-[#0891b2] mb-1">S/ 1,200.00</p>
+                    <p class="text-sm text-slate-600">Gastos en Materiales</p>
+                </div>
+            </div>
+        </div>
+        <!-- Gastos Servicios -->
+        <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 border-slate-200">
+            <div class="flex flex-col">
+                <div class="flex items-center justify-between md:mb-4 mb-2">
+                    <div class="bg-[#7c3aed]/10 p-3 rounded-xl">
+                        <i class="fas fa-bolt text-[#7c3aed] text-xl"></i>
+                    </div>
+                    <span class="text-xs font-medium text-[#7c3aed] bg-[#7c3aed]/10 px-2 py-1 rounded-full">Servicios</span>
+                </div>
+                <div>
+                    <p class="md:text-3xl text-2xl  font-bold text-[#0891b2] mb-1">S/ 800.00</p>
+                    <p class="text-sm text-slate-600">Gastos en Servicios</p>
+                </div>
+            </div>
+        </div>
+        <!-- Otros Gastos -->
+        <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 border-slate-200">
+            <div class="flex flex-col">
+                <div class="flex items-center justify-between md:mb-4 mb-2">
+                    <div class="bg-[#d97706]/10 p-3 rounded-xl">
+                        <i class="fas fa-receipt text-[#d97706] text-xl"></i>
+                    </div>
+                    <span class="text-xs font-medium text-[#d97706] bg-[#d97706]/10 px-2 py-1 rounded-full">Otros</span>
+                </div>
+                <div>
+                    <p class="md:text-3xl text-2xl  font-bold text-[#0891b2] mb-1">S/ 500.00</p>
+                    <p class="text-sm text-slate-600">Otros Gastos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- grafico -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <!-- grafico de gastos por categoria -->
+        <div class="bg-white rounded-xl shadow p-4">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Gastos por Categoría</h3>
+            <div class="flex justify-center">
+                <div style="width: 80%;">
+                    <canvas id="expensesByCategory" height="270"></canvas>
+                </div>
+            </div>
+        </div>
+        <!-- grafico de gastos -->
+        <div class="bg-white rounded-xl shadow p-4">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Tendencia de Gastos</h3>
+            <canvas id="expensesTrend" height="170"></canvas>
+        </div>
+    </div>
+
+    <!-- Tabla de gastos -->
+    <div class="bg-white rounded-xl shadow">
+        <div class="p-4 flex justify-between flex-wrap items-center border-b">
+            <h3 class="text-lg font-semibold text-gray-700">Registro de Gastos</h3>
+            <div class="flex gap-4 mt-2">
+                <button onclick="window.location.href='/spending/register'"
+                    class="bg-indigo-600 text-white md:text-base text-sm md:px-4 px-1 py-2 rounded-lg hover:bg-indigo-700 transition-colors flex items-center gap-2">
+                    <i class="fas fa-plus"></i>
+                    <span>Nuevo Gasto</span>
+                </button>
+                <select class="bg-gray-100 text-gray-700 md:text-base text-sm  md:px-4 px-1 py-2 rounded-lg">
+                    <option>Todos los gastos</option>
+                    <option>Materiales</option>
+                    <option>Servicios</option>
+                    <option>Otros</option>
                 </select>
             </div>
         </div>
-        <div class="mt-7 overflow-x-auto min-h-[70vh]">
-            <table class="w-full whitespace-nowrap">
-                <thead>
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-gray-50">
                     <tr>
-                        <th class="text-start mr-2 pl-5 py-5 font-medium leading-none text-gray-700">Fecha</th>
-                        <th class="text-start mr-2 pl-5 py-5 font-medium leading-none text-gray-700">Descripcion</th>
-                        <th class="text-start mr-2 pl-5 font-medium leading-none text-gray-700">Tipo de gasto</th>
-                        <th class="text-start mr-2 pl-3 py-5 font-medium leading-none text-gray-700">Monto</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fecha</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Descripción</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Categoría</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Empleado</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Monto</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr tabindex="0" class="focus:outline-none h-16 border border-gray-100 rounded">
-                        <td>
-                            <div class="ml-5">
-                                <div class="w-16 h-5 flex flex-shrink-0 justify-center items-center">
-                                    <p class="text-sm leading-none text-gray-600 ml-2">04/07/2024</p>
+                <tbody class="divide-y divide-gray-200">
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 text-sm text-gray-500">2024-01-15</td>
+                        <td class="px-6 py-4">
+                            <div class="text-sm font-medium text-gray-900">Detergente Industrial</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                Materiales
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-2">
+                                <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                                    <i class="fas fa-user text-indigo-600"></i>
                                 </div>
+                                <span class="text-sm text-gray-700">Flores</span>
                             </div>
                         </td>
-                        <td>
-                            <div class="flex items-center pl-5">
-                                <p class="text-base font-medium leading-none text-gray-700 mr-2">
-                                    Detergente ariel
-                                </p>
-                            </div>
-                        </td>
-
-                        <td class="pl-4">
-                            <p
-                                class="focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none">
-                                Materiales</p>
-                        </td>
-                        <td class="pl-3">
-                            <div class="flex items-center">
-                                <span class="text-sm leading-none text-gray-600 ml-2">S/</span>
-                                <p class="text-sm leading-none text-gray-600 ml-2">20</p>
-                            </div>
-                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500">S/ 450.00</td>
                     </tr>
-                    <tr class="h-3"></tr>
-                    <tr tabindex="0" class="focus:outline-none h-16 border border-gray-100 rounded">
-                        <td>
-                            <div class="ml-5">
-                                <div class="w-16 h-5 flex flex-shrink-0 justify-center items-center">
-                                    <p class="text-sm leading-none text-gray-600 ml-2">04/07/2024</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="flex items-center pl-5">
-                                <p class="text-base font-medium leading-none text-gray-700 mr-2">
-                                    Detergente ariel
-                                </p>
-                            </div>
-                        </td>
-
-                        <td class="pl-4">
-                            <p
-                                class="focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none">
-                                Materiales</p>
-                        </td>
-                        <td class="pl-3">
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 text-sm text-gray-500">2024-01-14</td>
+                        <td class="px-6 py-4">
                             <div class="flex items-center">
-                                <span class="text-sm leading-none text-gray-600 ml-2">S/</span>
-                                <p class="text-sm leading-none text-gray-600 ml-2">20</p>
+                                <div class="text-sm font-medium text-gray-900">Servicio de Agua</div>
                             </div>
                         </td>
+                        <td class="px-6 py-4">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
+                                Servicios
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-2">
+                                <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                                    <i class="fas fa-user text-indigo-600"></i>
+                                </div>
+                                <span class="text-sm text-gray-700">Caballero</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500">S/ 280.00</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 text-sm text-gray-500">2024-01-13</td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <div class="text-sm font-medium text-gray-900">Suavizante</div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                Materiales
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-2">
+                                <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                                    <i class="fas fa-user text-indigo-600"></i>
+                                </div>
+                                <span class="text-sm text-gray-700">James</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500">S/ 180.00</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 text-sm text-gray-500">2024-01-12</td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <div class="text-sm font-medium text-gray-900">Mantenimiento Lavadora</div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">
+                                Otros
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-2">
+                                <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                                    <i class="fas fa-user text-indigo-600"></i>
+                                </div>
+                                <span class="text-sm text-gray-700">Mallca y palacios</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500">S/ 350.00</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // grafico de gastos por Categoría
+    new Chart(document.getElementById('expensesByCategory'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Materiales', 'Servicios', 'Otros'],
+            datasets: [{
+                data: [1200, 800, 500],
+                backgroundColor: ['#059669', '#7c3aed', '#d97706']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        padding: 20,
+                        usePointStyle: true,
+                        font: {
+                            size: 12
+                        }
+                    }
+                }
+            },
+            layout: {
+                padding: {
+                    top: 20
+                }
+            }
+        }
+    });
+
+    // Grafico  de Gastos
+    new Chart(document.getElementById('expensesTrend'), {
+        type: 'line',
+        data: {
+            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Gastos Mensuales',
+                data: [2100, 1800, 2500, 2200, 2600, 2500],
+                borderColor: '#2563eb',
+                backgroundColor: '#2563eb/10',
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

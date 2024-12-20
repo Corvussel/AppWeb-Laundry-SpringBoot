@@ -28,8 +28,8 @@
         <nav x-data="{ 
             open: false,
             langOpen: false 
-        }" class=" top-0 left-0 w-full z-50 bg-white backdrop-blur-md border-b border-neutral-100 shadow-sm">
-            <div class="max-w-6xl  mx-auto px-4 sm:px-6 lg:px-8">
+        }" class="top-0 left-0 w-full z-50 bg-white backdrop-blur-md border-b border-neutral-100 shadow-sm">
+            <div class="max-w-6xl  mx-auto px-4 sm:px-6 lg:px-2">
                 <div class="flex h-16">
                     <!-- Logo INICIO -->
                     <div class="flex items-center">
@@ -111,7 +111,7 @@
                 </div>
             </div>
 
-            <!-- Overlay fondo -->
+            <!-- Overlay de fondo -->
             <div x-show="open" x-cloak @click="open = false"
                 class="fixed inset-0 bg-black/20 z-40 sm:hidden h-screen overflow-hidden ">
             </div>
