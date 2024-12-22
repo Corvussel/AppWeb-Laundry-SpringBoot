@@ -6,10 +6,10 @@ const openModalButton = document.getElementById('openModalButton');
 // Evento para abrir el modal
 openModalButton.addEventListener('click', () => {
     $.ajax({
-        url: '/services/ListUsers',
+        url: '/serviceLaundry/ListUsers',
         type: 'get',
         success: function (data) {
-            // insertarr el html en el contenedor del modal
+            // insertar el html en el contenedor del modal
             $('#userListContainer').html(data);
         },
         error: function () {
@@ -25,7 +25,7 @@ openModalButton.addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', function () {
 
     $.ajax({
-        url: '/services/selection',
+        url: '/serviceLaundry/selection',
         type: 'get',
         success: function (data) {
             $('#ContainerServiceSelection').html(data);

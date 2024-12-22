@@ -11,10 +11,10 @@ public class CashClosingController {
 
     private static final String SHARED_LAYOUT = "shared/layout";
 
-    @GetMapping("/cashClosing")
-    public String cashClosing(Model model) {
+    @GetMapping("/index")
+    public String showCashClosingPage(Model model) {
 
-        model.addAttribute("content", "cash-closing/cash-closing.html");
+        model.addAttribute("content", "cash-closing/index.html");
         return SHARED_LAYOUT;
     }
 }

@@ -6,16 +6,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/comms")
-public class CommsController {
+@RequestMapping("/sales")
+public class SalesController {
 
     private static final String SHARED_LAYOUT = "shared/layout";
-
-    @GetMapping("/whatsapp")
-    public String showCommsPage(Model model) {
-        model.addAttribute("content", "comms/index.html");
+ 
+    // detalles ventas
+    @GetMapping("/details")
+    public String showDetailsPage(Model model) {
+        model.addAttribute("content", "details-sales/index.html");
         return SHARED_LAYOUT;
     }
-
-    
 }

@@ -12,8 +12,16 @@ import com.laundry.lavanderia.Model.serviceLaundry.Categoria;
 import com.laundry.lavanderia.Model.serviceLaundry.Servicio;
 
 @Controller
-@RequestMapping("/services")
-public class ServiceController {
+@RequestMapping("/serviceLaundry")
+public class ServiceLaundryController {
+
+    private static final String SHARED_LAYOUT = "shared/layout";
+
+    @GetMapping("index")
+    public String showIndexPage(Model model) {
+        model.addAttribute("content", "services-laundry/index.html");
+        return SHARED_LAYOUT;
+    }
 
     @GetMapping("/ListUsers")
     public String showUserListFragment() {
@@ -39,5 +47,4 @@ public class ServiceController {
 
         return "services-laundry/service-selection";
     }
- 
 }

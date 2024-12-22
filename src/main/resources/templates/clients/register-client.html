@@ -5,7 +5,7 @@
         <div class="w-11/12 sm:w-11/12 md:w-10/12 lg:w-8/12 my-9">
             <div class="main-container">
                 <div class="form-header">
-                    <h2 class="font-medium text-base">Registrar Nuevo Cliente</h2>
+                    <h2 class="font-medium text-base">Cliente</h2>
                 </div>
 
                 <form class="needs-validation" novalidate>
@@ -63,9 +63,17 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-submit">
-                        <i class="fas fa-check-circle me-2"></i> Registrar Cliente
-                    </button>
+                    <div class="flex justify-end gap-4 pt-4">
+                        <button type="button" onclick="history.back()"
+                            class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                            Cancelar
+                        </button>
+                        <button type="submit"
+                            class="px-6 py-2 bg-[#0891b2] text-white rounded-lg hover:bg-[#0891b2]/90 transition-colors flex items-center gap-2">
+                            <i class="fas fa-user-plus"></i>
+                            Registrar Cliente
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

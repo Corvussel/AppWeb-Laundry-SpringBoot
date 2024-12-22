@@ -11,10 +11,20 @@ public class SpendingController {
 
     private static final String SHARED_LAYOUT = "shared/layout";
 
+     // gastos menu principal
+     @GetMapping("/index")
+     public String showExpenseControlPage(Model model) {
+         model.addAttribute("content", "spending/index.html");
+         return SHARED_LAYOUT;
+    }
+ 
+ 
+    // Registrar nuevo gasto
     @GetMapping("/register")
     public String showAddExpensePage(Model model) {
         model.addAttribute("content", "spending/add-expense.html");
         return SHARED_LAYOUT;
     }
+
 
 }

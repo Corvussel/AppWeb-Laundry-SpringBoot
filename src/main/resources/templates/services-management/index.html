@@ -3,7 +3,7 @@
         font-family: 'Poppins', sans-serif;
     }
 </style>
-<div class="min-h-screen" x-data="configuracion()">
+<div class="min-h-screen" x-data="configuracion">
     <div class="container mx-auto px-4 py-8">
         <!-- Header-encabezado -->
         <div class="mb-8">
@@ -20,7 +20,7 @@
                             <h2 class="text-lg font-semibold text-gray-800">Categorías</h2>
                             <p class="text-sm text-gray-500">Total: 6 categorías</p>
                         </div>
-                        <button @click="openCategoryModal = true" 
+                        <button @click="openCategoryModal = true"
                             class="bg-[#0891b2] text-white px-4 py-2 rounded-lg hover:bg-[#0891b2]/90 transition-colors flex items-center gap-2">
                             <i class="fas fa-plus"></i>
                             <span>Nueva Categoría</span>
@@ -43,20 +43,22 @@
                             </div>
                             <div class="flex items-center gap-4">
                                 <div class="flex items-center gap-2">
-                                    <span class="px-2 py-1 text-xs rounded-full bg-green-50 text-green-700">Activo</span>
+                                    <span
+                                        class="px-2 py-1 text-xs rounded-full bg-green-50 text-green-700">Activo</span>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <button class="p-2 text-gray-600 hover:text-[#0891b2] rounded-lg transition-colors">
+                                    <a href="/management/categories"
+                                        class="p-2 text-gray-600 hover:text-[#0891b2] rounded-lg transition-colors">
                                         <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="p-2 text-gray-600 hover:text-red-500 rounded-lg transition-colors">
+                                    </a>
+                                    <a class="p-2 text-gray-600 hover:text-red-500 rounded-lg transition-colors">
                                         <i class="fas fa-trash"></i>
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
 
@@ -88,27 +90,33 @@
                                     <h3 class="font-medium text-gray-800">Lavado Simple</h3>
                                     <p class="text-sm text-gray-500">Categoría: Ropa Normal</p>
                                     <div class="flex items-center gap-2 mt-1">
-                                        <span class="px-2 py-1 text-xs rounded-full bg-green-50 text-green-700">Activo</span>
+                                        <span
+                                            class="px-2 py-1 text-xs rounded-full bg-green-50 text-green-700">Activo</span>
                                         <span class="text-sm font-medium text-gray-700">S/ 15.00</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="flex items-center gap-2">
-                                <button class="p-2 text-gray-600 hover:text-[#0891b2] rounded-lg transition-colors">
+                                <a href="/management/services"
+                                    class="p-2 text-gray-600 hover:text-[#0891b2] rounded-lg transition-colors">
                                     <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="p-2 text-gray-600 hover:text-red-500 rounded-lg transition-colors">
+                                </a>
+                                <a class="p-2 text-gray-600 hover:text-red-500 rounded-lg transition-colors">
                                     <i class="fas fa-trash"></i>
-                                </button>
+                                </a>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Modal de Categoria -->
-        <div x-show="openCategoryModal" class="fixed inset-0 bg-gray-800/50 flex items-center justify-center z-50">
+        <div x-show="openCategoryModal" x-cloak="openCategoryModal"
+            x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-300"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+            class="fixed inset-0 bg-gray-800/50 flex items-center justify-center z-50">
             <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-md">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-semibold text-gray-800">Nueva Categoría</h3>
@@ -119,33 +127,21 @@
                 <form class="space-y-4">
                     <div>
                         <label class="text-sm font-medium text-gray-700">Nombre de la Categoría</label>
-                        <input type="text" class="mt-1 w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
+                        <input type="text"
+                            class="mt-1 w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
                     </div>
                     <div>
                         <label class="text-sm font-medium text-gray-700">Descripción</label>
-                        <textarea class="mt-1 w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent" rows="3"></textarea>
-                    </div>
-                    <div>
-                        <label class="text-sm font-medium text-gray-700">Estado</label>
-                        <div class="mt-1">
-                            <div class="flex gap-3">
-                                <label class="flex items-center gap-2">
-                                    <input type="radio" name="estado" value="activo" checked>
-                                    <span class="text-sm text-gray-700">Activo</span>
-                                </label>
-                                <label class="flex items-center gap-2">
-                                    <input type="radio" name="estado" value="inactivo">
-                                    <span class="text-sm text-gray-700">Inactivo</span>
-                                </label>
-                            </div>
-                        </div>
+                        <textarea
+                            class="mt-1 w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
+                            rows="3"></textarea>
                     </div>
                     <div class="flex justify-end gap-3">
-                        <button type="button" @click="openCategoryModal = false" 
+                        <button type="button" @click="openCategoryModal = false"
                             class="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200">
                             Cancelar
                         </button>
-                        <button type="submit" 
+                        <button type="submit"
                             class="px-4 py-2 bg-[#0891b2] text-white rounded-lg hover:bg-[#0891b2]/90">
                             Guardar
                         </button>
@@ -155,7 +151,11 @@
         </div>
 
         <!-- Modal de Servicio -->
-        <div x-show="openServiceModal" class="fixed inset-0 bg-gray-800/50 flex items-center justify-center z-50">
+        <div x-show="openServiceModal" x-cloak="openServiceModal" x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="fixed inset-0 bg-gray-800/50 flex items-center justify-center z-50">
             <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-md">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-semibold text-gray-800">Nuevo Servicio</h3>
@@ -166,11 +166,13 @@
                 <form class="space-y-4">
                     <div>
                         <label class="text-sm font-medium text-gray-700">Nombre del Servicio</label>
-                        <input type="text" class="mt-1 w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
+                        <input type="text"
+                            class="mt-1 w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
                     </div>
                     <div>
                         <label class="text-sm font-medium text-gray-700">Categoría</label>
-                        <select class="mt-1 w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
+                        <select
+                            class="mt-1 w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
                             <option value="">Seleccionar categoría</option>
                             <option value="1">Ropa Normal</option>
                             <option value="2">Ropa Delicada</option>
@@ -180,34 +182,22 @@
                         <label class="text-sm font-medium text-gray-700">Precio</label>
                         <div class="relative mt-1">
                             <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">S/</span>
-                            <input type="number" class="w-full pl-8 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
+                            <input type="number"
+                                class="w-full pl-8 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
                         </div>
                     </div>
                     <div>
                         <label class="text-sm font-medium text-gray-700">Descripción</label>
-                        <textarea class="mt-1 w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent" rows="3"></textarea>
-                    </div>
-                    <div>
-                        <label class="text-sm font-medium text-gray-700">Estado</label>
-                        <div class="mt-1">
-                            <div class="flex gap-3">
-                                <label class="flex items-center gap-2">
-                                    <input type="radio" name="estado-servicio" value="activo" checked>
-                                    <span class="text-sm text-gray-700">Activo</span>
-                                </label>
-                                <label class="flex items-center gap-2">
-                                    <input type="radio" name="estado-servicio" value="inactivo">
-                                    <span class="text-sm text-gray-700">Inactivo</span>
-                                </label>
-                            </div>
-                        </div>
+                        <textarea
+                            class="mt-1 w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
+                            rows="3"></textarea>
                     </div>
                     <div class="flex justify-end gap-3">
-                        <button type="button" @click="openServiceModal = false" 
+                        <button type="button" @click="openServiceModal = false"
                             class="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200">
                             Cancelar
                         </button>
-                        <button type="submit" 
+                        <button type="submit"
                             class="px-4 py-2 bg-[#0891b2] text-white rounded-lg hover:bg-[#0891b2]/90">
                             Guardar
                         </button>

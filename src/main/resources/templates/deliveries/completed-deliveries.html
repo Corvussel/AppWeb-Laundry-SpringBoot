@@ -18,17 +18,19 @@
             <div class="flex flex-wrap gap-4 items-center justify-between">
                 <div class="relative flex-grow max-w-md">
                     <input type="text" id="searchInput"
-                    class="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent transition-all"
+                        class="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent transition-all"
                         placeholder="Buscar por cliente o numero de orden...">
                     <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                 </div>
                 <div class="flex flex-wrap md:gap-3 gap-2">
-                    <select class="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-gray-700 md:text-base text-sm">
+                    <select
+                        class="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-gray-700 md:text-base text-sm">
                         <option>Todos los pagos</option>
                         <option>Efectivo</option>
                         <option>Yape</option>
                     </select>
-                    <select class="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-gray-700 md:text-base text-sm">
+                    <select
+                        class="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-gray-700 md:text-base text-sm">
                         <option>Este mes</option>
                         <option>Última semana</option>
                         <option>Hoy</option>
@@ -37,7 +39,7 @@
             </div>
         </div>
 
-         
+
         <div class="grid md:grid-cols-2 gap-6">
             <!-- Tarjeta de Pedido -->
             <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
@@ -62,7 +64,7 @@
                     <div class="space-y-3">
                         <div class="flex items-center gap-2 text-sm text-gray-600">
                             <i class="fas far fa-user w-4"></i>
-                           <span class="font-medium text-gray-800">Flores Solano Russel</span>
+                            <span class="font-medium text-gray-800">Flores Solano Russel</span>
                         </div>
                         <div class="flex items-center gap-2 text-sm text-gray-600">
                             <i class="fas fa-calendar-alt w-4"></i>
@@ -95,9 +97,14 @@
         </div>
 
         <!-- Modal -->
-        <div x-show="openModal" class="fixed inset-0 bg-gray-800/50 flex items-center justify-center z-50 p-4">
-          
-            <div class="bg-white rounded-xl shadow-lg w-full max-w-2xl max-h-[90vh] flex flex-col" @click.away="openModal = false">
+        <div x-show="openModal" x-cloak="openModal" x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="fixed inset-0 bg-gray-800/50 flex items-center justify-center z-50 p-4">
+
+            <div class="bg-white rounded-xl shadow-lg w-full max-w-2xl max-h-[90vh] flex flex-col"
+                @click.away="openModal = false">
                 <!-- Header  -->
                 <div class="p-6 border-b">
                     <div class="flex justify-between items-center">
@@ -116,7 +123,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="overflow-y-auto flex-1 p-6">
                     <!-- informacion del Cliente -->
                     <div class="bg-gray-50 rounded-lg p-4 mb-6">
@@ -163,8 +170,9 @@
                                 </div>
                             </div>
                             <div class="text-sm flex gap-1 border-t border-gray-200">
-                                <span class="font-medium">Notas:</span> 
-                                <p class="text-gray-500  text-nowrap text-ellipsis overflow-hidden">Tratamiento especial</p>
+                                <span class="font-medium">Notas:</span>
+                                <p class="text-gray-500  text-nowrap text-ellipsis overflow-hidden">Tratamiento especial
+                                </p>
                             </div>
                         </article>
 
@@ -185,8 +193,9 @@
                                 </div>
                             </div>
                             <div class="text-sm flex  gap-1 border-t border-gray-200">
-                                <span class="font-medium">Notas:</span> 
-                                <p class="text-gray-500  text-nowrap text-ellipsis overflow-hidden">Tratamiento especial</p>
+                                <span class="font-medium">Notas:</span>
+                                <p class="text-gray-500  text-nowrap text-ellipsis overflow-hidden">Tratamiento especial
+                                </p>
                             </div>
                         </article>
                         <article class="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
@@ -206,8 +215,9 @@
                                 </div>
                             </div>
                             <div class="text-sm flex  gap-1 border-t border-gray-200">
-                                <span class="font-medium">Notas:</span> 
-                                <p class="text-gray-500  text-nowrap text-ellipsis overflow-hidden">Tratamiento especial</p>
+                                <span class="font-medium">Notas:</span>
+                                <p class="text-gray-500  text-nowrap text-ellipsis overflow-hidden">Tratamiento especial
+                                </p>
                             </div>
                         </article>
                     </div>
@@ -231,7 +241,8 @@
                         </div>
                     </div>
                     <div class="flex justify-end gap-3 mt-4">
-                        <button class="px-4 py-2 bg-[#0891b2] text-white rounded-lg hover:bg-[#0891b2]/90 flex items-center gap-2">
+                        <button
+                            class="px-4 py-2 bg-[#0891b2] text-white rounded-lg hover:bg-[#0891b2]/90 flex items-center gap-2">
                             <i class="fas fa-print"></i>
                             <span>Imprimir</span>
                         </button>
