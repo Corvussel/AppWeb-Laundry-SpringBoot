@@ -1,27 +1,32 @@
 <link rel="stylesheet" href="/css/client/register-client.css">
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-9 col-lg-9 mt-5 mb-5">
+<div>
+    <div class="flex justify-center">
+        <div class="w-11/12 sm:w-11/12 md:w-10/12 lg:w-8/12 my-9">
             <div class="main-container">
                 <div class="form-header">
-                    <h2>Registrar Nuevo Cliente</h2>
+                    <h2 class="font-medium text-base">Cliente</h2>
                 </div>
 
                 <form class="needs-validation" novalidate>
-                    <div class="input-icon form-floating mb-3">
-                        <input type="text" class="form-control" id="nombre" placeholder="Nombre" required>
-                        <label for="nombre" class="required ">Nombre y Apellido</label>
-                        <i class="fas fa-user"></i>
+                    <div class="mb-3 flex flex-col gap-2">
+                        <label for="nombre" class="required text-gray-700">Nombre y Apellido</label>
+                        <div class="input-icon">
+                            <input type="text" class="form-control w-full" id="nombre" placeholder="Nombre" required>
+                            <i class="fas fa-user"></i>
+                        </div>
                     </div>
 
-                    <div class="input-icon form-floating">
-                        <input type="number" class="form-control" required id="telefono" placeholder="Teléfono">
-                        <label for="telefono ps-5">Teléfono</label>
-                        <i class="fas fa-phone"></i>
+                    <div class="mb-3 flex flex-col gap-2">
+                        <label for="telefono" class=" text-gray-700">Teléfono</label>
+                        <div class="input-icon">
+                            <input type="number" class="form-control w-full" required id="telefono"
+                                placeholder="Teléfono">
+                            <i class="fas fa-phone"></i>
+                        </div>
                     </div>
 
-                    <label class="form-label required">Género</label>
+                    <label class="required text-gray-700">Género</label>
                     <div class="gender-group">
                         <button type="button" class="button-outline">
                             <i class="fas fa-venus me-2"></i> Femenino
@@ -31,32 +36,44 @@
                         </button>
                     </div>
 
-                    <div class="form-floating mb-3">
+                    <div class="mb-3 flex flex-col gap-2">
+                        <label for="observaciones" class=" text-gray-700">Observaciones de cliente</label>
                         <textarea class="form-control" id="observaciones" style="height: 100px"
                             placeholder="Observaciones"></textarea>
-                        <label for="observaciones">Observaciones de cliente</label>
                     </div>
 
-                    <div class="form-floating mb-3">
+                    <div class="mb-3 flex flex-col gap-2">
+                        <label for="cod_cliente" class=" text-gray-700">Codigo Cliente</label>
                         <input type="text" class="form-control" readonly id="cod_cliente" placeholder="Codigo Cliente">
-                        <label for="cod_cliente">Codigo Cliente</label>
                     </div>
 
-                    <div class="input-icon form-floating mb-3">
-                        <input type="text" class="form-control" id="direccion" placeholder="Dirección">
-                        <label for="direccion">Dirección</label>
-                        <i class="fas fa-map-marker-alt"></i>
+                    <div class="mb-3 flex flex-col gap-2">
+                        <label for="direccion" class=" text-gray-700">Dirección</label>
+                        <div class="input-icon">
+                            <input type="text" class="form-control w-full" id="direccion" placeholder="Dirección">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
                     </div>
 
-                    <div class="input-icon form-floating mb-3">
-                        <input type="text" class="form-control" id="distrito" placeholder="Distrito">
-                        <label for="distrito">Distrito</label>
-                        <i class="fas fa-city"></i>
+                    <div class="mb-3 flex flex-col gap-2">
+                        <label for="distrito" class=" text-gray-700">Distrito</label>
+                        <div class="input-icon">
+                            <input type="text" class="form-control w-full" id="distrito" placeholder="Distrito">
+                            <i class="fas fa-city"></i>
+                        </div>
                     </div>
- 
-                    <button type="submit" class="btn-submit">
-                        <i class="fas fa-check-circle me-2"></i> Registrar Cliente
-                    </button>
+
+                    <div class="flex justify-end gap-4 pt-4">
+                        <button type="button" onclick="history.back()"
+                            class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                            Cancelar
+                        </button>
+                        <button type="submit"
+                            class="px-6 py-2 bg-[#0891b2] text-white rounded-lg hover:bg-[#0891b2]/90 transition-colors flex items-center gap-2">
+                            <i class="fas fa-user-plus"></i>
+                            Registrar Cliente
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

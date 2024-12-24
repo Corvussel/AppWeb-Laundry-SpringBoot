@@ -1,27 +1,15 @@
 
-// Validacion de Formulario principal
-const btn = document.getElementById('asa');
-const form_Register = document.getElementById('form_Register');
-
-btn.addEventListener('click', function () {
-
-    if (!form_Register.checkValidity()) {
-        form_Register.classList.add('was-validated');
-    } else {
-        form_Register.classList.remove('was-validated');
-    } 
-});
-
-
 // Eventos y interaccion entre vista parcial de usuario
-// Evento cuando se muestra la modal
-document.getElementById('userModal').addEventListener('show.bs.modal', function () {
+// Evento cuando se muestra la modal 
+const openModalButton = document.getElementById('openModalButton');
 
+// Evento para abrir el modal
+openModalButton.addEventListener('click', () => {
     $.ajax({
-        url: '/services/ListUsers',
+        url: '/serviceLaundry/ListUsers',
         type: 'get',
         success: function (data) {
-            // insertarr el html en el contenedor del modal
+            // insertar el html en el contenedor del modal
             $('#userListContainer').html(data);
         },
         error: function () {
@@ -30,21 +18,20 @@ document.getElementById('userModal').addEventListener('show.bs.modal', function 
         }
     });
 });
- 
+
 
 // Eventos y interaccion entre vista seleccion de servicio
 
 document.addEventListener('DOMContentLoaded', function () {
 
     $.ajax({
-        url: '/services/selection',
+        url: '/serviceLaundry/selection',
         type: 'get',
-        success: function (data) {            
+        success: function (data) {
             $('#ContainerServiceSelection').html(data);
 
             const buttonCancelar = document.getElementById('btnCancelarRegistroServicio');
             const buttonRegistrar = document.getElementById('btnRealizarRegistrarServicio');
-            const formRegistroServicio = document.querySelector('.form-validation');
 
 
             if (buttonCancelar) {
@@ -55,15 +42,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (buttonRegistrar) {
                 buttonRegistrar.addEventListener('click', function (e) {
-                    // Validación de formulario
-                    if (!formRegistroServicio.checkValidity()) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        formRegistroServicio.classList.add('was-validated');
-                    } else {
-                        hideServiceSelection();
-                        registrarServicio();
-                    }
+
+                    hideServiceSelection();
+                    registrarServicio();
                 });
             }
 
@@ -83,14 +64,14 @@ const registroVentaContainer = document.getElementById('ContainerSalesRegistrati
 
 // Evento para mostrar la vista parcial de selección de servicio
 function showServiceSelection() {
-    serviceSelectionContainer.classList.remove('d-none');
-    registroVentaContainer.classList.add('d-none');
+    serviceSelectionContainer.classList.remove('hidden');
+    registroVentaContainer.classList.add('hidden');
 };
 
 // Evento para ocultar la vista parcial de selección de servicio
 function hideServiceSelection() {
-    serviceSelectionContainer.classList.add('d-none');
-    registroVentaContainer.classList.remove('d-none');
+    serviceSelectionContainer.classList.add('hidden');
+    registroVentaContainer.classList.remove('hidden');
 };
 
 
@@ -100,15 +81,15 @@ function registrarServicio() {
 
     // Valores De la vista Parcial Seleccion de Servicios
     const cantidad = document.getElementById('spinner').value;
-    const servicio = document.getElementById('servicio').value;
+    const servicio = document.getElementById('servicio').textContent;
     const precioUnidad = document.getElementById('precioUnidad').textContent;
     const subTotal = document.getElementById('total').textContent;
     const detalle = document.getElementById('detalles').value;
 
     // Mostramos el contenedor La tabla
-    document.getElementById('tableContainer').classList.remove('d-none');
+    document.getElementById('tableContainer').classList.remove('hidden');
     // Modificamos el tamaño de button BtnNuevoServicio
-    document.getElementById('BtnNuevoServicio').classList.remove('w-100'); 
+    document.getElementById('BtnNuevoServicio').classList.remove('w-100');
 
     // Referencia a la tabla y al tbody
     const tablaServicio = document.getElementById('tableService').getElementsByTagName("tbody")[0];

@@ -1,46 +1,102 @@
-<div class="container mt-5">
-    <h2 class="text-center">Lista de Clientes</h2>
+<style>
+    body {
+        background-color: rgb(249 250 251 / 0.5);
+    }
+</style>
 
-    <!-- Tabla con los datos de los clientes -->
-    <table class="table table-bordered table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>#</th>
-                <th>Nombre y Apellido</th>
-                <th>Correo Electrónico</th>
-                <th>Teléfono</th>
-                <th>Observación</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Supongamos que pasamos una lista de clientes desde el controlador -->
-            <tr>
-                <td>1</td>
-                <td>palacios</td>
-                <td>pala@pnpdelperu</td>
-                <td>+123456789</td>
-                <td><input type="text" class="form-control" placeholder="Escribe una observación"></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>caballero</td>
-                <td>caba@pnpdelperu</td>
-                <td>+987654321</td>
-                <td><input type="text" class="form-control" placeholder="Escribe una observación"></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>velezmoro </td>
-                <td>velez@pnpdelperu</td>
-                <td>+912345678</td>
-                <td><input type="text" class="form-control" placeholder="Escribe una observación"></td>
-            </tr>
-            <!-- Más clientes... -->
-        </tbody>
-    </table>
+<div class="min-h-screen py-8">
+    <div class="max-w-7xl mx-auto px-4">
+        <!-- Header con informacion -->
+        <div class="mb-8">
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">Gestión de Clientes</h1>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+                <div class="bg-white rounded-xl p-4 shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-blue-50 p-3 rounded-lg">
+                            <i class="fas fa-users text-blue-500"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Total Clientes</p>
+                            <p class="text-xl font-bold text-gray-800">248</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-green-50 p-3 rounded-lg">
+                            <i class="fas fa-user-check text-green-500"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Clientes Activos</p>
+                            <p class="text-xl font-bold text-gray-800">180</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <!-- Botón para regresar al Menú Principal -->
-    <div class="text-center mt-3">
-        <a href="/home" class="btn btn-primary">Regresar al Menú Principal</a>
+        <!-- Barra de busqueda  -->
+        <div class="bg-white rounded-xl shadow-sm p-4 mb-6">
+            <div class="flex flex-wrap gap-4 items-center justify-between">
+                <div class="relative flex-grow max-w-md">
+                    <input type="text" placeholder="Buscar por nombre o teléfono..."
+                        class="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent transition-all">
+                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                </div>
+                <div class="flex">
+                    <a href="/client/register"
+                        class="bg-[#0891b2] text-white px-4 py-2 rounded-lg hover:bg-[#0891b2]/90 transition-colors flex items-center gap-2">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Nuevo Cliente</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="overflow-y-auto max-h-[600px] pr-2">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Tarjeta de Cliente -->
+                <div
+                    class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group">
+                    <div class="p-5">
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="h-12 w-12 rounded-full bg-[#0891b2]/10 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-user text-[#0891b2]"></i>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-medium text-gray-800 text-lg mb-1 truncate">Russel Flores Solano</h3>
+                                <div class="space-y-1">
+                                    <div class="flex items-center gap-2 text-gray-600">
+                                        <i class="fas fa-phone text-sm w-4"></i>
+                                        <span class="text-sm">992-676-985</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-gray-600">
+                                        <i class="fas fa-map-marker-alt text-sm w-4"></i>
+                                        <span class="text-sm truncate">Av. Los Jardines 123</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2 mt-2">
+                                    <span
+                                        class="px-2 py-1 bg-green-50 text-green-700 text-xs rounded-full">Activo</span>
+                                    <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">Cliente
+                                        Frecuente</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="px-5 py-3 bg-gray-50 flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <a href="/client/register"
+                            class="p-2 text-gray-600 hover:text-[#0891b2] rounded-lg transition-colors">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a class="p-2 text-gray-600 hover:text-red-500 rounded-lg transition-colors">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
