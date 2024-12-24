@@ -1,108 +1,214 @@
-<link rel="stylesheet" href="/css/services-laundry/service-selection.css">
+<style>
+    .card-active {
+        background: #0891b2; 
+    }
+    .card-active .price {
+        color: white !important;
+    }
+    .card-active .service-name {
+        color: white !important;
+    }
+    .card-active:hover {
+        background: #09a0c5 !important;
+    }
 
-<div>
-    <div class="flex justify-center">
-        <div class="w-11/12 md:w-11/12 lg:w-11/12">
-            <div class="main-container">
-                <!--Encabezado-->
-                <div class="form-header">
-                    <h2 class="text-sm lg:text-2xl">Servicio de Lavanderia</h2>
-                </div>
+</style>
 
-                <div class="category-container mt-3">
-                    <!-- Pestañas de navegacion -->
-                    <ul class="nav nav-pills gap-2 flex" id="categoriasTabsButton">
-                        <div th:each="categoria : ${categorias}">
-                            <li class="nav-item">
-                                <button type="button" th:text="${categoria.nombre}" class="nav-link"
-                                    th:value="${categoria.nombre}">
-                                </button>
-                            </li>
-                        </div>
-                    </ul>
-                </div>
+<div x-data="configuracion" class="min-h-screen">
 
-                <!-- Busqueda de servicio -->
-                <div class="icon mb-4 mt-4">
-                    <input type="text" class="input-search" id="searchInput" placeholder="Buscar Servicio...">
-                    <i class="fas fa-search"></i>
-                </div>
+    <div class="max-w-5xl mx-auto px-6 py-20">
+        <div class="bg-white/40 backdrop-blur-lg rounded-3xl shadow-2xl p-12 border border-slate-100">
+            <!-- Header -->
+            <h1 class="md:text-5xl text-2xl font-extralight text-slate-800 text-center mb-16 tracking-tight">
+                Servicio de <span class="text-blue-600">Lavandería</span>
+            </h1>
 
-                <!-- Tabs -->
-                <div class="tab-container" id="card-container">
+            <!-- Categorias -->
+            <div class="flex justify-center mb-14">
+                <div class="flex gap-4 overflow-x-auto pb-2" id="categoriasTabsButton">
                     <div th:each="categoria : ${categorias}">
-                        <!--Pestaña-->
-                        <div class="tab-panes hidden" th:id="${categoria.nombre}">
-                            <!--Servicios-->
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 lg:gap-3 sm:gap-1 md:gap-2">
+                        <button type="button" th:text="${categoria.nombre}" th:value="${categoria.nombre}" class="px-8 py-3 rounded-full text-sm tracking-wide transition-all duration-300
+                            bg-white text-slate-600 shadow-sm hover:shadow-md hover:text-blue-600 
+                            border border-slate-100 nav-button">
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-                                <div th:each="servicio : ${categoria.servicios}">
-                                    <div class="card" th:data-servicio="${servicio.nombre}">
-                                        <div class="flex justify-between">
-                                            <label class="title-service" th:text="${servicio.nombre}"></label>
-                                            <span class="card-price">$5</span>
-                                        </div>
-                                    </div>
+            <!-- Search -->
+            <div class="relative max-w-lg mx-auto mb-16">
+                <input type="text" id="searchInput" placeholder="Buscar servicio..." class="w-full px-8 py-4 rounded-2xl bg-white/80 border-0
+                    shadow-sm hover:shadow-md transition-all duration-300
+                    placeholder-slate-400 text-slate-600 focus:ring-0">
+                <i class="fas fa-search absolute right-6 top-1/2 -translate-y-1/2 text-slate-400"></i>
+            </div>
+
+            <!-- paginas tab-content -->
+            <div id="card-container" class="space-y-10 overflow-y-auto max-h-96">
+                <div th:each="categoria : ${categorias}">
+                    <div th:id="${categoria.nombre}" class="tab-pane hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div th:each="servicio : ${categoria.servicios}" class="group p-8 rounded-2xl bg-white border-0 shadow-sm hover:shadow-md 
+                                transition-all duration-500  hover:bg-blue-50/30 cursor-pointer card-service"
+                                th:data-servicio="${servicio.nombre}"
+                                th:data-precio="${servicio.precioUnidad}"
+                                @click="setService($el.getAttribute('data-servicio'), $el.getAttribute('data-precio'))">
+
+                                <div class="flex justify-between items-center">
+                                    <span th:text="${servicio.nombre}"
+                                        class="service-name text-lg font-light text-slate-700 group-hover:text-blue-600"></span>
+                                    <span th:text="${servicio.precioUnidad}"
+                                        class="price text-lg font-medium text-blue-600 opacity-75 group-hover:opacity-100"></span>
                                 </div>
                             </div>
-                            <!---------->
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Resumen del servicio -->
-                <div id="resumenServicio" class="summary-container hidden">
-                    <h4 class="title-summary-service" id="servicio">Resumen del Servicio</h4>
 
-                    <div class="service-summary">
-                        <p class="label">Servicio:</p>
-                        <span id="detalleServicio" class="value">Lavado completo</span>
+            <!-- buttons-->
+            <div class="flex justify-center gap-8 mt-16">
+                <button id="btnCancelarRegistroServicio" class="px-10 py-4 rounded-xl bg-white text-slate-600 
+                    hover:bg-slate-50 transition-all duration-300 shadow-sm hover:shadow-md">
+                    Cancelar
+                </button>
+                <button id="btnRealizarRegistrarServicio" class="px-10 py-4 rounded-xl bg-blue-600 text-white 
+                    hover:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg">
+                    Registrar servicio
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div x-show="isModalOpen" x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95" x-cloak="isModalOpen"
+        class="fixed inset-0 z-50 overflow-y-auto bg-black/20 backdrop-blur-sm">
+
+        <!-- Modal Contenido -->
+        <div class="min-h-screen px-4 text-center">
+            <div class="flex items-center justify-center min-h-screen">
+                <div
+                    class="relative w-full max-w-xl bg-gradient-to-b from-white to-slate-50/90 rounded-2xl shadow-xl p-6 text-left overflow-hidden transform transition-all">
+                    <!-- cerrar modal -->
+                    <button @click="closeModal"
+                        class="absolute right-4 top-4 p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+
+                    <!-- Header -->
+                    <div class="mb-4 pb-3 border-b border-slate-100">
+                        <h3 class="text-lg font-medium text-slate-800 flex items-center">
+                            <i class="fas fa-clipboard-list text-blue-500 mr-2"></i>
+                            Detalles del Servicio
+                        </h3>
                     </div>
 
-                    <div class="service-summary">
-                        <p class="label">Precio por unidad:</p>
-                        <span id="precioUnidad" class="value">$10</span>
-                    </div>
 
-                    <div class="service-summary quantity-control">
-                        <p class="label">Cantidad:</p>
-                        <div class="counter">
-                            <button type="button" class="btn-decrement" id="btnDecrement">-</button>
-                            <input type="text" id="spinner" value="1" readonly min="1" max="20" data-step="1">
-                            <button type="button" class="btn-increment" id="btnIncrement">+</button>
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Servicio y precio -->
+                        <div class="col-span-2 grid grid-cols-2 gap-4">
+                            <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100">
+                                <p class="text-xs text-slate-500 mb-1">Servicio</p>
+                                <p x-text="nombreServicio"  id="servicio" class="font-medium text-slate-700"></p>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100">
+                                <p class="text-xs text-slate-500 mb-1">Precio unitario</p>
+                                <p x-text="precioServicio" id="precioUnidad" class="font-medium text-slate-700"></p>
+                            </div>
+                        </div>
+
+                        <!-- cantidad -->
+                        <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100">
+                            <p class="text-xs text-slate-500 mb-2">Cantidad</p>
+                            <div class="flex items-center gap-2">
+                                <button @click="decrement"
+                                    class="w-8 h-8 rounded-lg bg-slate-50 text-blue-600 hover:bg-blue-50 transition-colors flex items-center justify-center">−</button>
+                                <span x-text="cantidad" id="cantidad" class="w-8 text-center font-medium text-slate-700"></span>
+                                <button @click="increment"
+                                    class="w-8 h-8 rounded-lg bg-slate-50 text-blue-600 hover:bg-blue-50 transition-colors flex items-center justify-center">+</button>
+                            </div>
+                        </div>
+
+                        <!-- Total -->
+                        <div
+                            class="bg-gradient-to-r from-blue-50 to-indigo-50 p-3 rounded-xl shadow-sm border border-blue-100">
+                            <p class="text-xs text-blue-600 mb-1">Total</p>
+                            <div class="flex items-center gap-1">
+                                <p class="text-lg font-semibold text-blue-700">S/</p>
+                                <p x-text="total" id="total" class="text-lg font-semibold text-blue-700"></p>
+                            </div> 
+                        </div>
+
+                        <!-- detalles -->
+                        <div class="col-span-2 bg-white p-3 rounded-xl shadow-sm border border-slate-100">
+                            <p class="text-xs text-slate-500 mb-2">Detalles adicionales</p>
+                            <textarea x-model="detalles" rows="2" id="detalles"
+                                placeholder="Marca, color, instrucciones especiales..." class="w-full text-sm bg-slate-50 border-0 rounded-lg px-3 py-2 
+                                placeholder-slate-400 text-slate-600 
+                                focus:ring-1 focus:ring-blue-200 resize-none outline-none"></textarea>
                         </div>
                     </div>
 
-                    <div class="service-summary details-control">
-                        <p class="label">Detallar:</p>
-                        <input type="text" id="detalles" class="input-details" maxlength="200"
-                            placeholder="Detallar Marca - Color">
-                    </div>
-
-                    <div class="service-summary total-control">
-                        <p class="label">Total:</p>
-                        <span id="total" class="value">$5.00</span>
+                    <!-- Buttons -->
+                    <div class="mt-6 flex justify-end gap-3">
+                        <button @click="closeModal" class="px-4 py-2 rounded-lg border border-slate-200 text-slate-600 
+                            hover:bg-slate-50 text-sm transition-colors">
+                            Cancelar
+                        </button>
+                        <button @click="closeModal" class="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 
+                            text-white hover:from-blue-700 hover:to-indigo-700 text-sm transition-colors">
+                            Confirmar
+                        </button>
                     </div>
                 </div>
-
-                <div class="flex gap-2 justify-center">
-                    <!--button para cancelar el registro -->
-                    <button type="button" class="btn-cancelar sm:text-sm" id="btnCancelarRegistroServicio">
-                        Cancelar
-                    </button>
-                    <!--button para Realizar realizar registro-->
-                    <button type="button" class="btn-submit" id="btnRealizarRegistrarServicio">
-                        <i class="fas fa-check-circle"></i> Registrar
-                    </button>
-                </div>
-
             </div>
         </div>
     </div>
 </div>
 
 
+<script>
 
+    Alpine.data('configuracion', () => ({
+        isModalOpen: false,
+        nombreServicio: '',
+        precioServicio: '',
+        cantidad: 1,
+        detalles: '',
+        total: 0,
 
+        openModal() {
+            this.isModalOpen = true
+        },
 
+        closeModal() {
+            this.isModalOpen = false
+        },
+
+        increment() {
+            if (this.cantidad < 20) this.cantidad++
+            this.calculateTotal()
+        },
+
+        decrement() {
+            if (this.cantidad > 1) this.cantidad--
+            this.calculateTotal()
+        },
+
+        calculateTotal() {
+            this.total = (parseFloat(this.precioServicio) * this.cantidad).toFixed(2)
+        },
+
+        setService(nombre, precio) {
+            this.nombreServicio = nombre
+            this.precioServicio = precio
+            this.calculateTotal()
+            this.openModal()
+        }
+    })); 
+</script>
 <script src="/js/services-laundry/service-selection/funcionality.js"></script>
