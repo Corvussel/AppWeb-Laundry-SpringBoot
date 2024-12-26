@@ -43,9 +43,10 @@
                     <!-- Nombre y observaciones -->
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="space-y-2">
-                            <label class="text-sm font-medium text-gray-700">Nombre <span
-                                    class="text-red-500">*</span></label>
-                            <input type="text" id="name" required value="flores"
+                            <label class="text-sm font-medium text-gray-700">Nombre
+                                 <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="nombreCliente" required value="flores"
                                 class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
                                 placeholder="Nombre del cliente">
                         </div>
@@ -101,13 +102,13 @@
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label class="text-sm font-medium text-gray-700">Total Servicio</label>
-                            <input type="number" id="totalServicio" required value="2"
+                            <input type="number" disabled id="totalServicios" min="0"
                                 class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
                                 placeholder="0.00">
                         </div>
                         <div class="space-y-2">
                             <label class="text-sm font-medium text-gray-700">Total Cobro</label>
-                            <input type="number" id="totalCobro" required value="2"
+                            <input type="number" id="totalCobro" required value="2" min="0"
                                 class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
                                 placeholder="0.00">
                         </div>
@@ -158,13 +159,13 @@
                         <div class="grid md:grid-cols-2 gap-6">
                             <div class="space-y-2">
                                 <label class="text-sm font-medium text-gray-700">Descuento</label>
-                                <input type="number" id="descuento" value="2"
+                                <input type="number" id="descuento" min="0" max="100" value="0"
                                     class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
                                     placeholder="0.00">
                             </div>
                             <div class="space-y-2">
                                 <label class="text-sm font-medium text-gray-700">Total a Cobrar</label>
-                                <input type="number" id="totalCobrar" required value="2"
+                                <input type="number" id="precioTotal" disabled min="0"
                                     class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
                                     placeholder="0.00">
                             </div>
@@ -183,6 +184,7 @@
         </div>
     </section>
 
+
     <!--Contenedor secundario-->
     <section>
         <!-- Contenedor de Servicios  -->
@@ -191,7 +193,7 @@
         </div>
     </section>
 
-    <!-- Modal mejorado -->
+    <!-- Modal -->
     <div x-show="ModalUser" x-cloak="ModalUser"
         class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm"
         x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
@@ -215,7 +217,9 @@
 </div>
 
 
+
 <script>
+
     document.addEventListener('alpine:init', () => {
         Alpine.data('configuraciones', () => ({
             ModalUser: false,
@@ -227,24 +231,6 @@
                 TRANSFERENCIA: 'Transferencia'
             },
             selectedTipoPago: 'Efectivo',
-            precioTotalServicio: 0,
-            descuento: 0, 
-            totalCobrado: 0, 
-            totalServicio: 0,
- 
-            
-            totalServicios() {
-                const tabla = document.getElementById('tableService').getElementsByTagName('tbody')[0];
-                const filas = tabla.getElementsByTagName('tr');
-                let total = 0;
-                for (let i = 0; i < filas.length; i++) {
-                    const fila = filas[i];
-                    const celdas = fila.getElementsByTagName('td');
-                    total += parseFloat(celdas[2].getAttribute('data-subtotal'));
-                }
-                this.totalServicio = total;
-            },
- 
 
             openModalUser() {
                 this.ModalUser = true;
@@ -256,54 +242,6 @@
         }));
     });
 </script>
-
-<script>
-
-    function submitForm(event) {
-        event.preventDefault();
-        const tabla = document.getElementById('tableService').getElementsByTagName('tbody')[0];
-        const filas = tabla.getElementsByTagName('tr');
-
-        // Creamos un objeto  que contendra la lista de servicios
-        const registroData = {
-            nombreCliente: "Servicio Regular", // Puedes personalizar esto según necesites
-            servicios: []
-        };
-
-        // Convertimos las filas de la tabla en objetos de servicio
-        for (let i = 0; i < filas.length; i++) {
-            const fila = filas[i];
-            const celdas = fila.getElementsByTagName('td');
-
-            const servicio = {
-                nombre: celdas[0].getAttribute('data-servicio'),
-                precioUnidad: parseFloat(celdas[1].getAttribute('data-precio')),
-                cantidad: parseInt(celdas[2].getAttribute('data-cantidad')),
-                subTotal: parseFloat(celdas[2].getAttribute('data-subtotal')),
-                detalle: celdas[3].getAttribute('data-detalle')
-            };
-
-            registroData.servicios.push(servicio);
-        }
-
-        // Enviamos el registro completo
-        fetch('/serviceLaundry/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(registroData)
-        })
-            .then(response => response.json())
-            .then(result => {
-                console.log("Success:", result);
-                // Aquí puedes manejar la respuesta exitosa
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                // Aquí puedes manejar los errores
-            });
-    }
-</script>
+ 
 <!-- Script de funcionalidades -->
 <script src="/js/services-laundry/index/funcionality.js"></script>

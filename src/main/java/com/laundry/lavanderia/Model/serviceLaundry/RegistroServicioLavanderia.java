@@ -14,5 +14,5 @@ public class RegistroServicioLavanderia {
     private double totalCobro;
     private String metodoPago;         
     private double descuento;
-    private double totalCobrar;
+    private double precioTotal;
 }
