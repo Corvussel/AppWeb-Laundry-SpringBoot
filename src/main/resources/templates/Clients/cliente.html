@@ -4,9 +4,9 @@
     }
 </style>
 
-<div class="min-h-screen py-8">
+<div class="min-h-screen py-8" x-data="configuraciones">
     <div class="max-w-7xl mx-auto px-4">
-        <!-- Header con información -->
+        <!-- header con informacion -->
         <div class="mb-8">
             <h1 class="text-2xl font-bold text-gray-800 mb-2">Gestión de Clientes</h1>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
@@ -17,7 +17,7 @@
                         </div>
                         <div>
                             <p class="text-sm text-gray-500">Total Clientes</p>
-                            <p class="text-xl font-bold text-gray-800" id="totalClientes">0</p>
+                            <p class="text-xl font-bold text-gray-800" th:text="${totalClientes}">0</p>
                         </div>
                     </div>
                 </div>
@@ -28,14 +28,14 @@
                         </div>
                         <div>
                             <p class="text-sm text-gray-500">Clientes Activos</p>
-                            <p class="text-xl font-bold text-gray-800" id="clientesActivos">0</p>
+                            <p class="text-xl font-bold text-gray-800" th:text="${clientesActivos}">0</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Barra de búsqueda -->
+        <!-- barra de busqueda  -->
         <div class="bg-white rounded-xl shadow-sm p-4 mb-6">
             <div class="flex flex-wrap gap-4 items-center justify-between">
                 <div class="relative flex-grow max-w-md">
@@ -43,49 +43,123 @@
                         class="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent transition-all">
                     <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                 </div>
+                <!--Button para agregar un nuevo cliente-->
                 <div class="flex">
-                    <a href="/client/register"
+                    <button @click="openModal"
                         class="bg-[#0891b2] text-white px-4 py-2 rounded-lg hover:bg-[#0891b2]/90 transition-colors flex items-center gap-2">
                         <i class="fas fa-user-plus"></i>
                         <span>Nuevo Cliente</span>
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
 
         <div class="overflow-y-auto max-h-[600px] pr-2">
-            <div id="clientesContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- Las tarjetas de clientes se generarán dinámicamente aquí -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- tarjeta de clientes -->
+                <article th:each="cliente : ${clientes}"
+                    class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group">
+                    <div class="p-5">
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="h-12 w-12 rounded-full bg-[#0891b2]/10 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-user text-[#0891b2]"></i>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-medium text-gray-800 text-lg mb-1 truncate" th:text="${cliente.nombre}">
+                                    Nombre del Cliente</h3>
+                                <div class="space-y-1">
+                                    <div class="flex items-center gap-2 text-gray-600">
+                                        <i class="fas fa-phone text-sm w-4"></i>
+                                        <span class="text-sm" th:text="${cliente.telefono}">Teléfono</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-gray-600">
+                                        <i class="fas fa-map-marker-alt text-sm w-4"></i>
+                                        <span class="text-sm truncate" th:text="${cliente.direccion}">Dirección</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2 mt-2">
+                                    <span th:if="${cliente.activo}"
+                                        class="px-2 py-1 bg-green-50 text-green-700 text-xs rounded-full">
+                                        Activo
+                                    </span>
+                                    <span th:unless="${cliente.activo}"
+                                        class="px-2 py-1 bg-red-50 text-red-700 text-xs rounded-full">
+                                        Inactivo
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-5 py-3 bg-slate-100 flex justify-end gap-2">
+                        <a th:href="@{/client/edit/{id}(id=${cliente.id})}"
+                            class="p-2 text-gray-600 hover:text-[#0891b2] rounded-lg transition-colors">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a th:href="@{/client/delete/{id}(id=${cliente.id})}"
+                            class="p-2 text-gray-600 hover:text-red-500 rounded-lg transition-colors cursor-pointer"
+                            onclick="return confirm('¿Estás seguro de eliminar este cliente?')">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </article>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Template para las tarjetas de cliente -->
-<template id="clienteTemplate">
-    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group">
-        <div class="p-5">
-            <div class="flex items-start gap-4">
-                <div class="h-12 w-12 rounded-full bg-[#0891b2]/10 flex items-center justify-center flex-shrink-0">
-                    <i class="fas fa-user text-[#0891b2]"></i>
+    <!-- Modal de registro -->
+    <div x-show="showModal" x-cloak="showModal"
+        class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50"
+        x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+
+        <!-- contenido -->
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-md mx-4" @click.away="closeModal"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 transform scale-90"
+            x-transition:enter-end="opacity-100 transform scale-100">
+
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold text-gray-900">Registrar Nuevo Cliente</h3>
+                    <button @click="closeModal" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
-                <div class="flex-grow">
-                    <h3 class="font-medium text-gray-800 text-lg mb-1 truncate cliente-nombre"></h3>
-                    <div class="space-y-1">
-                        <div class="flex items-center gap-2 text-gray-600">
-                            <i class="fas fa-phone text-sm w-4"></i>
-                            <span class="text-sm cliente-telefono"></span>
-                        </div>
-                        <div class="flex items-center gap-2 text-gray-600">
-                            <i class="fas fa-map-marker-alt text-sm w-4"></i>
-                            <span class="text-sm truncate cliente-direccion"></span>
-                        </div>
+
+                <form th:action="@{/client/register}" method="POST" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nombre</label>
+                        <input type="text" name="nombre" required
+                            class="mt-1 p-3 w-full rounded-lg border border-gray-200 focus:outline-[#2fc1e6]">
                     </div>
-                    <div class="flex items-center gap-2 mt-2">
-                        <span class="px-2 py-1 text-xs rounded-full cliente-estado"></span>
-                        <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full cliente-codigo"></span>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Teléfono</label>
+                        <input type="text" name="telefono" required
+                            class="mt-1 p-3 block w-full rounded-lg border border-gray-200 focus:outline-[#2fc1e6]">
                     </div>
-                </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Dirección</label>
+                        <input type="text" name="direccion" required
+                            class="mt-1 p-3 block w-full rounded-lg border border-gray-200 focus:outline-[#2fc1e6]">
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" name="activo" id="activo" checked
+                            class="rounded p-3 border border-gray-200">
+                        <label for="activo" class="ml-2 block text-sm text-gray-700">Cliente Activo</label>
+                    </div>
+                    <div class="flex justify-end gap-3 mt-6">
+                        <button type="button" @click="closeModal"
+                            class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200">
+                            Cancelar
+                        </button>
+                        <button type="submit"
+                            class="px-4 py-2 text-sm font-medium text-white bg-[#0891b2] rounded-lg hover:bg-[#0891b2]/90">
+                            Registrar Cliente
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="px-5 py-3 bg-gray-50 flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -97,118 +171,21 @@
             </button>
         </div>
     </div>
-</template>
+</div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('searchInput');
-    const clientesContainer = document.getElementById('clientesContainer');
-    const clienteTemplate = document.getElementById('clienteTemplate');
 
-    // Cargar clientes iniciales
-    loadClientes();
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('configuraciones', () => ({
+            showModal: false,
 
-    // Configurar búsqueda
-    searchInput.addEventListener('input', debounce(handleSearch, 300));
-
-    function loadClientes() {
-        fetch('/client/search?query=')
-            .then(response => response.json())
-            .then(clientes => {
-                updateClientesDisplay(clientes);
-                updateContadores();
-            });
-    }
-
-    function handleSearch(event) {
-        const query = event.target.value;
-        fetch(`/client/search?query=${encodeURIComponent(query)}`)
-            .then(response => response.json())
-            .then(clientes => {
-                updateClientesDisplay(clientes);
-            });
-    }
-
-    function updateClientesDisplay(clientes) {
-        clientesContainer.innerHTML = '';
-        clientes.forEach(cliente => {
-            const card = createClienteCard(cliente);
-            clientesContainer.appendChild(card);
-        });
-    }
-
-    function createClienteCard(cliente) {
-        const clone = clienteTemplate.content.cloneNode(true);
-        
-        // Actualizar contenido
-        clone.querySelector('.cliente-nombre').textContent = cliente.nombre;
-        clone.querySelector('.cliente-telefono').textContent = cliente.telefono;
-        clone.querySelector('.cliente-direccion').textContent = cliente.direccion;
-        clone.querySelector('.cliente-codigo').textContent = cliente.codigoCliente;
-
-        // Estado
-        const estadoSpan = clone.querySelector('.cliente-estado');
-        estadoSpan.textContent = cliente.activo ? 'Activo' : 'Inactivo';
-        estadoSpan.className = `px-2 py-1 text-xs rounded-full ${
-            cliente.activo ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
-        }`;
-
-        // Configurar botones
-        const btnEditar = clone.querySelector('.btn-editar');
-        const btnEliminar = clone.querySelector('.btn-eliminar');
-
-        btnEditar.addEventListener('click', () => {
-            window.location.href = `/client/register?id=${cliente.id}`;
-        });
-
-        btnEliminar.addEventListener('click', () => {
-            if (confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
-                deleteCliente(cliente.id);
+            openModal() {
+                this.showModal = true;
+            },
+            closeModal() {
+                this.showModal = false;
             }
-        });
 
-        return clone;
-    }
-
-    function deleteCliente(id) {
-        fetch(`/client/delete/${id}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(result => {
-            if (result.success) {
-                loadClientes();
-            } else {
-                alert(result.message);
-            }
-        });
-    }
-
-    function updateContadores() {
-        const totalElement = document.getElementById('totalClientes');
-        const activosElement = document.getElementById('clientesActivos');
-
-        fetch('/client/index')
-            .then(response => response.json())
-            .then(data => {
-                totalElement.textContent = data.totalClientes;
-                activosElement.textContent = data.clientesActivos;
-            });
-    }
-
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
-});
+        }));
+    });
 </script>
