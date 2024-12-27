@@ -59,4 +59,17 @@ public class ServiceLaundryServices {
                 newClient.getActivo() == null ? false : true);
         clientes.add(newClient);
     }
+
+    public void updateClient(cliente updatedClient) {
+        clientes.forEach(cliente -> {
+            if (cliente.getId().equals(updatedClient.getId())) {
+                cliente.setNombre(updatedClient.getNombre());
+                cliente.setTelefono(updatedClient.getTelefono());
+                cliente.setDireccion(updatedClient.getDireccion());
+                cliente.setActivo(updatedClient.getActivo());
+                cliente.setFechaRegistro(updatedClient.getFechaRegistro());
+                return;
+            }
+        });
+    }
 }
