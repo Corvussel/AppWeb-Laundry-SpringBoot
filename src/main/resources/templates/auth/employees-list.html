@@ -2,6 +2,41 @@
     body {
         background-color: rgb(249 250 251 / 0.5);
     }
+
+    .truncate {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px;
+        background-color: #4caf50;
+        color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transform: translateX(100%);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        z-index: 9999;
+    }
+
+    .notification.show {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .notification.hide {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    .notification.error {
+        background-color: #f44336;
+    }
 </style>
 
 <div class="min-h-screen py-8">
@@ -44,80 +79,79 @@
             </div>
         </div>
 
+        <!-- Elemento de notificación -->
+        <div id="notification" class="notification"></div>
+
         <!-- Lista de Empleados -->
         <div class="grid md:grid-cols-2 sm:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- Tarjeta de Empleado -->
-            <article class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
-                <div class="p-6">
-                    <div class="flex items-start gap-4">
-                        <div
-                            class="h-12 w-12 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
-                            <i class="fas fa-user text-indigo-600"></i>
-                        </div>
-                        <div class="flex-grow">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-semibold text-gray-800">James Caballero</h3>
-                                <div class="flex gap-2">
-                                    <span
-                                        class="px-2 py-1 bg-green-50 text-green-700 text-xs rounded-full">Activo</span>
-                                    <span
-                                        class="px-2 py-1 bg-purple-50 text-purple-700 text-xs rounded-full">Admin</span>
+            <div th:each="employee : ${employees}">
+                <article
+                    class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="h-12 w-12 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-user text-indigo-600"></i>
+                            </div>
+                            <div class="flex-grow">
+                                <!-- Contenedor para nombres y apellidos -->
+                                <div>
+                                    <!-- Nombres -->
+                                    <h3 class="font-semibold text-gray-800 truncate"
+                                        th:text="${#strings.length(employee.nombres) > 13 ? #strings.substring(employee.nombres, 0, 13) + '...' : employee.nombres}">
+                                    </h3>
+                                    <!-- Apellidos -->
+                                    <h3 class="font-medium text-gray-700 truncate"
+                                        th:text="${#strings.length(employee.apellidos) > 18 ? #strings.substring(employee.apellidos, 0, 18) + '...' : employee.apellidos}">
+                                    </h3>
                                 </div>
                             </div>
-                            <p class="text-sm text-gray-500 mt-1">james@email.com</p>
-                            <div class="flex items-center gap-2 mt-2 text-sm text-gray-600">
-                                <i class="fas fa-phone"></i>
-                                <span>992-676-986</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="px-6 py-4 bg-gray-50 flex justify-end gap-2">
-                    <a href="/userAuth/register"
-                        class="text-gray-600 hover:text-[#0891b2] p-2 rounded-lg transition-colors">
-                        <i class="fas fa-edit"></i>
-                    </a>
-                    <button class="text-gray-600 hover:text-red-500 p-2 rounded-lg transition-colors">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </article>
 
-
-            <article class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
-                <div class="p-6">
-                    <div class="flex items-start gap-4">
-                        <div
-                            class="h-12 w-12 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
-                            <i class="fas fa-user text-indigo-600"></i>
-                        </div>
-                        <div class="flex-grow">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-semibold text-gray-800">Russel Flores</h3>
-                                <div class="flex gap-2">
-                                    <span class="px-2 py-1 bg-red-50 text-red-700 text-xs rounded-full">Inactivo</span>
+                            <!-- Estado y Rol (ajustado para alinearse a la derecha) -->
+                            <div class="flex flex-col items-end">
+                                <div class="flex gap-2 mt-2">
                                     <span
-                                        class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">Empleado</span>
+                                        th:class="'px-2 py-1 text-xs rounded-full ' + (${employee.estado} ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700')"
+                                        th:text="${employee.estado} ? 'Activo' : 'Inactivo'"></span>
+                                    <span class="px-2 py-1 bg-purple-50 text-purple-700 text-xs rounded-full"
+                                        th:text="${employee.rol}"></span>
                                 </div>
                             </div>
-                            <p class="text-sm text-gray-500 mt-1">russel@email.com</p>
-                            <div class="flex items-center gap-2 mt-2 text-sm text-gray-600">
-                                <i class="fas fa-phone"></i>
-                                <span>992-676-986</span>
-                            </div>
+                        </div>
+
+                        <!-- Correo -->
+                        <div class="flex items-center gap-2 mt-2 text-sm text-gray-600">
+                            <i class="fas fa-envelope"></i>
+                            <span th:text="${employee.correo}"></span>
+                        </div>
+
+                        <!-- Teléfono -->
+                        <div class="flex items-center gap-2 mt-2 text-sm text-gray-600">
+                            <i class="fas fa-phone"></i>
+                            <span th:text="${employee.telefono}"></span>
                         </div>
                     </div>
-                </div>
-                <div class="px-6 py-4 bg-gray-50 flex justify-end gap-2">
-                    <a href="/userAuth/register"
-                        class="text-gray-600 hover:text-[#0891b2] p-2 rounded-lg transition-colors">
-                        <i class="fas fa-edit"></i>
-                    </a>
-                    <button class="text-gray-600 hover:text-red-500 p-2 rounded-lg transition-colors">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </article>
+                    <div class="px-6 py-4 bg-gray-50 flex justify-end gap-2">
+                        <!-- Botón de Modificación -->
+                        <a th:href="'/userAuth/modify/' + ${employee.id}"
+                            class="text-gray-600 hover:text-[#0891b2] p-2 rounded-lg transition-colors">
+                            <i class="fas fa-edit"></i>
+                        </a>
+
+                        <!-- Formulario para Eliminar -->
+                        <form th:action="'/userAuth/delete/' + ${employee.id}" method="post" class="inline-block">
+                            <!-- Protección CSRF -->
+                            <input type="hidden" name="_method" value="DELETE" />
+
+                            <button type="submit"
+                                class="text-gray-600 hover:text-red-500 p-2 rounded-lg transition-colors">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                </article>
+            </div>
         </div>
     </div>
 </div>
@@ -126,5 +160,37 @@
 
     document.addEventListener('DOMContentLoaded', function () {
 
+    });
+
+     // Función para mostrar el mensaje
+     function showNotification(message, isError) {
+        var notification = document.getElementById("notification");
+        
+        // Asigna el mensaje y el estilo según el tipo (éxito o error)
+        notification.textContent = message;
+        notification.classList.add(isError ? "error" : "");
+        notification.classList.add("show");
+
+        // Desaparecer después de 3 segundos
+        setTimeout(function () {
+            notification.classList.remove("show");
+            setTimeout(function () {
+                notification.classList.remove("error"); // Eliminar la clase de error si es necesario
+            }, 500); // Espera 500ms para que termine la animación
+        }, 3000); // 3 segundos de duración del mensaje
+    }
+
+    // Mostrar el mensaje al cargar la página si hay un mensaje de éxito o error
+    document.addEventListener('DOMContentLoaded', function () {
+        var message = /*[[${message}]]*/ null;
+        var error = /*[[${error}]]*/ null;
+
+        if (message) {
+            showNotification(message, false); // Muestra un mensaje de éxito
+        }
+
+        if (error) {
+            showNotification(error, true); // Muestra un mensaje de error
+        }
     });
 </script>
