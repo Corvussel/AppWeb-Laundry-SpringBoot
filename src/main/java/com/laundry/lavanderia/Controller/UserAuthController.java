@@ -36,16 +36,5 @@ public class UserAuthController {
         }
         return "authenticate";
     }
- 
-    @GetMapping("/register")
-    public String getRegisterPage(Model model) {
-        model.addAttribute("content", "auth/register-employee.html");
-        return "shared/layout";
-    }
-
-    @GetMapping("/employees")
-    public String showEmplooyesPage(Model model) {
-        model.addAttribute("content", "auth/employees-list.html");
-        return "shared/layout";
-    }
+  
 }
