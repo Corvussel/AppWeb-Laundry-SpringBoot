@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/serviceLaundry")
-public class ServiceLaundryController {
+public class LaundryServicesController {
 
     private static final String SHARED_LAYOUT = "shared/layout";
 
