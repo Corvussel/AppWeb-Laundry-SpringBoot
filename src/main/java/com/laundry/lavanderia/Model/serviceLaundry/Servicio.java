@@ -13,10 +13,12 @@ public class Servicio {
     private int cantidad;
     private double subTotal;
     private String detalle;
+    private boolean activo ; // Por defecto, activo
 
     public Servicio(String nombre, String detalle, double precioUnidad) {
         this.nombre = nombre;
         this.detalle = detalle;
         this.precioUnidad = precioUnidad;
+        this.activo = true;
     }
 }
