@@ -11,7 +11,7 @@ public class ServiceLaundryServices {
     private List<cliente> clientes = new ArrayList<>();
 
     public ServiceLaundryServices() {
-        // Datos de ejemplo
+        // datos de ejemplo
         cliente cliente1 = new cliente();
         cliente1.setId(1L);
         cliente1.setNombre("Russel Flores Solano");
@@ -22,7 +22,7 @@ public class ServiceLaundryServices {
 
         cliente cliente2 = new cliente();
         cliente2.setId(2L);
-        cliente2.setNombre("Maria García");
+        cliente2.setNombre("Palacios PP");
         cliente2.setTelefono("987-654-321");
         cliente2.setDireccion("Jr. Las Palmeras 456");
         cliente2.setActivo(false);
@@ -49,7 +49,7 @@ public class ServiceLaundryServices {
     }
 
     public void registerClient(cliente newClient) {
-        // Asignar ID (simulado)
+         
         Long newId = clientes.stream()
                 .mapToLong(cliente::getId)
                 .max()
