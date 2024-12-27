@@ -1,9 +1,8 @@
-
 // Eventos y interaccion entre vista parcial de usuario
 // Evento cuando se muestra la modal 
 const openModalButton = document.getElementById('openModalButton');
 
-// Evento para abrir el modal
+// Evento insertar contenido en la modal
 openModalButton.addEventListener('click', () => {
     $.ajax({
         url: '/serviceLaundry/ListUsers',
@@ -36,15 +35,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (buttonCancelar) {
                 buttonCancelar.addEventListener('click', function () {
-                    hideServiceSelection();
+                    hideServiceSelection(); // Ocultamos la vista parcial
                 });
             }
 
             if (buttonRegistrar) {
                 buttonRegistrar.addEventListener('click', function (e) {
 
-                    hideServiceSelection();
-                    registrarServicio();
+                    hideServiceSelection(); // Ocultamos la vista parcial
+                    registrarServicio(); // Registramos el servicio 
+                    CalcularPrecioServicios(); // Calculamos el precio total de los servicios registrados en la tabla
                 });
             }
 
@@ -57,10 +57,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// Contenedor de la vista Parcial- Servicio seleccion
-const serviceSelectionContainer = document.getElementById('ContainerServiceSelection');
-// Contenedor de la vista principal - ventas
-const registroVentaContainer = document.getElementById('ContainerSalesRegistration');
+
+const serviceSelectionContainer = document.getElementById('ContainerServiceSelection');// Contenedor de la vista - Servicio seleccion 
+const registroVentaContainer = document.getElementById('ContainerSalesRegistration');// Contenedor de la vista principal - ventas
 
 // Evento para mostrar la vista parcial de selección de servicio
 function showServiceSelection() {
@@ -73,7 +72,8 @@ function hideServiceSelection() {
     serviceSelectionContainer.classList.add('hidden');
     registroVentaContainer.classList.remove('hidden');
 };
- 
+
+
 // Funcion Para la realizacion de registro de Servicio
 function registrarServicio() {
 
@@ -152,6 +152,7 @@ function registrarServicio() {
 
     const botonEliminar = document.createElement("button");
     botonEliminar.classList.add("p-2", "text-red-600", "hover:text-red-800", "rounded-lg");
+    botonEliminar.setAttribute("type", "button");
 
     const iconoEliminar = document.createElement("i");
     iconoEliminar.classList.add("fas", "fa-trash");
@@ -162,6 +163,115 @@ function registrarServicio() {
     // Evento para eliminar la fila 
     botonEliminar.addEventListener('click', function () {
         tablaServicio.deleteRow(Nuevafila.rowIndex - 1);
+        CalcularPrecioServicios(); // actualizamos el total
     });
     celdaAcciones.appendChild(divAcciones);
+
+};
+
+
+// Variables para el descuento y el total de los servicios
+let descuento = 0;
+let precioTotal = 0;
+let totalServicio = 0;
+
+function CalcularPrecioServicios() { // Funcion para calcular el precio total de los servicios registrados en la tabla
+    const tabla = document.getElementById('tableService').getElementsByTagName('tbody')[0];
+    const filas = tabla.getElementsByTagName('tr');
+    let total = 0;
+    for (let i = 0; i < filas.length; i++) {
+        const fila = filas[i];
+        const celdas = fila.getElementsByTagName('td');
+        total += parseFloat(celdas[2].getAttribute('data-subtotal'));
+    }
+    totalServicio = total;
+    // Actualizamos el total del servicio
+    document.getElementById('totalServicios').value = totalServicio;
+
+    CalcularDescuento(); // Calculamos el descuento
+};
+
+// Evento para calcular el descuento
+document.getElementById('descuento').addEventListener('input', CalcularDescuento);
+
+// Funcion para calcular el descuento
+function CalcularDescuento() {
+    // Obtenemos el valor del descuento
+    const descuento_input = parseFloat(document.getElementById('descuento').value);
+    descuento = descuento_input ? descuento_input : 0;
+    // Calculamos el precio total en base al descuento  
+    precioTotal = totalServicio - descuento;
+    // Actualizamos el precio total    
+    document.getElementById('precioTotal').value = precioTotal;
 }
+
+
+
+// Evento para enviar el formulario de registro
+
+function submitForm(event) {
+    event.preventDefault(); // Evitamos que el formulario se envie
+    const tabla = document.getElementById('tableService').getElementsByTagName('tbody')[0];
+    const filas = tabla.getElementsByTagName('tr');
+
+    // objeto  que contendra la lista de servicios
+    const registroData = {
+        tipoServicio: "Tienda",
+        clienteId: 1,
+        nombreCliente: document.getElementById('nombreCliente').value,
+        observacion: document.getElementById('observacion').value,
+        servicios: [],
+        totalServicio: parseFloat(document.getElementById('totalServicios').value),
+        totalCobro: parseFloat(document.getElementById('totalCobro').value),
+        metodoPago: "Efectivo",
+        descuento: parseFloat(document.getElementById('descuento').value),
+        precioTotal: parseFloat(document.getElementById('precioTotal').value)
+    };
+
+    // Convertimos las filas de la tabla en objetos de servicio
+    for (let i = 0; i < filas.length; i++) {
+        const fila = filas[i];
+        const celdas = fila.getElementsByTagName('td');
+
+        const servicio = {
+            nombre: celdas[0].getAttribute('data-servicio'),
+            precioUnidad: parseFloat(celdas[1].getAttribute('data-precio')),
+            cantidad: parseInt(celdas[2].getAttribute('data-cantidad')),
+            subTotal: parseFloat(celdas[2].getAttribute('data-subtotal')),
+            detalle: celdas[3].getAttribute('data-detalle')
+        };
+
+        registroData.servicios.push(servicio);
+    }
+
+    fetch('/serviceLaundry/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(registroData)
+    })
+        .then(response => response.json())
+        .then(result => {
+            if (result.status === 'success') {
+                // se hable la url en nueva ventana para imprimir la boleta
+                window.open(result.boletaUrl, '_blank', 'width=800,height=600');
+                // Limpiamos el formulario
+                limpiarFormulario();
+            } else {
+                // Mostramos un mensaje de error
+                alert('Error: ' + result.message);
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert('Error al procesar el registro');
+        });
+}
+
+function limpiarFormulario() {
+    document.getElementById('form_Register').reset();
+    document.getElementById('tableService').getElementsByTagName('tbody')[0].innerHTML = '';
+    document.getElementById('tableContainer').classList.add('hidden');
+}
+

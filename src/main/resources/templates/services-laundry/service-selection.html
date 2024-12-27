@@ -1,27 +1,29 @@
 <style>
     .card-active {
-        background: #0891b2; 
+        background: #0891b2;
     }
+
     .card-active .price {
         color: white !important;
     }
+
     .card-active .service-name {
         color: white !important;
     }
+
     .card-active:hover {
         background: #09a0c5 !important;
     }
-
 </style>
 
 <div x-data="configuracion" class="min-h-screen">
 
-    <div class="max-w-5xl mx-auto px-6 py-20">
-        <div class="bg-white/40 backdrop-blur-lg rounded-3xl shadow-2xl p-12 border border-slate-100">
+    <div class="max-w-5xl mx-auto md:px-6 px-3 py-20">
+        <div class="bg-white/15 backdrop-blur-lg rounded-3xl shadow-2xl p-12 border border-slate-100">
             <!-- Header -->
-            <h1 class="md:text-5xl text-2xl font-extralight text-slate-800 text-center mb-16 tracking-tight">
+            <header class="md:text-5xl text-2xl font-extralight text-slate-800 text-center mb-16 tracking-tight">
                 Servicio de <span class="text-blue-600">Lavandería</span>
-            </h1>
+            </header>
 
             <!-- Categorias -->
             <div class="flex justify-center mb-14">
@@ -35,23 +37,22 @@
                 </div>
             </div>
 
-            <!-- Search -->
+            <!-- busqueda -->
             <div class="relative max-w-lg mx-auto mb-16">
-                <input type="text" id="searchInput" placeholder="Buscar servicio..." class="w-full px-8 py-4 rounded-2xl bg-white/80 border-0
+                <input type="text" id="searchInput" placeholder="Buscar servicio..." class="w-full px-8 py-4 pr-10 rounded-2xl bg-white/80 border-0
                     shadow-sm hover:shadow-md transition-all duration-300
                     placeholder-slate-400 text-slate-600 focus:ring-0">
                 <i class="fas fa-search absolute right-6 top-1/2 -translate-y-1/2 text-slate-400"></i>
             </div>
 
             <!-- paginas tab-content -->
-            <div id="card-container" class="space-y-10 overflow-y-auto max-h-96">
+            <div id="card-container" class="overflow-y-auto max-h-96">
                 <div th:each="categoria : ${categorias}">
                     <div th:id="${categoria.nombre}" class="tab-pane hidden">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div th:each="servicio : ${categoria.servicios}" class="group p-8 rounded-2xl bg-white border-0 shadow-sm hover:shadow-md 
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-3">
+                            <div th:each="servicio : ${categoria.servicios}" class="group p-8 rounded-2xl bg-white border-0 shadow-md hover:shadow-lg 
                                 transition-all duration-500  hover:bg-blue-50/30 cursor-pointer card-service"
-                                th:data-servicio="${servicio.nombre}"
-                                th:data-precio="${servicio.precioUnidad}"
+                                th:data-servicio="${servicio.nombre}" th:data-precio="${servicio.precioUnidad}"
                                 @click="setService($el.getAttribute('data-servicio'), $el.getAttribute('data-precio'))">
 
                                 <div class="flex justify-between items-center">
@@ -68,13 +69,13 @@
 
 
             <!-- buttons-->
-            <div class="flex justify-center gap-8 mt-16">
-                <button id="btnCancelarRegistroServicio" class="px-10 py-4 rounded-xl bg-white text-slate-600 
-                    hover:bg-slate-50 transition-all duration-300 shadow-sm hover:shadow-md">
+            <div class="flex justify-center md:gap-8 sm:gap-4 gap-2 mt-16">
+                <button id="btnCancelarRegistroServicio" class="md:px-10 px-4 py-4 rounded-xl bg-white text-slate-600 
+                    hover:bg-slate-50 transition-all duration-300 shadow-sm hover:shadow-md md:text-base text-sm">
                     Cancelar
                 </button>
-                <button id="btnRealizarRegistrarServicio" class="px-10 py-4 rounded-xl bg-blue-600 text-white 
-                    hover:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg">
+                <button id="btnRealizarRegistrarServicio" class="md:px-10 px-4 py-4 rounded-xl bg-blue-600 text-white 
+                    hover:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg md:text-base text-sm">
                     Registrar servicio
                 </button>
             </div>
@@ -113,7 +114,7 @@
                         <div class="col-span-2 grid grid-cols-2 gap-4">
                             <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100">
                                 <p class="text-xs text-slate-500 mb-1">Servicio</p>
-                                <p x-text="nombreServicio"  id="servicio" class="font-medium text-slate-700"></p>
+                                <p x-text="nombreServicio" id="servicio" class="font-medium text-slate-700"></p>
                             </div>
                             <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100">
                                 <p class="text-xs text-slate-500 mb-1">Precio unitario</p>
@@ -127,7 +128,8 @@
                             <div class="flex items-center gap-2">
                                 <button @click="decrement"
                                     class="w-8 h-8 rounded-lg bg-slate-50 text-blue-600 hover:bg-blue-50 transition-colors flex items-center justify-center">−</button>
-                                <span x-text="cantidad" id="cantidad" class="w-8 text-center font-medium text-slate-700"></span>
+                                <span x-text="cantidad" id="cantidad"
+                                    class="w-8 text-center font-medium text-slate-700"></span>
                                 <button @click="increment"
                                     class="w-8 h-8 rounded-lg bg-slate-50 text-blue-600 hover:bg-blue-50 transition-colors flex items-center justify-center">+</button>
                             </div>
@@ -140,7 +142,7 @@
                             <div class="flex items-center gap-1">
                                 <p class="text-lg font-semibold text-blue-700">S/</p>
                                 <p x-text="total" id="total" class="text-lg font-semibold text-blue-700"></p>
-                            </div> 
+                            </div>
                         </div>
 
                         <!-- detalles -->
@@ -160,7 +162,7 @@
                             Cancelar
                         </button>
                         <button @click="closeModal" class="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 
-                            text-white hover:from-blue-700 hover:to-indigo-700 text-sm transition-colors">
+                            text-white hover:from-blue-600 hover:to-indigo-700 text-sm transition-colors">
                             Confirmar
                         </button>
                     </div>
@@ -209,6 +211,7 @@
             this.calculateTotal()
             this.openModal()
         }
+
     })); 
 </script>
 <script src="/js/services-laundry/service-selection/funcionality.js"></script>

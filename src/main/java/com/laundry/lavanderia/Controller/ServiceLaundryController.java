@@ -2,7 +2,10 @@ package com.laundry.lavanderia.Controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap; 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,16 +13,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.PathVariable;
 import com.laundry.lavanderia.Model.serviceLaundry.Categoria;
 import com.laundry.lavanderia.Model.serviceLaundry.RegistroServicioLavanderia;
 import com.laundry.lavanderia.Model.serviceLaundry.Servicio;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/serviceLaundry")
 public class ServiceLaundryController {
 
     private static final String SHARED_LAYOUT = "shared/layout";
+
+    @Autowired
+    private HttpSession httpSession;
 
     @GetMapping("index")
     public String showIndexPage(Model model) {
@@ -54,29 +62,57 @@ public class ServiceLaundryController {
 
     @PostMapping("/register")
     @ResponseBody
-    public String registerService(@RequestBody RegistroServicioLavanderia registro){
+    public Map<String, Object> registerService(@RequestBody RegistroServicioLavanderia registro) {
         try {
-            // Procesar el registro completo
-            System.out.println("Tipo de Servicio: " + registro.getTipoServicio());
-            System.out.println("Cliente: " + registro.getNombreCliente());
-            System.out.println("Método de Pago: " + registro.getMetodoPago());
-            
-            // Procesar servicios
-            for (Servicio servicio : registro.getServicios()) {
-                System.out.println("Servicio: " + servicio.getNombre());
-                System.out.println("Precio: " + servicio.getPrecioUnidad());
-                System.out.println("Cantidad: " + servicio.getCantidad());
-                System.out.println("Subtotal: " + servicio.getSubTotal());
-                System.out.println("Detalle: " + servicio.getDetalle());
+            // Guardar el registro en sesion con un Id unico
+            String boletaId = generarNumeroBoleta();
+            httpSession.setAttribute("boleta_" + boletaId, registro);
+
+            Map<String, Object> repuesta = new HashMap<>();
+            repuesta.put("status", "success");
+            repuesta.put("boletaId", boletaId);
+            repuesta.put("boletaUrl", "/serviceLaundry/boleta/" + boletaId);
+
+            return repuesta;
+        } catch (Exception e) {
+            Map<String, Object> error = new HashMap<>();
+            error.put("status", "error");
+            error.put("message", "Error: " + e.getMessage());
+            return error;
+        }
+    }
+
+    @GetMapping("/boleta/{boletaId}")
+    public String generarBoleta(@PathVariable String boletaId, Model model) {
+        try {
+            // Recuperar datos de la sesion
+            RegistroServicioLavanderia registro = (RegistroServicioLavanderia) httpSession
+                    .getAttribute("boleta_" + boletaId);
+
+            if (registro == null) {
+                throw new RuntimeException("boletaa no encontrada o esta expirada");
             }
 
-            System.out.println("Total Servicio: " + registro.getTotalServicio());
-            System.out.println("Descuento: " + registro.getDescuento());
-            System.out.println("Total a Cobrar: " + registro.getTotalCobrar());
-            
-            return "{\"message\":\"Registro de servicio procesado correctamente\"}";
+            // agregar datos al modelo
+            model.addAttribute("numeroBoleta", boletaId);
+            model.addAttribute("fecha", new java.util.Date());
+            model.addAttribute("nombreCliente", registro.getNombreCliente());
+            model.addAttribute("servicios", registro.getServicios());
+            model.addAttribute("totalServicio", registro.getTotalServicio());
+            model.addAttribute("descuento", registro.getDescuento());
+            model.addAttribute("precioTotal", registro.getPrecioTotal());
+            model.addAttribute("metodoPago", registro.getMetodoPago());
+
+            // se Limpiar la sesion despuess de usar
+            httpSession.removeAttribute("boleta_" + boletaId);
+
+            return "services-laundry/boleta";
         } catch (Exception e) {
-            return "{\"error\":\"Error al procesar el registro: " + e.getMessage() + "\"}";
+            throw new RuntimeException("Error al generar la boleta: " + e.getMessage());
         }
+    }
+
+    private String generarNumeroBoleta() {
+        return "B-" + System.currentTimeMillis();
     }
 }
