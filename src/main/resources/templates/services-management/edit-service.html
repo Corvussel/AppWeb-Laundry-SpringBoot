@@ -19,17 +19,14 @@
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label class="text-sm font-medium text-gray-700">Nombre del Serviciosss</label>
-                            <input type="text" value="Lavado Simple"
-                                class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
+                            <input type="text" x-ref="nombreEditado" value="Lavado Simple"
+                                class="w-full px-4 py-2 border">
                         </div>
                         <div class="space-y-2">
                             <label class="text-sm font-medium text-gray-700">Categoría</label>
-                            <select
-                                class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
+                            <select x-ref="categoriaSeleccionada" class="w-full px-4 py-2 border">
                                 <option value="1">Ropa Normal</option>
                                 <option value="2">Ropa Delicada</option>
-                                <option value="3">Ropa de Cama</option>
-                            </select>
                         </div>
                     </div>
                 </div>
@@ -42,8 +39,8 @@
                             <label class="text-sm font-medium text-gray-700">Precio Base</label>
                             <div class="relative">
                                 <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">S/</span>
-                                <input type="number" value="15.00" step="0.50"
-                                    class="w-full pl-8 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
+                                <input type="number" x-ref="precioEditado" value="15.00"
+                                    class="w-full px-4 py-2 border">
                             </div>
                         </div>
                         <div class="space-y-2">
@@ -63,8 +60,8 @@
                     <div class="space-y-4">
                         <div class="space-y-2">
                             <label class="text-sm font-medium text-gray-700">Descripción</label>
-                            <textarea rows="3"
-                                class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">Servicio de lavado básico para prendas normales.</textarea>
+                            <textarea x-ref="descripcionEditada"
+                                class="w-full px-4 py-2 border">Servicio de lavado básico.</textarea>
                         </div>
 
                         <div class="space-y-2">
@@ -76,8 +73,7 @@
                                     <span class="text-sm text-gray-700">Activo</span>
                                 </label>
                                 <label class="flex items-center gap-2">
-                                    <input type="radio" name="status" value="inactive"
-                                        class="text-[#0891b2] focus:ring-[#0891b2]">
+                                    <input type="radio" name="status" x-ref="estado" value="active" checked class="text-[#0891b2]">
                                     <span class="text-sm text-gray-700">Inactivo</span>
                                 </label>
                             </div>
@@ -92,11 +88,12 @@
                         class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
                         Cancelar
                     </button>
-                    <button type="submit"
-                        class="px-6 py-2 bg-[#0891b2] text-white rounded-lg hover:bg-[#0891b2]/90 transition-colors flex items-center gap-2">
-                        <i class="fas fa-save"></i>
+                    <button type="button"
+                        @click="servicios = servicios.map(servicio => servicio.nombre === 'Lavado Simple' ? {...servicio, nombre: $refs.nombreEditado.value, categoria: $refs.categoriaSeleccionada.value, precio: $refs.precioEditado.value, descripcion: $refs.descripcionEditada.value, activo: $refs.estado.checked} : servicio)"
+                        class="px-6 py-2 bg-[#0891b2] text-white rounded-lg">
                         Guardar Cambios
                     </button>
+
                 </div>
             </form>
         </div>

@@ -4,18 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import com.laundry.lavanderia.Model.serviceLaundry.Categoria;
 import com.laundry.lavanderia.Model.serviceLaundry.RegistroServicioLavanderia;
 import com.laundry.lavanderia.Model.serviceLaundry.Servicio;
@@ -35,77 +32,17 @@ public class ServiceLaundryController {
 
     public ServiceLaundryController() {
         // Datos iniciales
-        servicios.add(new Servicio("Lavado Simple", "Lavado básico", 15.0));
-        servicios.add(new Servicio("Planchado Rápido", "Planchado sencillo", 20.0));
-        categorias.add(new Categoria("Ropa Normal", servicios));
+        List<Servicio> serviciosIniciales = new ArrayList<>();
+        serviciosIniciales.add(new Servicio("Lavado Simple", "Lavado básico", 15.0, true));
+        serviciosIniciales.add(new Servicio("Planchado Rápido", "Planchado sencillo", 20.0, true));
+
+        // Asegúrate de proporcionar un valor para la descripción al crear la categoría
+        categorias .add(new Categoria("Ropa Normal", serviciosIniciales, true, "Descripción de la categoría Ropa Normal"));
     }
 
-    // Mostrar categorías
-    @GetMapping("/categories")
-    public String showCategories(Model model) {
-        model.addAttribute("categorias", categorias);
-        return "services-management/edit-category";
-    }
+    // ** Vistas principales **
 
-    // Actualizar categoría (estado y nombre)
-    @PostMapping("/categories/update")
-    public String updateCategory(@RequestParam String nombre, @RequestParam boolean activo) {
-        categorias.forEach(categoria -> {
-            if (categoria.getNombre().equals(nombre)) {
-                categoria.setActivo(activo);
-            }
-        });
-        return "redirect:/serviceLaundry/categories";
-    }
-
-
-    @PostMapping("/categories/add")
-    public String addCategory(@RequestParam String nombre, @RequestParam String descripcion) {
-        categorias.add(new Categoria(nombre, new ArrayList<>()));
-        return "redirect:/serviceLaundry/categories";
-    }
-
-    @PostMapping("/categories/delete")
-    public String deleteCategory(@RequestParam String nombre) {
-        categorias.removeIf(c -> c.getNombre().equals(nombre));
-        return "redirect:/serviceLaundry/categories";
-    }
-
-    @GetMapping("/services")
-    public String showServices(Model model) {
-        model.addAttribute("servicios", servicios);
-        return "services-management/edit-service.html";
-    }
-
-    @PostMapping("/services/add")
-    public String addService(@RequestParam String nombre, @RequestParam String detalle, @RequestParam double precio) {
-        servicios.add(new Servicio(nombre, detalle, precio));
-        return "redirect:/serviceLaundry/services";
-    }
-
-    // Añadir nuevo servicio
-    @PostMapping("/services/add")
-    public String addService(@RequestParam String nombre, @RequestParam String detalle, @RequestParam double precio,
-            @RequestParam String categoriaNombre) {
-        categorias.forEach(categoria -> {
-            if (categoria.getNombre().equals(categoriaNombre) && categoria.isActivo()) {
-                Servicio nuevoServicio = new Servicio(nombre, detalle, precio);
-                categoria.getServicios().add(nuevoServicio);
-                servicios.add(nuevoServicio);
-            }
-        });
-        return "redirect:/serviceLaundry/services";
-    }
-
-
-
-    @PostMapping("/services/delete")
-    public String deleteService(@RequestParam String nombre) {
-        servicios.removeIf(s -> s.getNombre().equals(nombre));
-        return "redirect:/serviceLaundry/services";
-    }
-
-    @GetMapping("index")
+    @GetMapping("/index")
     public String showIndexPage(Model model) {
         model.addAttribute("content", "services-laundry/index.html");
         return SHARED_LAYOUT;
@@ -118,7 +55,6 @@ public class ServiceLaundryController {
 
     @GetMapping("/selection")
     public String showServiceSelectionFragment(Model model) {
-
         List<Servicio> servicios1 = Arrays.asList(
                 new Servicio("Lavado", "Descripción del Servicio 1", 10),
                 new Servicio("Servicio 2", "Descripción del Servicio 2", 120));
@@ -136,20 +72,131 @@ public class ServiceLaundryController {
         return "services-laundry/service-selection";
     }
 
+    // ** Gestión de categorías **
+
+    @GetMapping("/categories")
+    public String showCategories(Model model) {
+        model.addAttribute("categorias", categorias);
+        return "services-management/edit-category";
+    }
+
+    @PostMapping("/categories/add")
+    @ResponseBody
+    public Map<String, Object> addCategory(@RequestParam String nombre, @RequestParam String descripcion) {
+        System.out.println("Nombre: " + nombre + ", Descripción: " + descripcion);
+        Categoria nuevaCategoria = new Categoria(nombre, new ArrayList<>(), true, descripcion);
+        categorias.add(nuevaCategoria);
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("status", "success");
+        respuesta.put("categoria", nuevaCategoria);
+        return respuesta;
+    }
+    
+
+    @PostMapping("/categories/edit")
+    @ResponseBody
+    public Map<String, Object> editCategory(@RequestParam String nombreOriginal, @RequestParam String nuevoNombre,
+            @RequestParam String descripcion, @RequestParam boolean activo) {
+        for (Categoria categoria : categorias) {
+            if (categoria.getNombre().equals(nombreOriginal)) {
+                categoria.setNombre(nuevoNombre);
+                categoria.setDescripcion(descripcion);
+                categoria.setActivo(activo);
+            }
+        }
+
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("status", "success");
+        return respuesta;
+    }
+
+    @PostMapping("/categories/update")
+    public String updateCategory(@RequestParam String nombre, @RequestParam boolean activo) {
+        categorias.forEach(categoria -> {
+            if (categoria.getNombre().equals(nombre)) {
+                categoria.setActivo(activo);
+            }
+        });
+        return "redirect:/serviceLaundry/categories";
+    }
+    
+
+    @PostMapping("/categories/delete")
+    public String deleteCategory(@RequestParam String nombre) {
+        categorias.forEach(categoria -> {
+            if (categoria.getNombre().equals(nombre)) {
+                categoria.setActivo(false);
+            }
+        });
+        return "redirect:/serviceLaundry/categories";
+    }
+
+    @PostMapping("/categories/deactivate")
+    @ResponseBody
+    public Map<String, Object> deactivateCategory(@RequestParam String nombre) {
+        for (Categoria categoria : categorias) {
+            if (categoria.getNombre().equals(nombre)) {
+                categoria.setActivo(false);
+            }
+        }
+
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("status", "success");
+        return respuesta;
+    }
+
+    // ** Gestión de servicios **
+
+    @GetMapping("/services")
+    public String showServices(Model model) {
+        model.addAttribute("servicios", servicios);
+        return "services-management/edit-service.html";
+    }
+
+    @PostMapping("/services/add")
+    public ResponseEntity<?> addService(@RequestParam String nombre, @RequestParam String detalle,
+            @RequestParam double precio, @RequestParam String categoriaNombre) {
+        Optional<Categoria> categoriaOptional = categorias.stream()
+                .filter(c -> c.getNombre().equals(categoriaNombre) && c.isActivo())
+                .findFirst();
+
+        if (categoriaOptional.isPresent()) {
+            Categoria categoria = categoriaOptional.get();
+            Servicio nuevoServicio = new Servicio(nombre, detalle, precio, true);
+            categoria.getServicios().add(nuevoServicio);
+            servicios.add(nuevoServicio);
+            return ResponseEntity.ok(Map.of("status", "success", "servicio", nuevoServicio));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("status", "error", "message", "Categoría no encontrada o inactiva"));
+        }
+    }
+
+    @PostMapping("/services/delete")
+    public String deleteService(@RequestParam String nombre) {
+        servicios.forEach(servicio -> {
+            if (servicio.getNombre().equals(nombre)) {
+                servicio.setActivo(false);
+            }
+        });
+        return "redirect:/serviceLaundry/services";
+    }
+
+    // ** Registro y boleta **
+
     @PostMapping("/register")
     @ResponseBody
     public Map<String, Object> registerService(@RequestBody RegistroServicioLavanderia registro) {
         try {
-            // Guardar el registro en sesion con un Id unico
             String boletaId = generarNumeroBoleta();
             httpSession.setAttribute("boleta_" + boletaId, registro);
 
-            Map<String, Object> repuesta = new HashMap<>();
-            repuesta.put("status", "success");
-            repuesta.put("boletaId", boletaId);
-            repuesta.put("boletaUrl", "/serviceLaundry/boleta/" + boletaId);
+            Map<String, Object> respuesta = new HashMap<>();
+            respuesta.put("status", "success");
+            respuesta.put("boletaId", boletaId);
+            respuesta.put("boletaUrl", "/serviceLaundry/boleta/" + boletaId);
 
-            return repuesta;
+            return respuesta;
         } catch (Exception e) {
             Map<String, Object> error = new HashMap<>();
             error.put("status", "error");
@@ -161,15 +208,13 @@ public class ServiceLaundryController {
     @GetMapping("/boleta/{boletaId}")
     public String generarBoleta(@PathVariable String boletaId, Model model) {
         try {
-            // Recuperar datos de la sesion
             RegistroServicioLavanderia registro = (RegistroServicioLavanderia) httpSession
                     .getAttribute("boleta_" + boletaId);
 
             if (registro == null) {
-                throw new RuntimeException("boletaa no encontrada o esta expirada");
+                throw new RuntimeException("Boleta no encontrada o está expirada");
             }
 
-            // agregar datos al modelo
             model.addAttribute("numeroBoleta", boletaId);
             model.addAttribute("fecha", new java.util.Date());
             model.addAttribute("nombreCliente", registro.getNombreCliente());
@@ -179,7 +224,6 @@ public class ServiceLaundryController {
             model.addAttribute("precioTotal", registro.getPrecioTotal());
             model.addAttribute("metodoPago", registro.getMetodoPago());
 
-            // se Limpiar la sesion despuess de usar
             httpSession.removeAttribute("boleta_" + boletaId);
 
             return "services-laundry/boleta";
@@ -191,24 +235,5 @@ public class ServiceLaundryController {
     private String generarNumeroBoleta() {
         return "B-" + System.currentTimeMillis();
     }
-
-    @PostMapping("/categories/deactivate")
-    public String deactivateCategory(@RequestParam String nombre) {
-        categorias.forEach(categoria -> {
-            if (categoria.getNombre().equals(nombre)) {
-                categoria.setActivo(false);
-            }
-        });
-        return "redirect:/serviceLaundry/categories";
-    }
-
-    @PostMapping("/services/deactivate")
-    public String deactivateService(@RequestParam String nombre) {
-        servicios.forEach(servicio -> {
-            if (servicio.getNombre().equals(nombre)) {
-                servicio.setActivo(false);
-            }
-        });
-        return "redirect:/serviceLaundry/services";
-    }
+    
 }
