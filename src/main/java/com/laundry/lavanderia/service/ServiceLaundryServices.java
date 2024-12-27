@@ -7,7 +7,7 @@ import com.laundry.lavanderia.Model.client.cliente;
 
 @Service
 public class ServiceLaundryServices {
-    
+
     private List<cliente> clientes = new ArrayList<>();
 
     public ServiceLaundryServices() {
@@ -49,15 +49,14 @@ public class ServiceLaundryServices {
     }
 
     public void registerClient(cliente newClient) {
-        // Asignar ID (simulado)
+        // id
         Long newId = clientes.stream()
                 .mapToLong(cliente::getId)
                 .max()
                 .orElse(0L) + 1L;
         newClient.setId(newId);
         newClient.setActivo(
-            newClient.getActivo() == null ? false : true
-        );
+                newClient.getActivo() == null ? false : true);
         clientes.add(newClient);
     }
 }
