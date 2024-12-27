@@ -1,0 +1,214 @@
+<style>
+    body {
+        background-color: rgb(249 250 251 / 0.5);
+    }
+</style>
+
+<div class="min-h-screen py-8">
+    <div class="max-w-7xl mx-auto px-4">
+        <!-- Header con información -->
+        <div class="mb-8">
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">Gestión de Clientes</h1>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+                <div class="bg-white rounded-xl p-4 shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-blue-50 p-3 rounded-lg">
+                            <i class="fas fa-users text-blue-500"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Total Clientes</p>
+                            <p class="text-xl font-bold text-gray-800" id="totalClientes">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-green-50 p-3 rounded-lg">
+                            <i class="fas fa-user-check text-green-500"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Clientes Activos</p>
+                            <p class="text-xl font-bold text-gray-800" id="clientesActivos">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Barra de búsqueda -->
+        <div class="bg-white rounded-xl shadow-sm p-4 mb-6">
+            <div class="flex flex-wrap gap-4 items-center justify-between">
+                <div class="relative flex-grow max-w-md">
+                    <input type="text" id="searchInput" placeholder="Buscar por nombre o teléfono..."
+                        class="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent transition-all">
+                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                </div>
+                <div class="flex">
+                    <a href="/client/register"
+                        class="bg-[#0891b2] text-white px-4 py-2 rounded-lg hover:bg-[#0891b2]/90 transition-colors flex items-center gap-2">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Nuevo Cliente</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="overflow-y-auto max-h-[600px] pr-2">
+            <div id="clientesContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Las tarjetas de clientes se generarán dinámicamente aquí -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Template para las tarjetas de cliente -->
+<template id="clienteTemplate">
+    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group">
+        <div class="p-5">
+            <div class="flex items-start gap-4">
+                <div class="h-12 w-12 rounded-full bg-[#0891b2]/10 flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-user text-[#0891b2]"></i>
+                </div>
+                <div class="flex-grow">
+                    <h3 class="font-medium text-gray-800 text-lg mb-1 truncate cliente-nombre"></h3>
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2 text-gray-600">
+                            <i class="fas fa-phone text-sm w-4"></i>
+                            <span class="text-sm cliente-telefono"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-gray-600">
+                            <i class="fas fa-map-marker-alt text-sm w-4"></i>
+                            <span class="text-sm truncate cliente-direccion"></span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 mt-2">
+                        <span class="px-2 py-1 text-xs rounded-full cliente-estado"></span>
+                        <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full cliente-codigo"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="px-5 py-3 bg-gray-50 flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button class="p-2 text-gray-600 hover:text-[#0891b2] rounded-lg transition-colors btn-editar">
+                <i class="fas fa-edit"></i>
+            </button>
+            <button class="p-2 text-gray-600 hover:text-red-500 rounded-lg transition-colors btn-eliminar">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    </div>
+</template>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const clientesContainer = document.getElementById('clientesContainer');
+    const clienteTemplate = document.getElementById('clienteTemplate');
+
+    // Cargar clientes iniciales
+    loadClientes();
+
+    // Configurar búsqueda
+    searchInput.addEventListener('input', debounce(handleSearch, 300));
+
+    function loadClientes() {
+        fetch('/client/search?query=')
+            .then(response => response.json())
+            .then(clientes => {
+                updateClientesDisplay(clientes);
+                updateContadores();
+            });
+    }
+
+    function handleSearch(event) {
+        const query = event.target.value;
+        fetch(`/client/search?query=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(clientes => {
+                updateClientesDisplay(clientes);
+            });
+    }
+
+    function updateClientesDisplay(clientes) {
+        clientesContainer.innerHTML = '';
+        clientes.forEach(cliente => {
+            const card = createClienteCard(cliente);
+            clientesContainer.appendChild(card);
+        });
+    }
+
+    function createClienteCard(cliente) {
+        const clone = clienteTemplate.content.cloneNode(true);
+        
+        // Actualizar contenido
+        clone.querySelector('.cliente-nombre').textContent = cliente.nombre;
+        clone.querySelector('.cliente-telefono').textContent = cliente.telefono;
+        clone.querySelector('.cliente-direccion').textContent = cliente.direccion;
+        clone.querySelector('.cliente-codigo').textContent = cliente.codigoCliente;
+
+        // Estado
+        const estadoSpan = clone.querySelector('.cliente-estado');
+        estadoSpan.textContent = cliente.activo ? 'Activo' : 'Inactivo';
+        estadoSpan.className = `px-2 py-1 text-xs rounded-full ${
+            cliente.activo ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
+        }`;
+
+        // Configurar botones
+        const btnEditar = clone.querySelector('.btn-editar');
+        const btnEliminar = clone.querySelector('.btn-eliminar');
+
+        btnEditar.addEventListener('click', () => {
+            window.location.href = `/client/register?id=${cliente.id}`;
+        });
+
+        btnEliminar.addEventListener('click', () => {
+            if (confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
+                deleteCliente(cliente.id);
+            }
+        });
+
+        return clone;
+    }
+
+    function deleteCliente(id) {
+        fetch(`/client/delete/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                loadClientes();
+            } else {
+                alert(result.message);
+            }
+        });
+    }
+
+    function updateContadores() {
+        const totalElement = document.getElementById('totalClientes');
+        const activosElement = document.getElementById('clientesActivos');
+
+        fetch('/client/index')
+            .then(response => response.json())
+            .then(data => {
+                totalElement.textContent = data.totalClientes;
+                activosElement.textContent = data.clientesActivos;
+            });
+    }
+
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+});
+</script>

@@ -112,4 +112,3 @@ Frecuencia: Haz commits pequeños y frecuentes.
 Comentarios: Proporciona mensajes claros y significativos en tus commits.
 Colaboración: Comunica cualquier problema o duda con el equipo.
 
-   

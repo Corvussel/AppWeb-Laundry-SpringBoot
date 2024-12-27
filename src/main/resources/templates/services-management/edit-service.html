@@ -1,0 +1,102 @@
+<div class="min-h-screen bg-gray-50/50 py-8"> 
+    <div class="max-w-3xl mx-auto px-4">
+        <!-- Header -->
+        <div class="mb-8">
+            <a href="/management/services-laundry" class="text-gray-500 hover:text-[#0891b2] flex items-center gap-2 mb-4">
+                <i class="fas fa-arrow-left"></i>
+                <span>Volver a servicios</span>
+            </a>
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">Editar Servicio</h1>
+            <p class="text-gray-600">Modifica los detalles del servicio</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <form class="space-y-6">
+                <!-- Informacionn -->
+                <div class="border-b pb-6">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Información del Serviciosss</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-700">Nombre del Serviciosss</label>
+                            <input type="text" value="Lavado Simple" 
+                                class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-700">Categoría</label>
+                            <select class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
+                                <option value="1">Ropa Normal</option>
+                                <option value="2">Ropa Delicada</option>
+                                <option value="3">Ropa de Cama</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Precios y tiempos -->
+                <div class="border-b pb-6">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Precios y Tiempos</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-700">Precio Base</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">S/</span>
+                                <input type="number" value="15.00" step="0.50"
+                                    class="w-full pl-8 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-700">Tiempo Estimado</label>
+                            <div class="relative">
+                                <input type="number" value="2" min="1"
+                                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
+                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">hrs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- estado del servicio -->
+                <div class="border-b pb-6">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Detalles Adicionales</h2>
+                    <div class="space-y-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-700">Descripción</label>
+                            <textarea rows="3" 
+                                class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
+                            >Servicio de lavado básico para prendas normales.</textarea>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-700">Estado</label>
+                            <div class="flex gap-4">
+                                <label class="flex items-center gap-2">
+                                    <input type="radio" name="status" value="active" checked
+                                        class="text-[#0891b2] focus:ring-[#0891b2]">
+                                    <span class="text-sm text-gray-700">Activo</span>
+                                </label>
+                                <label class="flex items-center gap-2">
+                                    <input type="radio" name="status" value="inactive"
+                                        class="text-[#0891b2] focus:ring-[#0891b2]">
+                                    <span class="text-sm text-gray-700">Inactivo</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="flex justify-end gap-4 pt-4">
+                    <button type="button" onclick="window.location.href='/management/services-laundry'"
+                        class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                        Cancelar
+                    </button>
+                    <button type="submit"
+                        class="px-6 py-2 bg-[#0891b2] text-white rounded-lg hover:bg-[#0891b2]/90 transition-colors flex items-center gap-2">
+                        <i class="fas fa-save"></i>
+                        Guardar Cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

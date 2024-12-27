@@ -1,32 +1,62 @@
-// Evento Relacionado al Spinner
+ //evento cuando se presiona un button-categoria
+ const container_btnCategorias = document.querySelector('#categoriasTabsButton');
 
-const spinner = document.getElementById("spinner");
-const btnIncrement = document.getElementById("btnIncrement");
-const btnDecrement = document.getElementById("btnDecrement");
+ container_btnCategorias.addEventListener('click', function (e) {
 
-btnIncrement.addEventListener('click', () => {
+     const button_presionado = e.target.closest('.nav-button');
 
-    const value = Number(spinner.value); // Valor del input spinner
-    const step = Number(spinner.dataset.step);// El valor del incremento
-    const increment = value + step; // resultado
+     if (button_presionado) {
+         const value = button_presionado.value;
+        // removerActiveButtons();
+         mostrarTabPestaña(value);
+       //  button_presionado.classList.add('active'); 
 
-    if (increment <= 20) {
-        spinner.value = increment; // Mostramos
+     }
+ });
+
+ function removerActiveButtons() {
+     document.querySelectorAll('.nav-link').forEach(btn => { btn.classList.remove('active') });
+ }
+
+ function mostrarTabPestaña(tabCategoria) {
+     // Se Itera por todas las pestañas
+     document.querySelectorAll('.tab-pane').forEach(tabPage => {
+         const value = tabPage.id; // el Id de la pestaña
+         // Mostrar u ocultar la pestaña segun coincida con la categoria
+         if (!value.includes(tabCategoria)) {
+             tabPage.classList.add('hidden');
+         } else {
+             tabPage.classList.remove('hidden');
+         }
+     });
+ }
+
+
+// Evento para la activacion tarjetas de servicios
+const cardContainer = document.getElementById('card-container');
+
+cardContainer.addEventListener('click', (event) => {
+
+    // Verificar si el clic ocurrio en una tarjeta
+    const card = event.target.closest('.card-service');
+
+    if (card) {
+
+        desmarcarTarjetas();//Desmarcar tarjetas anteriores
+        card.classList.add('card-active');//Marcar Tarjeta actual
+ 
     }
 
 });
 
-btnDecrement.addEventListener('click', () => {
-    const value = Number(spinner.value); // Valor del input spinner
-    const step = Number(spinner.dataset.step);// El valor del incremento
-    const decrement = value - step; // resultado
-    if (decrement > 0) {
-        spinner.value = decrement; // Mostramos
-    }
-});
+// función para desmarcar todas las tarjetas
+function desmarcarTarjetas() {
+    const cards = document.querySelectorAll('.card-active');
+    cards.forEach(card => { card.classList.remove('card-active') });
+};
 
-
-//Evento Relacionado ala Busqueda de Servicio
+ 
+//Evento Relacionado a la Busqueda de Servicio
 
 const searchInput = document.getElementById('searchInput');
 searchInput.addEventListener('input', filterCards);
@@ -35,7 +65,7 @@ searchInput.addEventListener('input', filterCards);
 function filterCards() {
 
     const searchInput = document.getElementById('searchInput'); // input de busqueda
-    const cards = document.querySelectorAll('.card'); // cards
+    const cards = document.querySelectorAll('.card-service'); // cards
 
     cards.forEach((card) => {
 

@@ -1,0 +1,377 @@
+<style>
+    body {
+        background-color: white;
+    }
+</style>
+<div x-data="{ openModal: false }">
+
+    <!-- Contenedor Principal -->
+    <div class="max-w-6xl mx-auto space-y-4 my-7">
+        <!-- titulo -->
+        <h1 class="md:text-2xl text-lg font-bold text-center mb-4 text-gray-700">Resumen Diario de Lavandería</h1>
+
+        <div class="bg-white gap-2 p-4 flex flex-wrap justify-center">
+            <!-- Grafico -->
+            <div class="rounded-xl shadow p-4 w-full lg:w-6/12 sm:w-full md:w-7/12">
+                <h2 class="text-sm font-semibold text-gray-600 mb-4">Top Servicios Solicitados</h2>
+                <canvas id="topServiciosChart" height="200"></canvas>
+            </div>
+            <!-- Tarjetas -->
+            <div class="flex-grow grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-3 md:px-5">
+                <!-- Tarjeta Prendas Lavadas -->
+                <div class="bg-white p-4 rounded-xl shadow flex space-x-3 flex-col md:gap-3 gap-1">
+                    <div class="bg-[#f0f9ff] p-2 rounded-full flex items-center  md:gap-3 gap-1">
+                        <div class=" bg-blue-400 text-white md:p-3 md:px-4 p-2 px-3 rounded-full text-center">
+                            <i class="fa-solid fa-shirt md:fa-lg"></i>
+                        </div>
+                        <div>
+                            <p class="md:text-xs text-[11px] text-gray-400 uppercase">Prendas Lavadas</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="md:text-2xl text-base font-serif text-[#1798b7]">125</h3>
+                    </div>
+                </div>
+                <!-- Tarjeta Ingreso Diario -->
+                <div class="bg-white p-4 rounded-xl shadow flex space-x-3 flex-col gap-1">
+                    <div class="bg-[#f0f9ff] p-2 rounded-full flex items-center  md:gap-3 gap-1">
+                        <div class=" bg-green-600 text-white md:p-3 md:px-4 p-2 px-3 rounded-full text-center">
+                            <i class="fa-solid fas fa-check md:fa-lg"></i>
+                        </div>
+                        <div>
+                            <p class="md:text-xs text-[11px] text-gray-400 uppercase">Entregado</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="md:text-2xl text-base font-serif text-[#1798b7]">10</h3>
+                    </div>
+                </div>
+                <!-- Tarjeta Pendientes -->
+                <div class="bg-white p-4 rounded-xl shadow flex space-x-3 flex-col gap-1">
+                    <div class="bg-[#f0f9ff] p-2 rounded-full flex items-center  md:gap-3 gap-1">
+                        <div class=" bg-orange-400 text-white md:p-3 md:px-4 p-2 px-3 rounded-full text-center">
+                            <i class="fa-solid fa-clock md:fa-lg"></i>
+                        </div>
+                        <div>
+                            <p class="md:text-xs text-[11px] text-gray-400 uppercase">Pendientes</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="md:text-2xl text-base font-serif text-[#1798b7]">15</h3>
+                    </div>
+                </div>
+                <!-- Tarjeta Clientes Atendidos -->
+                <div class="bg-white p-4 rounded-xl shadow flex space-x-3 flex-col gap-1">
+                    <div class="bg-[#f0f9ff] p-2 rounded-full flex items-center  md:gap-3 gap-1">
+                        <div class=" bg-teal-500 text-white md:p-3 md:px-4 p-2 px-3  rounded-full text-center">
+                            <i class="fa-solid fa-user-check md:fa-lg"></i>
+                        </div>
+                        <div>
+                            <p class="md:text-xs text-[11px] text-gray-400 uppercase">Clientes Atendidos</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="md:text-2xl text-base font-serif text-[#1798b7]">85</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sm:px-6 w-full bg-white rounded-lg shadow-lg">
+            <div class="px-4 md:px-0 py-4 md:py-4">
+                <div class="flex items-center justify-between">
+                    <p tabindex="0"
+                        class="pl-3 focus:outline-none text-base sm:text-lg md:text-lg font-bold leading-normal text-gray-800">
+                        Opciones
+                    </p>
+                    <div
+                        class="py-3 px-4 flex items-center text-sm font-medium leading-none text-gray-600 bg-gray-200 hover:bg-gray-300 cursor-pointer rounded">
+                        <p>Ordenar por:</p>
+                        <select aria-label="select"
+                            class="focus:text-indigo-600 focus:outline-none bg-transparent ml-1">
+                            <option class="text-sm text-indigo-800">Ultimo</option>
+                            <option class="text-sm text-indigo-800">Antiguo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="py-4 px-4 md:py-7 md:px-0 xl:px-0 ">
+                <div class="overflow-x-auto max-h-72 w-full">
+                    <table class="w-full whitespace-nowrap" id="tableDetails">
+                        <thead class="uppercase text-gray-600">
+                            <tr>
+                                <th class="pl-7 p-2 text-xs text-start">ID</th>
+                                <th class="pl-6 p-2 text-xs text-start">Cliente</th>
+                                <th class="pl-6 p-2 text-xs text-start">Servicio</th>
+                                <th class="pl-6 p-2 text-xs text-start">Costo</th>
+                                <th class="pl-6 p-2 text-xs text-start">Estado</th>
+                                <th class="pl-6 p-2 text-xs text-start">Accion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr tabindex="0" class="hover:bg-slate-50 h-16 border border-gray-100 rounded">
+                                <td class="pl-6">
+                                    <div class="flex items-center">
+                                        <p class="text-sm leading-none text-gray-600 ml-2">001</p>
+                                    </div>
+                                </td>
+                                <td class="pl-5">
+                                    <div class="flex items-center">
+                                        <p class="text-base font-medium leading-none text-gray-700 mr-2">
+                                            Russel Flores solano
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="pl-6">
+                                    <div class="flex items-center">
+                                        <p class="text-sm leading-none text-gray-600 ml-2">Lavado rapido</p>
+                                    </div>
+                                </td>
+
+                                <td class="pl-5">
+                                    <div class="flex items-center">
+                                        <span class="text-sm leading-none text-gray-600">S/</span>
+                                        <p class="text-sm leading-none text-gray-600 ml-2">23</p>
+                                    </div>
+                                </td>
+
+                                <td class="pl-5">
+                                    <p
+                                        class="py-3 px-3 text-sm focus:outline-none leading-none text-green-700 bg-green-100 rounded">
+                                        Entregado
+                                    </p>
+                                </td>
+                                <td class="pl-4">
+                                    <button
+                                        class="fila-button focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none"
+                                        data-id-details="id de la Tabla" @click="openModal = true" name="button-fila">
+                                        Ver Detalles
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="h-3"></tr>
+                            <tr tabindex="0" class="hover:bg-slate-50 h-16 border border-gray-100 rounded">
+                                <td class="pl-6">
+                                    <div class="flex items-center">
+                                        <p class="text-sm leading-none text-gray-600 ml-2">002</p>
+                                    </div>
+                                </td>
+                                <td class="pl-5">
+                                    <div class="flex items-center">
+                                        <p class="text-base font-medium leading-none text-gray-700 mr-2">
+                                            Russel Flores solano
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="pl-6">
+                                    <div class="flex items-center">
+                                        <p class="text-sm leading-none text-gray-600 ml-2">Lavado rapido</p>
+                                    </div>
+                                </td>
+
+                                <td class="pl-5">
+                                    <div class="flex items-center">
+                                        <span class="text-sm leading-none text-gray-600">S/</span>
+                                        <p class="text-sm leading-none text-gray-600 ml-2">23</p>
+                                    </div>
+                                </td>
+
+                                <td class="pl-5">
+                                    <p
+                                        class="py-3 px-3 text-sm focus:outline-none leading-none text-orange-700 bg-orange-100 rounded">
+                                        Pendiente
+                                    </p>
+                                </td>
+                                <td class="pl-4">
+                                    <button
+                                        class="fila-button focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none"
+                                        data-id-details="id de la Tabla" @click="openModal = true" name="button-fila">
+                                        Ver Detalles
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal-->
+    <div x-show="openModal" x-cloak="openModal"
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-300"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-2xl mx-4 max-h-[90vh] flex flex-col">
+            <!-- Header del Modal -->
+            <div class="p-6 border-b">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-4">
+                        <div class="h-12 w-12 bg-[#f0f9ff] rounded-full flex items-center justify-center">
+                            <i class="fas fa-receipt text-[#0891b2] text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800">Detalles de Venta</h3>
+                            <p class="text-sm text-gray-500">Orden #B0003</p>
+                        </div>
+                    </div>
+                    <button @click="openModal = false" class="text-gray-400 hover:text-gray-600">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Contenido del Modal -->
+            <div class="p-6 overflow-y-auto">
+                <!-- Información del Cliente -->
+                <div class="bg-gray-50 rounded-xl p-4 mb-6">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                                    <i class="fas fa-user text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-800">Russel Flores Solano</p>
+                                    <p class="text-xs text-gray-500">Cliente Regular</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-gray-600 ml-13">
+                                <i class="fas fa-phone w-4"></i>
+                                <span>992-676-862</span>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">Estado:</span>
+                                <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
+                                    Completado
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">Fecha:</span>
+                                <span class="text-sm font-medium text-gray-800">2024-01-15</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lista de servicio -->
+                <div class="space-y-3">
+                    <h4 class="font-medium text-gray-700 mb-2">Servicios Solicitados</h4>
+                    <article class="bg-gray-50 rounded-xl p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-blue-100 p-2 rounded-lg">
+                                    <i class="fas fa-tshirt text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium text-gray-800">Lavado Completo</h5>
+                                    <p class="text-sm text-gray-500">2 unidades</p>
+                                </div>
+                            </div>
+                            <p class="font-medium text-gray-800">S/ 25.00</p>
+                        </div>
+                        <div class="text-xs text-gray-500 border-t border-gray-200 pt-2 mt-2">
+                            Notas: Marca Nike, Color Negro
+                        </div>
+                    </article>
+                    <article class="bg-gray-50 rounded-xl p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-blue-100 p-2 rounded-lg">
+                                    <i class="fas fa-tshirt text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium text-gray-800">Lavado Completo</h5>
+                                    <p class="text-sm text-gray-500">2 unidades</p>
+                                </div>
+                            </div>
+                            <p class="font-medium text-gray-800">S/ 25.00</p>
+                        </div>
+                        <div class="text-xs text-gray-500 border-t border-gray-200 pt-2 mt-2">
+                            Notas: Marca Nike, Color Negro
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const table = document.getElementById('tableDetails');
+    table.addEventListener('click', function (e) {
+        const fila = e.target.closest('.fila-button');
+        if (fila) {
+            const mensaje = fila.getAttribute('data-id-details');
+            alert(mensaje);
+        }
+    });
+
+</script>
+
+<!-- Script del grafico -->
+<script>
+    const ctx = document.getElementById('topServiciosChart').getContext('2d');
+    const topServiciosChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Lavado Rápido', 'Lavado y Planchado', 'Lavado en Seco', 'Lavado de Sábanas'],
+            datasets: [{
+                data: [35, 28, 20, 15],
+                backgroundColor: ['#1E3A8A', '#10B981', '#F59E0B', '#8B5CF6'],
+                borderColor: '#FFFFFF',
+                borderWidth: 2,
+                borderRadius: 10,
+                barThickness: 30
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: '#1F2937',
+                    titleColor: '#F9FAFB',
+                    bodyColor: '#F9FAFB',
+                    borderColor: '#4B5563',
+                    borderWidth: 1
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: '#4B5563',
+                        font: {
+                            family: 'Arial',
+                            size: 12,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                y: {
+                    grid: {
+                        color: '#E5E7EB'
+                    },
+                    ticks: {
+                        color: '#4B5563',
+                        font: {
+                            family: 'Arial',
+                            size: 12,
+                            weight: 'bold'
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>

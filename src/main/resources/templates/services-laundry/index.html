@@ -1,161 +1,215 @@
-<link rel="stylesheet" href="/css/services-laundry/index.css">
+<div x-data="configuraciones()">
+    <!-- Contenedor Principal con iD -->
+    <section id="ContainerSalesRegistration" class="min-h-screen bg-gray-50/50 py-8">
+        <div class="max-w-4xl mx-auto px-4">
+            <!-- Header-->
+            <div class="bg-white rounded-xl shadow-lg p-6 space-y-8">
+                <div class="mb-6">
+                    <h1 class="text-2xl font-bold text-gray-800 mb-2">Registro de Servicio</h1>
+                    <p class="text-gray-600">Complete los detalles del servicio</p>
+                </div>
 
-<div class="container" id="ContainerSalesRegistration">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-12 col-lg-9 mt-5">
-            <div class="container-form">
-
-                <form id="form_Register">
-                    <div class="form-group">
-                        <label>Tipo Servicio</label>
-                        <div class="d-flex gap-2">
-                            <button type="button" name="button-service"
-                                class="btn btn-outline-primary btn-outline-selected flex-grow-1 p-3">Tienda</button>
-                            <button type="button" name="button-service"
-                                class="btn btn-outline-primary flex-grow-1 p-3">Envios</button>
+                <form id="form_Register" class="space-y-6" onsubmit="submitForm(event)">
+                    <!-- Tipo de Servicio -->
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-700">Tipo de Servicio</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button type="button"
+                                class="px-4 py-3 rounded-xl border-2 bg-[#0891b2] text-white hover:bg-[#0890b2ec] hover:text-white transition-colors flex items-center justify-center gap-2 btn-outline-selected">
+                                <i class="fas fa-store"></i>
+                                <span>Tienda</span>
+                            </button>
+                            <button type="button"
+                                class="px-4 py-3 rounded-xl border-2 border-[#0891b2] text-[#0891b2] hover:bg-[#0891b2] hover:text-white transition-colors flex items-center justify-center gap-2">
+                                <i class="fas fa-truck"></i>
+                                <span>Envíos</span>
+                            </button>
                         </div>
                     </div>
 
-                    <!--Accion para a seleccion de cliente mediante un modal-->
-                    <div class="form-group">
-                        <label>Cliente<span class="required"></span></label>
-                        <div class="input-icon" data-bs-toggle="modal" data-bs-target="#userModal">
-                            <input type="text" id="usuario" class="form-control" placeholder="Selecciona el cliente"
-                                readonly style="cursor:pointer;" />
-                            <i class="fas fa-chevron-down"></i>
+                    <!-- Seleccion de Cliente -->
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-700">Cliente
+                            <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative" @click="openModalUser" id="openModalButton">
+                            <input type="text" id="usuario" readonly
+                                class="w-full px-4 py-2 bg-gray-50/10 border border-gray-200 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
+                                placeholder="Seleccionar cliente">
+                            <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                         </div>
                     </div>
 
-                    <!--Nombre de cliente-->
-                    <div class="form-group">
-                        <label for="name">Nombre <span class="required"></span> </label>
-                        <input type="text" id="name" class="form-control" placeholder="Ingrese el nombre del cliente"
-                            required />
-                    </div>
-                    <!--Observacion-->
-                    <div class="form-group">
-                        <label for="observacion">Observacion</label>
-                        <input type="text" id="observacion" class="form-control" placeholder="Añada una observación" />
+                    <!-- Nombre y observaciones -->
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-700">Nombre
+                                 <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="nombreCliente" required value="flores"
+                                class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
+                                placeholder="Nombre del cliente">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-700">Observación</label>
+                            <input type="text" id="observacion"
+                                class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
+                                placeholder="Observaciones adicionales">
+                        </div>
                     </div>
 
 
-                    <!--Seleccion de Servicio -->
-                    <div class="form-group">
-                        <label for="name">Registrar Servicio<span class="required"></span> </label>
-                        <!--Tabla de Registro de Servicios-->
-                        <div class="table-container d-none" id="tableContainer">
-                            <div class="table-responsive">
-                                <table id="tableService" class="table">
-                                    <thead class="table-header">
+                    <!-- servicios -->
+                    <div class="space-y-4 bg-gray-50 rounded-xl p-6">
+                        <div class="flex flex-wrap items-center justify-between">
+                            <h2 class="md:text-lg text-base font-semibold text-gray-800 mb-2">Servicios Registrados</h2>
+                            <button type="button" id="BtnNuevoServicio" onclick="showServiceSelection()"
+                                class="bg-[#0891b2] text-white px-4 py-2 rounded-xl hover:bg-[#0891b2]/90 transition-all duration-300 flex items-center gap-2 shadow-lg shadow-[#0891b2]/10">
+                                <i class="fas fa-plus"></i>
+                                <span>Agregar Servicio</span>
+                            </button>
+                        </div>
+
+                        <!-- Tabla  -->
+                        <div id="tableContainer" class="hidden">
+                            <div class="overflow-x-auto rounded-xl border border-gray-200 bg-white">
+                                <table id="tableService" class="w-full">
+                                    <thead class="bg-gray-50/50">
                                         <tr>
-                                            <th scope="col" class="table-column">
-                                                Cantidad
+
+                                            <th class="px-6 py-4 text-xs font-medium text-gray-500 uppercase">Servicio
                                             </th>
-                                            <th scope="col" class="table-column w-50">
-                                                Servicio
+                                            <th class="px-6 py-4 text-xs font-medium text-gray-500 uppercase">Precio
+                                                Unitario
                                             </th>
-                                            <th scope="col" class="table-column">
-                                                Precio Unitario
+                                            <th class="px-6 py-4 text-xs font-medium text-gray-500 uppercase">Subtotal
                                             </th>
-                                            <th scope="col" class="table-column">
-                                                Sub Total
-                                                <span class="resizerTable"></span>
+                                            <th class="px-6 py-4 text-xs font-medium text-gray-500 uppercase">Detalles
                                             </th>
-                                            <th scope="col" class="table-column w-25">
-                                                Detallar Color - Marca
-                                            </th>
-                                            <th scope="col" class="table-column">
-                                                Acciones
+                                            <th class="px-6 py-4 text-xs font-medium text-gray-500 uppercase">Acciones
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <!--Contenido de la tabla-->
+                                    <tbody class="divide-y divide-gray-200">
+                                        <!-- Contenido de la tabla -->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div class="text-end mt-1 me-1">
-                            <!--button para mostrar la seleccion de servicio-->
-                            <button type="button" class="btn btn-outline-light w-100" id="BtnNuevoServicio"
-                                onclick="showServiceSelection()">Nuevo</button>
+                    </div>
+
+                    <!-- Totales -->
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-700">Total Servicio</label>
+                            <input type="number" disabled id="totalServicios" min="0"
+                                class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
+                                placeholder="0.00">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-700">Total Cobro</label>
+                            <input type="number" id="totalCobro" required value="2" min="0"
+                                class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
+                                placeholder="0.00">
                         </div>
                     </div>
 
-                    <!-- Total del Servicio -->
-                    <div class="form-group">
-                        <label for="totalServicio">Total Servicio</label>
-                        <input type="number" id="totalServicio" class="form-control"
-                            placeholder="Ingrese el total del servicio" required />
-                    </div>
-
-                    <!-- Total Cobro -->
-                    <div class="form-group">
-                        <label for="totalCobro">Total Cobro</label>
-                        <input type="number" id="totalCobro" class="form-control"
-                            placeholder="Ingrese el total a cobrar" required />
-                    </div>
-
-                    <!--Metodo de pagos-->
-                    <div class="form-group">
-                        <label class="mb-2">Métodos de Cobro:</label>
-                        <div class="payment-group">
-                            <button type="button" class="btn btn-outline-primary" data-value="10" name="payment-button">
-                                <i class="fas fa-money-bill-wave"></i> <span class="ms-2">Efectivo</span>
+                    <!-- Metodos de Pago -->
+                    <div class="space-y-4">
+                        <h2 class="text-lg font-semibold text-gray-800">Método de Pago</h2>
+                        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 payment-group">
+                            <button type="button" name="payment-button" data-value="10"
+                                @click="selectedTipoPago = tipoPago.EFECTIVO"
+                                x-bind:class="{'bg-[#0891b2] text-white':selectedTipoPago === tipoPago.EFECTIVO }"
+                                class="px-4 py-3 rounded-xl border border-[#0891b2] text-[#0891b2] hover:bg-[#0891b2] hover:text-white transition-all flex items-center justify-center gap-2">
+                                <i class="fas fa-money-bill-wave"></i>
+                                <span>Efectivo</span>
                             </button>
-                            <button type="button" class="btn btn-outline-primary" data-value="15" name="payment-button">
-                                <i class="fas fa-wallet"></i> <span class="ms-2">Yape</span>
+                            <button type="button" name="payment-button" data-value="15"
+                                @click="selectedTipoPago = tipoPago.YAPE"
+                                x-bind:class="{'bg-[#0891b2] text-white':selectedTipoPago === tipoPago.YAPE }"
+                                class="px-4 py-3 rounded-xl border border-[#0891b2] text-[#0891b2] hover:bg-[#0891b2] hover:text-white transition-all flex items-center justify-center gap-2">
+                                <i class="fas fa-qrcode"></i>
+                                <span>Yape</span>
                             </button>
-                            <button type="button" class="btn btn-outline-primary" data-value="5" name="payment-button">
-                                <i class="fas fa-wallet"></i> <span class="ms-2">Plin</span>
+                            <button type="button" name="payment-button" data-value="5"
+                                @click="selectedTipoPago = tipoPago.PLIN"
+                                x-bind:class="{'bg-[#0891b2] text-white':selectedTipoPago === tipoPago.PLIN }"
+                                class="px-4 py-3 rounded-xl border border-[#0891b2] text-[#0891b2] hover:bg-[#0891b2] hover:text-white transition-all flex items-center justify-center gap-2">
+                                <i class="fas fa-qrcode"></i>
+                                <span>Plin</span>
                             </button>
-                            <button type="button" class="btn btn-outline-primary" data-value="20" name="payment-button">
-                                <i class="fas fa-credit-card"></i> <span class="ms-2">Pos</span>
+                            <button type="button" name="payment-button" data-value="20"
+                                @click="selectedTipoPago = tipoPago.POS"
+                                x-bind:class="{'bg-[#0891b2] text-white':selectedTipoPago === tipoPago.POS }"
+                                class="px-4 py-3 rounded-xl border border-[#0891b2] text-[#0891b2] hover:bg-[#0891b2] hover:text-white transition-all flex items-center justify-center gap-2">
+                                <i class="fas fa-credit-card"></i>
+                                <span>POS</span>
                             </button>
-                            <button type="button" class="btn btn-outline-primary" data-value="12" name="payment-button">
-                                <i class="fas fa-exchange-alt"></i> <span class="ms-2">Transferencia</span>
+                            <button type="button" name="payment-button" data-value="25"
+                                @click="selectedTipoPago = tipoPago.TRANSFERENCIA"
+                                x-bind:class="{'bg-[#0891b2] text-white':selectedTipoPago === tipoPago.TRANSFERENCIA }"
+                                class="px-4 py-3 rounded-xl border border-[#0891b2] text-[#0891b2] hover:bg-[#0891b2] hover:text-white transition-all flex items-center justify-center gap-2">
+                                <i class="fas fa-university"></i>
+                                <span>Transferencia</span>
                             </button>
                         </div>
-                    </div>
 
+                        <!-- Descuento y Total Final -->
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-700">Descuento</label>
+                                <input type="number" id="descuento" min="0" max="100" value="0"
+                                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
+                                    placeholder="0.00">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-700">Total a Cobrar</label>
+                                <input type="number" id="precioTotal" disabled min="0"
+                                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
+                                    placeholder="0.00">
+                            </div>
+                        </div>
 
-                    <!--Descuento de servicio-->
-                    <div class="form-group">
-                        <label for="descuento">Descuento</label>
-                        <input type="number" id="descuento" class="form-control"
-                            placeholder="Ingrese el descuento (opcional)" />
-                    </div>
-                    <!--Total del servicio -->
-                    <div class="form-group">
-                        <label for="totalCobrar">Total a Cobrar</label>
-                        <input type="number" id="totalCobrar" class="form-control"
-                            placeholder="Ingrese el total a cobrar" required />
-                    </div>
-
-                    <!--button-->
-                    <button type="submit" class="btn-submit w-100" id="asa">Enviar</button>
+                        <!-- Boton de Registro -->
+                        <div class="flex justify-end pt-6">
+                            <button type="submit" id="asa"
+                                class="bg-gradient-to-r from-[#0891b2] to-[#0891b2]/90 text-white px-6 py-3 rounded-xl hover:shadow-lg hover:shadow-[#0891b2]/20 transition-all duration-300 flex items-center gap-2">
+                                <i class="fas fa-save"></i>
+                                <span>Registrar Servicio</span>
+                            </button>
+                        </div>
                 </form>
-
             </div>
         </div>
-    </div>
-</div>
+    </section>
 
 
+    <!--Contenedor secundario-->
+    <section>
+        <!-- Contenedor de Servicios  -->
+        <div id="ContainerServiceSelection" class="hidden">
+            <!--contenido -->
+        </div>
+    </section>
 
-
-<!-- Modal se muestra una ventana flotante para  la busqueda de usuario-->
-
-<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content p-3">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalLabel">Seleccionar Usuario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Modal -->
+    <div x-show="ModalUser" x-cloak="ModalUser"
+        class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm"
+        x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <div class="bg-white p-6 rounded-lg shadow-lg lg:max-w-lg lg:w-full sm:w- w-11/12 relative h-[500px]">
+            <!--Header-->
+            <div class="flex justify-end mb-2">
+                <button @click="closeModalUser" class=" px-2 py-1">
+                    <i class="fa fa-times"></i>
+                </button>
             </div>
-            <div class="modal-body">
+            <!--body-->
+            <div>
                 <div id="userListContainer">
-                    <!-- se cargara la vista parcial con la lista de usuarios -->
+                    <!--lista de usuarios-->
                 </div>
             </div>
         </div>
@@ -163,13 +217,31 @@
 </div>
 
 
-<!-- Vista parcial de La selección de servicio -->
-<div id="ContainerServiceSelection" class="d-none">
-    <!-- Vista servicio -->
-</div>
 
+<script>
 
-<!-- Script de Apariencia -->
-<script src="/js/services-laundry/index/apperence.js"></script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('configuraciones', () => ({
+            ModalUser: false,
+            tipoPago: {
+                EFECTIVO: 'Efectivo',
+                YAPE: 'Yape',
+                PLIN: 'Plin',
+                POS: 'POS',
+                TRANSFERENCIA: 'Transferencia'
+            },
+            selectedTipoPago: 'Efectivo',
+
+            openModalUser() {
+                this.ModalUser = true;
+            },
+            closeModalUser() {
+                this.ModalUser = false;
+            }
+
+        }));
+    });
+</script>
+ 
 <!-- Script de funcionalidades -->
 <script src="/js/services-laundry/index/funcionality.js"></script>

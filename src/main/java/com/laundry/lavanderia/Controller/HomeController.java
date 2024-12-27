@@ -17,39 +17,11 @@ public class HomeController {
         model.addAttribute("content", "home/index.html");
         return SHARED_LAYOUT;
     }
-
     // menu principal
     @GetMapping("/home")
     public String showHomePageAlternate(Model model) {
         model.addAttribute("content", "home/index.html");
         return SHARED_LAYOUT;
     }
-
-    // entregas
-    @GetMapping("/deliveries")
-    public String showDeliveriesPage(Model model) {
-        model.addAttribute("content", "deliveries/index.html");
-        return SHARED_LAYOUT;
-    }
-
-    // registro de servicio
-    @GetMapping("/services")
-    public String showServicesPage(Model model) {
-        model.addAttribute("content", "services-laundry/index.html");
-        return SHARED_LAYOUT;
-    }
-
-    // pedidos entregados
-    @GetMapping("/orders/delivered")
-    public String showDeliveredOrdersPage(Model model) {
-        model.addAttribute("content", "deliveries/PedidosEntregados.html");
-        return SHARED_LAYOUT;
-    }
-
-    // clientes
-    @GetMapping("/clients")
-    public String showClientsPage(Model model) {
-        model.addAttribute("content", "clients/cliente.html");
-        return SHARED_LAYOUT;
-    }
+    
 }

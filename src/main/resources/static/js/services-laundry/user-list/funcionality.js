@@ -1,8 +1,8 @@
- // Evento para asignar el valor al input usuario, interaccion entre vista index de servicio
- function selectUser(userName) {
+ 
+// Evento para asignar el valor al input usuario, interaccion entre vista index de servicio
+function selectUser(userName) {
     document.getElementById('usuario').value = userName;
-    var modal = bootstrap.Modal.getInstance(document.getElementById('userModal'));
-    modal.hide();
+    document.getElementById('nombreCliente').value = userName;
 }
 
 

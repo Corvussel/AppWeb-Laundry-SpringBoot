@@ -1,20 +1,19 @@
 :root {
-    --gradient: linear-gradient(135deg, #132b50 0%, #132b50 100%);
+    --gradient: linear-gradient(135deg, #18bbcc 0%, #18bbcc 100%);
     --white-color: linear-gradient(135deg, #ffffff 100%, #ffffff 100%);
     --border-color: #e4e4e7;
 }
 
 body {
     background: #ffffff;
-    min-height: 100vh;
-    padding-bottom: 30px;
+    min-height: 100vh; 
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
 /*contenedor pricipal*/
 .container-form {
     background: rgba(255, 255, 255, 255);
-    border-radius: 20px;
+    border-radius: 2rem;
     transition: all 0.3s ease-in-out;
     box-shadow: 0 14px 32px rgba(31, 38, 135, 0.15);
     padding: 2.5rem;
@@ -78,7 +77,7 @@ label::after {
 
 
 /*personalizacion para los inputs*/
-.form-control {
+.form-control { 
     width: 100%;
     padding: 0.8rem 1rem;
     border: 1px solid var(--border-color);
@@ -182,8 +181,7 @@ label::after {
 .btn-submit {
     width: 100%;
     padding: 1rem;
-    border-radius: 12px;
-    background: #227bef;
+    border-radius: 12px; 
     border: none;
     color: white;
     font-size: 1.1rem;
@@ -247,7 +245,7 @@ input[type="number"]::-webkit-inner-spin-button {
     background: #77a3bf;
 }
 
-.table-column {
+thead th {
     position: relative;
     padding: 0.95rem 1.2rem !important;
     font-weight: 500;
@@ -319,7 +317,7 @@ tbody tr:hover {
 
     .container-form {
         background: #ffffff;
-        border-radius: 10px;
+        border-radius: 1.5rem;
         transition: all 0.3s ease-in-out;
         box-shadow: 0 14px 32px rgba(31, 38, 135, 0.15);
         padding: 2.4rem;

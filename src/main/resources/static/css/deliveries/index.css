@@ -1,22 +1,16 @@
 body {
-    background: rgb(255, 255, 255);
+    background: rgb(255, 255, 254);
     min-height: 100vh;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-
-.main-container {
-    padding: 0 2.5rem;
-    min-height: 100vh;
-    transition: all 0.3s ease;
-}
-
+ 
 .form-header {
     width: 100%;
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     position: relative;
     margin-bottom: 10px;
-    color: #132b50;
+    color: #291f68;
 }
 
 .form-header::after {
@@ -76,32 +70,33 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     box-sizing: border-box;
-    padding: 0.2rem 0.9rem; 
-    margin-top: 2rem; 
+    padding: 0.2rem 0.9rem;
+    margin-top: 2rem;
 }
 
 /*Card de servicio*/
 .card {
     border: none;
-    border-radius: 15px;
+    border-radius: 2rem;
     box-shadow: 0 8px 10px rgba(31, 38, 135, 0.15);
     transition: all 0.3s ease;
     cursor: pointer;
-    padding: 0.5rem 0.7rem;
+    padding: 0.8rem 0.7rem;
     overflow: hidden;
     margin-bottom: 1rem;
 }
 
 .card:hover {
     box-shadow: 4px 10px 12px rgba(31, 88, 135, 0.2);
-    transform: translateY(-4px);
-    background: rgb(252, 251, 251);
+    transform: translateY(-5px); 
 }
+
+ 
 
 /*Estilo para el contenido de card*/
 .icon-container {
     margin-right: 15px;
-    color: #7a7e7e;
+    color: #45446e;
 }
 
 .detail-item {
@@ -112,11 +107,20 @@ body {
 
 .detail-text {
     font-size: 1rem;
-    color: #45446e; 
+    color: #45446e;
 }
 
-.payment {
-    background: #f3f3f6;
+.earring-service {
+    padding: 0.3rem 0.5rem;
+    background: #f55951;
+    color: white;
+    border-radius: 15px;
+}
+
+/*Detalles-precio*/
+ 
+
+.payment { 
     border-radius: 0.5rem;
     padding: 0 0.7rem;
 }
