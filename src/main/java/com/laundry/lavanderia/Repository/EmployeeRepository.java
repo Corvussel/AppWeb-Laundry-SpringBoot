@@ -1,4 +1,4 @@
-package com.laundry.lavanderia.Repository;
+package com.laundry.lavanderia.repository;
 
 import java.util.ArrayList;
 import java.util.List;

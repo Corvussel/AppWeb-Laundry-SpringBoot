@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.laundry.lavanderia.Model.Employee.Employee;
 import com.laundry.lavanderia.Model.Login.login;
-import com.laundry.lavanderia.Repository.EmployeeRepository;
+import com.laundry.lavanderia.repository.EmployeeRepository;
 
 import lombok.RequiredArgsConstructor;
 
