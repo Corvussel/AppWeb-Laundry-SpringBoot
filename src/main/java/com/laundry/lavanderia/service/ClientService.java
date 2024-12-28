@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 import com.laundry.lavanderia.Model.client.cliente;
 
 @Service
-public class ServiceLaundryServices {
+public class ClientService {
 
     private List<cliente> clientes = new ArrayList<>();
 
-    public ServiceLaundryServices() {
+    public ClientService() {
         // Datos de ejemplo
         cliente cliente1 = new cliente();
         cliente1.setId(1L);
@@ -44,32 +44,20 @@ public class ServiceLaundryServices {
         return clientes.stream().filter(c -> c.getActivo()).count();
     }
 
-    public void deleteClient(Long id) {
+    public void registerClient(cliente newClient) {
+        System.out.println("Registrando nuevo cliente: " + newClient.ToString());
+    }
+
+    public void getClientById(Long id) {
+        System.out.println("Buscando cliente con ID: " + id);
+    }
+
+    public void deleteClientbyId(Long id) {
+        System.out.println("Eliminando cliente con ID: " + id);
         clientes.removeIf(c -> c.getId().equals(id));
     }
 
-    public void registerClient(cliente newClient) {
-        // id
-        Long newId = clientes.stream()
-                .mapToLong(cliente::getId)
-                .max()
-                .orElse(0L) + 1L;
-        newClient.setId(newId);
-        newClient.setActivo(
-                newClient.getActivo() == null ? false : true);
-        clientes.add(newClient);
-    }
-
     public void updateClient(cliente updatedClient) {
-        clientes.forEach(cliente -> {
-            if (cliente.getId().equals(updatedClient.getId())) {
-                cliente.setNombre(updatedClient.getNombre());
-                cliente.setTelefono(updatedClient.getTelefono());
-                cliente.setDireccion(updatedClient.getDireccion());
-                cliente.setActivo(updatedClient.getActivo());
-                cliente.setFechaRegistro(updatedClient.getFechaRegistro());
-                return;
-            }
-        });
+        System.out.println("Actualizando cliente con ID: " + updatedClient.ToString());
     }
 }

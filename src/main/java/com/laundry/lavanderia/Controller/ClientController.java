@@ -8,17 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import com.laundry.lavanderia.service.ServiceLaundryServices;
+import com.laundry.lavanderia.service.ClientService;
 import com.laundry.lavanderia.Model.client.cliente;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("/client")
 public class ClientController {
 
     @Autowired
-    private ServiceLaundryServices clientService;
+    private ClientService clientService;
     private static final String SHARED_LAYOUT = "shared/layout";
 
     @GetMapping("/index")
@@ -29,27 +27,31 @@ public class ClientController {
         model.addAttribute("content", "clients/cliente.html");
         return SHARED_LAYOUT;
     }
-  
+
     @GetMapping("/edit/{id}")
     public String editClient(@PathVariable Long id, Model model) {
-        System.out.println("Editando cliente con ID: " + id);
+        clientService.getClientById(id);
         model.addAttribute("content", "clients/edit-client.html");
         return SHARED_LAYOUT;
     }
 
+    @PostMapping("/update/")
+    public String updateClient(@ModelAttribute cliente updatedClient) {
+        clientService.updateClient(updatedClient);
+        return "redirect:/client/index";
+    }
+
     @GetMapping("/delete/{id}")
     public String deleteClient(@PathVariable Long id) {
-        System.out.println("Eliminando cliente con ID: " + id);
-        clientService.deleteClient(id);
+        clientService.deleteClientbyId(id);
         return "redirect:/client/index";
     }
 
     @PostMapping("/register")
     public String registerClient(@ModelAttribute cliente newClient) {
-       
-        newClient.setFechaRegistro(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         clientService.registerClient(newClient);
         return "redirect:/client/index";
     }
+     
 
 }

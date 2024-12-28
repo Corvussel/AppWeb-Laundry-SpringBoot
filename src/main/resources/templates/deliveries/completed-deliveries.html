@@ -41,8 +41,8 @@
 
 
         <div class="grid md:grid-cols-2 gap-6">
-            <!-- Tarjeta de Pedido -->
-            <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <article th:each="delivery : ${deliveries}" 
+             class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="p-6">
                     <!-- Header de la tarjeta -->
                     <div class="flex justify-between items-start mb-4">
@@ -52,39 +52,40 @@
                             </div>
                             <div>
                                 <p class="text-xs text-gray-500">Orden</p>
-                                <h3 class="font-medium text-gray-800">#B0003</h3>
+                                <h3 class="font-medium text-gray-800" th:text="${'#' + delivery.orderNumber}"></h3>
                             </div>
                         </div>
-                        <span class="px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full text-xs font-medium">
-                            Entregado
-                        </span>
+                        <span class="px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full text-xs font-medium" 
+                      th:text="${delivery.status}">
+                </span>
                     </div>
 
                     <!-- Detalles -->
                     <div class="space-y-3">
                         <div class="flex items-center gap-2 text-sm text-gray-600">
                             <i class="fas far fa-user w-4"></i>
-                            <span class="font-medium text-gray-800">Flores Solano Russel</span>
+                            <span class="font-medium text-gray-800" th:text="${delivery.customerName}"></span>
                         </div>
                         <div class="flex items-center gap-2 text-sm text-gray-600">
                             <i class="fas fa-calendar-alt w-4"></i>
-                            <span>09/12/2024</span>
+                            <span th:text="${#temporals.format(delivery.completedDate, 'dd/MM/yyyy')}"></span>
                         </div>
                         <div class="flex items-center gap-2 text-sm text-gray-600">
                             <i class="fas fa-phone w-4"></i>
-                            <span>992-676-986</span>
+                            <span th:text="${delivery.phoneNumber}"></span>
                         </div>
                         <div class="flex items-center gap-2 text-sm text-gray-600">
                             <i class="fas fa-money-bill w-4"></i>
-                            <span>Efectivo</span>
+                            <span th:text="${delivery.paymentMethod}"></span>
                         </div>
                     </div>
 
-                    <!-- Precio y Acción -->
+                    <!-- Precio y Acciones -->
                     <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
                         <div>
                             <p class="text-sm text-gray-500">Total Pagado</p>
-                            <p class="text-lg font-bold text-[#0891b2]">S/ 1,299.00</p>
+                            <p class="text-lg font-bold text-[#0891b2]" 
+                       th:text="${'S/ ' + #numbers.formatDecimal(delivery.totalAmount, 1, 2)}"></p>
                         </div>
                         <button @click="openModal = true"
                             class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 flex items-center gap-2 transition-colors">
@@ -93,7 +94,7 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </article>
         </div>
 
         <!-- Modal -->
@@ -126,7 +127,7 @@
 
                 <div class="overflow-y-auto flex-1 p-6">
                     <!-- informacion del Cliente -->
-                    <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                    <article class="bg-gray-50 rounded-lg p-4 mb-6">
                         <div class="grid md:grid-cols-2 gap-4">
                             <div class="space-y-2">
                                 <div class="flex items-center gap-2">
@@ -149,7 +150,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </article>
 
                     <!-- Lista -->
                     <div class="space-y-4">
@@ -224,7 +225,7 @@
                 </div>
 
                 <!-- Footerr -->
-                <div class="p-6 border-t">
+                <footer class="p-6 border-t">
                     <div class="flex justify-between items-center">
                         <div class="space-y-1">
                             <p class="text-sm text-gray-500">Atendido por</p>
@@ -247,7 +248,7 @@
                             <span>Imprimir</span>
                         </button>
                     </div>
-                </div>
+                </footer>
             </div>
         </div>
     </div>
