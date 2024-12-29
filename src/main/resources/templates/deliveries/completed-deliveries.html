@@ -5,7 +5,7 @@
 </style>
 
 
-<div class="min-h-screen bg-gray-50/50 py-8" x-data="{ openModal: false }">
+<div class="min-h-screen bg-gray-50/50 py-8" x-data="deliveryDetails()">
     <div class="max-w-7xl mx-auto px-4">
         <!-- Header Section -->
         <div class="mb-8">
@@ -41,8 +41,8 @@
 
 
         <div class="grid md:grid-cols-2 gap-6">
-            <article th:each="delivery : ${deliveries}" 
-             class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <article th:each="delivery : ${deliveries}"
+                class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="p-6">
                     <!-- Header de la tarjeta -->
                     <div class="flex justify-between items-start mb-4">
@@ -55,9 +55,9 @@
                                 <h3 class="font-medium text-gray-800" th:text="${'#' + delivery.orderNumber}"></h3>
                             </div>
                         </div>
-                        <span class="px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full text-xs font-medium" 
-                      th:text="${delivery.status}">
-                </span>
+                        <span class="px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full text-xs font-medium"
+                            th:text="${delivery.status}">
+                        </span>
                     </div>
 
                     <!-- Detalles -->
@@ -68,7 +68,7 @@
                         </div>
                         <div class="flex items-center gap-2 text-sm text-gray-600">
                             <i class="fas fa-calendar-alt w-4"></i>
-                            <span th:text="${#temporals.format(delivery.completedDate, 'dd/MM/yyyy')}"></span>
+                            <span th:text="${delivery.completedDate}"></span>
                         </div>
                         <div class="flex items-center gap-2 text-sm text-gray-600">
                             <i class="fas fa-phone w-4"></i>
@@ -84,10 +84,9 @@
                     <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
                         <div>
                             <p class="text-sm text-gray-500">Total Pagado</p>
-                            <p class="text-lg font-bold text-[#0891b2]" 
-                       th:text="${'S/ ' + #numbers.formatDecimal(delivery.totalAmount, 1, 2)}"></p>
+                            <p class="text-lg font-bold text-[#0891b2]" th:text="${'S/ ' + delivery.totalAmount }"></p>
                         </div>
-                        <button @click="openModal = true"
+                        <button th:data-id="${delivery.id}" @click="loadDeliveryDetails($el.dataset.id)"
                             class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 flex items-center gap-2 transition-colors">
                             <i class="fas fa-eye"></i>
                             <span>Ver Detalles</span>
@@ -114,7 +113,8 @@
                                 <i class="fas fa-receipt text-[#0891b2] text-xl"></i>
                             </div>
                             <div>
-                                <h3 class="text-lg font-semibold text-gray-800">Orden #B0003</h3>
+                                <h3 class="text-lg font-semibold text-gray-800"
+                                    x-text="'Orden #' + (delivery?.orderNumber || '')"></h3>
                                 <p class="text-sm text-gray-500">Detalles del pedido entregado</p>
                             </div>
                         </div>
@@ -132,21 +132,24 @@
                             <div class="space-y-2">
                                 <div class="flex items-center gap-2">
                                     <i class="fas fa-user text-gray-400"></i>
-                                    <span class="text-sm font-medium text-gray-700">Flores Solano Russel</span>
+                                    <span class="text-sm font-medium text-gray-700"
+                                        x-text="delivery?.customerName"></span>
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <i class="fas fa-phone text-gray-400"></i>
-                                    <span class="text-sm text-gray-600">992-676-986</span>
+                                    <span class="text-sm text-gray-600" x-text="delivery?.phoneNumber"></span>
                                 </div>
                             </div>
                             <div class="space-y-2">
                                 <div class="flex items-center gap-2">
                                     <i class="fas fa-calendar text-gray-400"></i>
-                                    <span class="text-sm text-gray-600">Entregado: 09/12/2024</span>
+                                    <span class="text-sm text-gray-600"
+                                        x-text="'Entregado: ' + (delivery?.completedDate || '')"></span>
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <i class="fas fa-money-bill text-gray-400"></i>
-                                    <span class="text-sm text-gray-600">Método: Efectivo</span>
+                                    <span class="text-sm text-gray-600"
+                                        x-text="'Método Pago: ' + (delivery?.paymentMethod || '')"></span>
                                 </div>
                             </div>
                         </div>
@@ -154,73 +157,31 @@
 
                     <!-- Lista -->
                     <div class="space-y-4">
-                        <article class="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
-                            <div class="flex items-center justify-between mb-3">
-                                <div class="flex items-center gap-3">
-                                    <div class="bg-blue-100 p-2 rounded-lg">
-                                        <i class="fas fa-tshirt text-blue-600"></i>
+                        <template x-for="item in delivery?.items" :key="item.name">
+                            <article class="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="bg-blue-100 p-2 rounded-lg">
+                                            <i class="fas fa-tshirt text-blue-600"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-gray-800" x-text="item.name"></h4>
+                                            <p class="text-sm text-gray-500" x-text="item.serviceType"></p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Camisa Formal</h4>
-                                        <p class="text-sm text-gray-500">Lavado y Planchado</p>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <p class="font-medium text-gray-800">S/ 25.00</p>
-                                    <p class="text-sm text-gray-500">2 unidades</p>
-                                </div>
-                            </div>
-                            <div class="text-sm flex gap-1 border-t border-gray-200">
-                                <span class="font-medium">Notas:</span>
-                                <p class="text-gray-500  text-nowrap text-ellipsis overflow-hidden">Tratamiento especial
-                                </p>
-                            </div>
-                        </article>
-
-                        <article class="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
-                            <div class="flex items-center justify-between mb-3">
-                                <div class="flex items-center gap-3">
-                                    <div class="bg-purple-100 p-2 rounded-lg">
-                                        <i class="fas fa-socks text-purple-600"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Pantaloon Jean</h4>
-                                        <p class="text-sm text-gray-500">Lavado Especial</p>
+                                    <div class="text-right">
+                                        <p class="font-medium text-gray-800" x-text="'S/ ' + item.price.toFixed(2)"></p>
+                                        <p class="text-sm text-gray-500"
+                                            x-text="item.quantity + ' unidad' + (item.quantity > 1 ? 'es' : '')"></p>
                                     </div>
                                 </div>
-                                <div class="text-right">
-                                    <p class="font-medium text-gray-800">S/ 30.00</p>
-                                    <p class="text-sm text-gray-500">1 unidad</p>
+                                <div class="text-sm flex gap-1 border-t border-gray-200 pt-2">
+                                    <span class="font-medium">Notas:</span>
+                                    <p class="text-gray-500 text-nowrap text-ellipsis overflow-hidden"
+                                        x-text="item.notes"></p>
                                 </div>
-                            </div>
-                            <div class="text-sm flex  gap-1 border-t border-gray-200">
-                                <span class="font-medium">Notas:</span>
-                                <p class="text-gray-500  text-nowrap text-ellipsis overflow-hidden">Tratamiento especial
-                                </p>
-                            </div>
-                        </article>
-                        <article class="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
-                            <div class="flex items-center justify-between mb-3">
-                                <div class="flex items-center gap-3">
-                                    <div class="bg-purple-100 p-2 rounded-lg">
-                                        <i class="fas fa-socks text-purple-600"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Pantaloon Jean</h4>
-                                        <p class="text-sm text-gray-500">Lavado Especial</p>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <p class="font-medium text-gray-800">S/ 30.00</p>
-                                    <p class="text-sm text-gray-500">1 unidad</p>
-                                </div>
-                            </div>
-                            <div class="text-sm flex  gap-1 border-t border-gray-200">
-                                <span class="font-medium">Notas:</span>
-                                <p class="text-gray-500  text-nowrap text-ellipsis overflow-hidden">Tratamiento especial
-                                </p>
-                            </div>
-                        </article>
+                            </article>
+                        </template>
                     </div>
                 </div>
 
@@ -233,12 +194,13 @@
                                 <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
                                     <i class="fas fa-user text-indigo-600"></i>
                                 </div>
-                                <span class="text-sm font-medium text-gray-700">James Caballero</span>
+                                <span class="text-sm font-medium text-gray-700" x-text="delivery?.employeeName"></span>
                             </div>
                         </div>
                         <div class="text-right">
                             <p class="text-sm text-gray-500">Total Pagado</p>
-                            <p class="text-2xl font-bold text-[#0891b2]">S/ 55.00</p>
+                            <p class="text-2xl font-bold text-[#0891b2]"
+                                x-text="'S/ ' + (delivery?.totalAmount || 0).toFixed(2)"></p>
                         </div>
                     </div>
                     <div class="flex justify-end gap-3 mt-4">
@@ -255,3 +217,24 @@
 </div>
 
 <script src="/js/deliveries/funcionality.js"></script>
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('deliveryDetails', () => ({
+            openModal: false,
+            delivery: null,
+            async loadDeliveryDetails(id) {
+                if (!id) return;
+                try {
+                    const response = await fetch(`/deliveries/completed/details/${id}`);
+                    if (response.ok) {
+                        this.delivery = await response.json();
+                        this.openModal = true;
+                    }
+                } catch (error) {
+                    console.error('Error loading delivery details:', error);
+                }
+            },
+
+        }))
+    });
+</script>

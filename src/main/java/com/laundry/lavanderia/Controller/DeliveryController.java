@@ -22,8 +22,16 @@ public class DeliveryController {
     // Entregas pendientes
     @GetMapping("/pending")
     public String showPendingDeliveriesPage(Model model) {
-        model.addAttribute("deliveries", deliveryService.getPendingDeliveries());
+        model.addAttribute("deliveries", deliveryService.getAllPendingDeliveries());
         model.addAttribute("content", "deliveries/pending-deliveries.html");
+        return SHARED_LAYOUT;
+    }
+
+    // Entregas realizadas
+    @GetMapping("/completed")
+    public String showCompletedDeliveriesPage(Model model) {
+        model.addAttribute("deliveries", deliveryService.getAllCompletedDeliveries());
+        model.addAttribute("content", "deliveries/completed-deliveries.html");
         return SHARED_LAYOUT;
     }
 
@@ -38,20 +46,15 @@ public class DeliveryController {
         return ResponseEntity.ok(delivery);
     }
 
-    // Entregas realizadas
-    @GetMapping("/completed")
-    public String showCompletedDeliveriesPage(Model model) {
-        model.addAttribute("deliveries", deliveryService.getCompletedDeliveries());
-        model.addAttribute("content", "deliveries/completed-deliveries.html");
-        return SHARED_LAYOUT;
-    }
-
     // Obtener detalles de una entrega realizada
     @GetMapping("/completed/details/{id}")
-    public String getDeliveryCompletedDetails(@PathVariable Long id, Model model) {
-        model.addAttribute("delivery", deliveryService.getDeliveryCompletedById(id));
-        model.addAttribute("content", "deliveries/delivery-details.html");
-        return SHARED_LAYOUT;
+    @ResponseBody
+    public ResponseEntity<Delivery> getDeliveryCompletedDetails(@PathVariable Long id) {
+        Delivery delivery = deliveryService.getDeliveryCompletedById(id);
+        if (delivery == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(delivery);
     }
 
 }

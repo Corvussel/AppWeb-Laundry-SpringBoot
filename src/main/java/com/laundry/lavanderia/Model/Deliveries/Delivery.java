@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class Delivery {
+    private Long id;
     private String orderNumber;
     private String status;
     private String customerName;
@@ -19,4 +20,12 @@ public class Delivery {
     private String employeeName;     
     private LocalDate completedDate; 
     private String deliveryStatus;  
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
