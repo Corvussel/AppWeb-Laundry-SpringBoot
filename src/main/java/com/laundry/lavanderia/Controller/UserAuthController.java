@@ -1,5 +1,9 @@
 package com.laundry.lavanderia.Controller;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.laundry.lavanderia.Model.Login.login;
+import com.laundry.lavanderia.Model.LoginDates.Login;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,25 +20,47 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserAuthController {
 
-    // Redireccion para Login
+    private final AuthenticationManager authenticationManager;
+
     @GetMapping("/login")
-    public String getLoginPage(Model model) {
-        model.addAttribute("login", new login());
-        return "login/index";
+    public String login(Model model) {
+        model.addAttribute("loginForm", new Login());
+        return "/login/index";
     }
 
-    // Con autenticacion
+    // Se encarga de autenticar el usuario
     @PostMapping("/authenticate")
-    public String authenticate(@ModelAttribute("login") login login, Model model) {
-        // Simulación de validación
-        if ("admin".equals(login.getUsername()) && "123".equals(login.getPassword())) {
-            model.addAttribute("message", "Inicio de sesión exitoso");
-            model.addAttribute("content", "home/index.html");
-        } else {
-            model.addAttribute("message", "Usuario o contraseña incorrectos");
-            model.addAttribute("content", "login/index.html");
+    public String authenticate(@ModelAttribute("loginForm") Login login, Model model) {
+
+        try {
+            /// se autentica el usuario con el nombre de usuario y contraseña ingresados en
+            /// el formulario y en el securityConfig, el userService consulta a la base de
+            /// datos para verificar si el usuario existe 
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()));
+
+            if (authentication.isAuthenticated()) {
+                // Si la autenticacion es correcta se redirige a la pagina principal
+                return "redirect:/home";
+            }
+        } catch (AuthenticationException e) {
+            // Si la autenticacion es incorrecta se muestra un mensaje de error y se
+            // redirige a la pagina de login
+            model.addAttribute("error", "Nombre de usuario o contraseña incorrectos");
+            return "/login/index";
         }
-        return "authenticate";
+        return "/login/index";
     }
-  
+
+    // Se encarga de cerrar la sesion
+    @GetMapping("/logout")
+    public String logout() {
+        
+        return "redirect:/userAuth/login?logout";
+    }
+
+    @GetMapping("/access-denied")
+    public String accessDenied() {
+        return "error/access-denied";
+    }
 }

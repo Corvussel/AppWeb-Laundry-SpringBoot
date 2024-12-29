@@ -1,6 +1,16 @@
+-- Active: 1735511517208@@b0vg062se0kqukm3t4yx-mysql.services.clever-cloud.com@3306@b0vg062se0kqukm3t4yx
 CREATE DATABASE sistema_ventas;
 
 USE sistema_ventas;
+
+CREATE TABLE persistent_logins (
+    username VARCHAR(64) NOT NULL,
+    series VARCHAR(64) PRIMARY KEY,
+    token VARCHAR(64) NOT NULL,
+    last_used TIMESTAMP NOT NULL
+);
+
+SELECT * FROM persistent_logins;
 
 CREATE TABLE Clientes (
     ID_Cliente INT AUTO_INCREMENT PRIMARY KEY,

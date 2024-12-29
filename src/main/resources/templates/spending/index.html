@@ -18,7 +18,8 @@
                     <span class="text-xs font-medium text-[#2563eb] bg-[#2563eb]/10 px-2 py-1 rounded-full">Total</span>
                 </div>
                 <div>
-                    <p class="md:text-3xl text-2xl font-bold text-[#0891b2] mb-1">S/ 2,500.00</p>
+                    <p class="md:text-3xl text-2xl font-bold text-[#0891b2] mb-1" 
+                       th:text="${'S/ ' + #numbers.formatDecimal(summary.totalAmount, 1, 2)}">S/ 2,500.00</p>
                     <p class="text-sm text-slate-600">Total Gastos del Mes</p>
                 </div>
             </div>
@@ -33,7 +34,8 @@
                     <span class="text-xs font-medium text-[#059669] bg-[#059669]/10 px-2 py-1 rounded-full">Materiales</span>
                 </div>
                 <div>
-                    <p class="md:text-3xl text-2xl  font-bold text-[#0891b2] mb-1">S/ 1,200.00</p>
+                    <p class="md:text-3xl text-2xl  font-bold text-[#0891b2] mb-1" 
+                       th:text="${'S/ ' + #numbers.formatDecimal(summary.materialsAmount, 1, 2)}">S/ 1,200.00</p>
                     <p class="text-sm text-slate-600">Gastos en Materiales</p>
                 </div>
             </div>
@@ -118,14 +120,18 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 text-sm text-gray-500">2024-01-15</td>
+                    <tr th:each="spending : ${summary.recentSpendings}" class="hover:bg-gray-50">
+                        <td class="px-6 py-4 text-sm text-gray-500" th:text="${#temporals.format(spending.date, 'yyyy-MM-dd')}">2024-01-15</td>
                         <td class="px-6 py-4">
-                            <div class="text-sm font-medium text-gray-900">Detergente Industrial</div>
+                            <div class="text-sm font-medium text-gray-900" th:text="${spending.description}">Detergente Industrial</div>
                         </td>
                         <td class="px-6 py-4">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                Materiales
+                            <span th:class="${spending.category == 'Materiales' ? 
+                                'px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800' :
+                                spending.category == 'Servicios' ? 
+                                'px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800' :
+                                'px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800'}"
+                                th:text="${spending.category}">
                             </span>
                         </td>
                         <td class="px-6 py-4">
@@ -133,76 +139,10 @@
                                 <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
                                     <i class="fas fa-user text-indigo-600"></i>
                                 </div>
-                                <span class="text-sm text-gray-700">Flores</span>
+                                <span class="text-sm text-gray-700" th:text="${spending.employeeName}">Flores</span>
                             </div>
                         </td>
-                        <td class="px-6 py-4 text-sm text-gray-500">S/ 450.00</td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 text-sm text-gray-500">2024-01-14</td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center">
-                                <div class="text-sm font-medium text-gray-900">Servicio de Agua</div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
-                                Servicios
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center gap-2">
-                                <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                                    <i class="fas fa-user text-indigo-600"></i>
-                                </div>
-                                <span class="text-sm text-gray-700">Caballero</span>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 text-sm text-gray-500">S/ 280.00</td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 text-sm text-gray-500">2024-01-13</td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center">
-                                <div class="text-sm font-medium text-gray-900">Suavizante</div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                Materiales
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center gap-2">
-                                <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                                    <i class="fas fa-user text-indigo-600"></i>
-                                </div>
-                                <span class="text-sm text-gray-700">James</span>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 text-sm text-gray-500">S/ 180.00</td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 text-sm text-gray-500">2024-01-12</td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center">
-                                <div class="text-sm font-medium text-gray-900">Mantenimiento Lavadora</div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">
-                                Otros
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center gap-2">
-                                <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                                    <i class="fas fa-user text-indigo-600"></i>
-                                </div>
-                                <span class="text-sm text-gray-700">Mallca y palacios</span>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 text-sm text-gray-500">S/ 350.00</td>
+                        <td class="px-6 py-4 text-sm text-gray-500" th:text="${'S/ ' + #numbers.formatDecimal(spending.amount, 1, 2)}">S/ 450.00</td>
                     </tr>
                 </tbody>
             </table>
@@ -211,14 +151,21 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    // grafico de gastos por Categoría
+<script th:inline="javascript">
+    const monthlyData = /*[[${summary.monthlyTrends}]]*/ [];
+    const categoryData = [
+        [[${summary.materialsAmount}]], 
+        [[${summary.servicesAmount}]], 
+        [[${summary.othersAmount}]]
+    ];
+    
+    // Actualizar gráficos con los datos dinámicos
     new Chart(document.getElementById('expensesByCategory'), {
         type: 'doughnut',
         data: {
             labels: ['Materiales', 'Servicios', 'Otros'],
             datasets: [{
-                data: [1200, 800, 500],
+                data: categoryData,
                 backgroundColor: ['#059669', '#7c3aed', '#d97706']
             }]
         },
@@ -252,7 +199,7 @@
             labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
             datasets: [{
                 label: 'Gastos Mensuales',
-                data: [2100, 1800, 2500, 2200, 2600, 2500],
+                data: monthlyData,
                 borderColor: '#2563eb',
                 backgroundColor: '#2563eb/10',
                 tension: 0.4
