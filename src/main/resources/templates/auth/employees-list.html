@@ -12,7 +12,7 @@
                 <h1 class="md:text-2xl text-xl font-bold text-gray-800 mb-2">Gestion de Personal</h1>
                 <p class="md:text-base text-sm text-gray-600">Administra las cuentas del personal</p>
             </div>
-            
+
             <div x-cloak>
                 <!-- Boton de Registro modal -->
                 <button type="button" @click="openEmployeeModal"
@@ -42,7 +42,7 @@
 
                             <!-- Formulario -->
                             <form th:action="@{/employees/register}" method="POST" th:object="${employee}"
-                                class="space-y-6" >
+                                class="space-y-6">
                                 <!-- perfil -->
                                 <div class="flex justify-center">
                                     <div>
@@ -104,10 +104,25 @@
                                     <div>
                                         <label class="text-sm font-medium text-gray-700">Rol</label>
                                         <div class="mt-1 space-x-4">
-                                            <select th:field="*{role}"
+                                            <select th:field="*{role.id}" required
                                                 class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
-                                                <option value="empleado">Empleado</option>
-                                                <option value="admin">Administrador</option>
+                                                <option th:each="role : ${roles}" th:value="${role.id}"
+                                                    th:text="${role.name}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Estado -->
+                                <div class="grid md:grid-cols-1">
+                                    <div>
+                                        <label class="text-sm font-medium text-gray-700">Estado</label>
+                                        <div class="mt-1 space-x-4">
+                                            <select th:field="*{status}" required
+                                                class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
+                                                <option value="activo">Activo</option>
+                                                <option value="inactivo">Inactivo</option>
                                             </select>
                                         </div>
                                     </div>
@@ -193,14 +208,18 @@
                                 <h3 class="font-semibold text-gray-800" th:text="${employee.fullName}">James Caballero
                                 </h3>
                                 <div class="flex gap-2">
-                                    <span th:if="${employee.status == 'activo'}"
-                                        class="px-2 py-1 bg-green-50 text-green-700 text-xs rounded-full">Activo</span>
-                                    <span th:if="${employee.status == 'inactivo'}"
-                                        class="px-2 py-1 bg-red-50 text-red-700 text-xs rounded-full">Inactivo</span>
-                                    <span th:if="${employee.role == 'admin'}"
-                                        class="px-2 py-1 bg-purple-50 text-purple-700 text-xs rounded-full">Admin</span>
-                                    <span th:if="${employee.role == 'empleado'}"
-                                        class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">Empleado</span>
+                                    <!-- Estado del empleado -->
+                                    <span
+                                        th:classappend="${employee.status == 'activo' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}"
+                                        class="px-2 py-1 text-xs rounded-full">
+                                        <span th:text="${employee.status == 'activo' ? 'Activo' : 'Inactivo'}"></span>
+                                    </span>
+                                    <!-- Rol del empleado -->
+                                    <span
+                                        th:classappend="${employee.role.name == 'employee' ? 'bg-blue-50 text-blue-700' : 'bg-purple-50 text-purple-700'}"
+                                        class="px-2 py-1 text-xs rounded-full">
+                                        <span th:text="${employee.role.name}">Empleado</span>
+                                    </span>
                                 </div>
                             </div>
                             <p class="text-sm text-gray-500 mt-1" th:text="${employee.email}">james@email.com</p>

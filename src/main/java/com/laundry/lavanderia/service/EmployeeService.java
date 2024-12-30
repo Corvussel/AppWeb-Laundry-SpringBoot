@@ -1,50 +1,40 @@
 package com.laundry.lavanderia.service;
 
-import java.util.ArrayList;
 import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.laundry.lavanderia.Model.employee.Employee;
+import com.laundry.lavanderia.repository.EmployeeRepository;
 
 @Service
 public class EmployeeService {
 
-    private List<Employee> employees;
+    // se inyecta el repositorio de empleados
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
-    public EmployeeService() {
-        employees = new ArrayList<>();
-        employees.add(new Employee(1L, "James", "Caballero", "james@email.com", "992-676-986", "admin", "activo"));
-        employees.add(new Employee(2L, "Russel", "Flores", "russel@email.com", "992-676-986", "empleado", "inactivo"));
+    // se obtienen todos los empleados en la base de datos
+    public List<Employee> getAllEmployees() { 
+        return employeeRepository.findAll();
     }
 
-    public List<Employee> getAllEmployees() {
-        return employees;
-    }
-
+    // se registra el empleado en la base de datos
     public void saveEmployee(Employee employee) {
-        System.out.println("Guardando empleado: " + employee.getFirstName() + " " + employee.getLastName() + " "
-                + employee.getEmail() + " " + employee.getPhone() + " " + employee.getRole() + " "
-                + employee.getPassword());
+        employeeRepository.save(employee);
     }
 
+    // se obtiene el empleado por id de la base de datos
     public Employee getEmployeeById(Long id) {
-        System.out.println("Buscando empleado con ID: " + id);
-        return employees.stream()
-                .filter(emp -> emp.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+        return employeeRepository.findById(id).orElse(null);
     }
 
+    // se actualiza el empleado en la base de datos
     public void updateEmployee(Employee employee) {
-        System.out.println("Actualizando empleado con ID: " + employee.getId());
-        System.out.println(employee.getFirstName() + " " + employee.getLastName() + " " + employee.getEmail() + " "
-                + employee.getPhone() + " " + employee.getRole() + " " + employee.getStatus());
+        employeeRepository.save(employee);
     }
 
+    // se elimina el empleado por id de la base de datos
     public void deleteEmployee(Long id) {
-        System.out.println("Eliminando empleado con ID: " + id);
-        employees.removeIf(emp -> emp.getId().equals(id));
-
+        employeeRepository.deleteById(id);
     }
-
 }
