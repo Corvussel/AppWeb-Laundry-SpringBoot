@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.laundry.lavanderia.Model.serviceLaundry.Categoria;
 import com.laundry.lavanderia.Model.serviceLaundry.RegistroServicioLavanderia;
 import com.laundry.lavanderia.Model.serviceLaundry.Servicio;
+import com.laundry.lavanderia.service.ServiceMangmentServiceLaundry;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -28,6 +29,9 @@ public class LaundryServicesController {
 
     @Autowired
     private HttpSession httpSession;
+    
+    @Autowired
+    private ServiceMangmentServiceLaundry serviceMangmentServiceLaundry;
 
     @GetMapping("index")
     public String showIndexPage(Model model) {
@@ -41,22 +45,8 @@ public class LaundryServicesController {
     }
 
     @GetMapping("/selection")
-    public String showServiceSelectionFragment(Model model) {
-
-        List<Servicio> servicios1 = Arrays.asList(
-                new Servicio("Lavado", "Descripción del Servicio 1", 10),
-                new Servicio("Servicio 2", "Descripción del Servicio 2", 120));
-
-        List<Servicio> servicios2 = Arrays.asList(
-                new Servicio("Servicio A", "Descripción del Servicio A", 150),
-                new Servicio("Servicio B", "Descripción del Servicio B", 220));
-
-        List<Categoria> categorias = Arrays.asList(
-                new Categoria("Planchado", servicios1),
-                new Categoria("Lavado", servicios2));
-
-        model.addAttribute("categorias", categorias);
-
+    public String showServiceSelectionFragment(Model model) { 
+        model.addAttribute("categorias", serviceMangmentServiceLaundry.getAllCategorys());
         return "services-laundry/service-selection";
     }
 

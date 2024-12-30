@@ -29,7 +29,7 @@
             <div class="flex justify-center mb-14">
                 <div class="flex gap-4 overflow-x-auto pb-2" id="categoriasTabsButton">
                     <div th:each="categoria : ${categorias}">
-                        <button type="button" th:text="${categoria.nombre}" th:value="${categoria.nombre}" class="px-8 py-3 rounded-full text-sm tracking-wide transition-all duration-300
+                        <button type="button" th:text="${categoria.name}" th:value="${categoria.name}" class="px-8 py-3 rounded-full text-sm tracking-wide transition-all duration-300
                             bg-white text-slate-600 shadow-sm hover:shadow-md hover:text-blue-600 
                             border border-slate-100 nav-button">
                         </button>
@@ -48,17 +48,17 @@
             <!-- paginas tab-content -->
             <div id="card-container" class="overflow-y-auto max-h-96">
                 <div th:each="categoria : ${categorias}">
-                    <div th:id="${categoria.nombre}" class="tab-pane hidden">
+                    <div th:id="${categoria.name}" class="tab-pane hidden">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-3">
-                            <div th:each="servicio : ${categoria.servicios}" class="group p-8 rounded-2xl bg-white border-0 shadow-md hover:shadow-lg 
+                            <div th:each="servicio : ${categoria.services}" class="group p-8 rounded-2xl bg-white border-0 shadow-md hover:shadow-lg 
                                 transition-all duration-500  hover:bg-blue-50/30 cursor-pointer card-service"
-                                th:data-servicio="${servicio.nombre}" th:data-precio="${servicio.precioUnidad}"
+                                th:data-servicio="${servicio.name}" th:data-precio="${servicio.price}"
                                 @click="setService($el.getAttribute('data-servicio'), $el.getAttribute('data-precio'))">
 
                                 <div class="flex justify-between items-center">
-                                    <span th:text="${servicio.nombre}"
+                                    <span th:text="${servicio.name}"
                                         class="service-name text-lg font-light text-slate-700 group-hover:text-blue-600"></span>
-                                    <span th:text="${servicio.precioUnidad}"
+                                    <span th:text="${servicio.price}"
                                         class="price text-lg font-medium text-blue-600 opacity-75 group-hover:opacity-100"></span>
                                 </div>
                             </div>
