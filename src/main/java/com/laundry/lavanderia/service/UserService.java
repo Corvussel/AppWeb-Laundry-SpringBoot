@@ -1,47 +1,55 @@
 package com.laundry.lavanderia.service;
 
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.laundry.lavanderia.Model.Security.Role;
-import com.laundry.lavanderia.Model.Security.User;
-
-import java.util.Arrays;
+import com.laundry.lavanderia.Model.employee.Employee;
+import com.laundry.lavanderia.repository.EmployeeRepository;
 
 @Service
 public class UserService implements UserDetailsService {
 
-    // Se encarga de encriptar la contraseña
-    private PasswordEncoder passwordEncoder;
+    /**
+     * Repositorio de empleados para la autenticacion     
+     * @param employeeRepository
+     * @return UserDetails del usuario para la autenticacion
+     */
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
-    // Inyecta el password encoder para encriptar la contraseña
+    /**
+     * Encriptador de contraseña para la autenticacion
+     * @param passwordEncoder
+     * @return UserDetails del usuario para la autenticacion
+     */
+   
+    private PasswordEncoder passwordEncoder;
+ 
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // búsqueda de usuario
+    /**
+     * Metodo para obtener el usuario por email y encriptar la contraseña
+     * @param email
+     * @return UserDetails del usuario
+     */
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        if ("admin".equals(username)) {
-            User user = new User();
-            user.setId(1L);
-            user.setUsername("admin");
-            user.setPassword(passwordEncoder.encode("123"));
-            user.setEmail("admin@example.com");
-            user.setEnabled(true);
-
-            Role adminRole = new Role();
-            adminRole.setId(1L);
-            adminRole.setName("ROLE_ADMIN");
-
-            user.setRoles(Arrays.asList(adminRole));
-            return user;
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Employee employee = employeeRepository.findByEmail(email);
+        if (employee == null) {
+            throw new UsernameNotFoundException("Usuario no encontrado");
         }
 
-        throw new UsernameNotFoundException("Usuario no encontrado");
+        return User.builder()
+                .username(employee.getEmail())
+                .password(employee.getPassword())
+                .roles(employee.getRole().getName().toUpperCase())
+                .build();
     }
 }

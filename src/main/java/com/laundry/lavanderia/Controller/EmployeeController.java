@@ -20,7 +20,8 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @Autowired
-    private RoleService roleService; 
+    private RoleService roleService;
+
     private static final String SHARED_LAYOUT = "shared/layout";
 
     @GetMapping("/index")
@@ -52,7 +53,7 @@ public class EmployeeController {
     @PostMapping("/update")
     public String updateEmployee(Employee employee) {
         if (employee.getStatus() == null || employee.getStatus().isEmpty()) {
-            employee.setStatus("activo"); // Valor predeterminado
+            employee.setStatus("activo");
         }
         employeeService.updateEmployee(employee);
         return "redirect:/employees/index";

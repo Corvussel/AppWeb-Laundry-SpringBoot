@@ -50,7 +50,7 @@ public class SecurityConfig {
                 // se configura la seguridad rutas de la aplicacion y se asignan los roles
                 .authorizeHttpRequests(auth -> auth
                         // se permiten las rutas de los recursos estaticos
-                        .requestMatchers("/userAuth/**", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/userAuth/**","/css/**", "/js/**", "/images/**").permitAll()
                         // se asignan los roles a las rutas de la aplicacion
                         .requestMatchers("/sales/**", "/spending/**").hasRole("ADMIN")
                         // se asignan los roles a las rutas de la aplicacion
