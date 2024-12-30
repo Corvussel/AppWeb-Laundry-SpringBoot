@@ -15,27 +15,31 @@ import com.laundry.lavanderia.repository.EmployeeRepository;
 public class UserService implements UserDetailsService {
 
     /**
-     * Repositorio de empleados para la autenticacion     
+     * Repositorio de empleados para la autenticacion
+     * 
      * @param employeeRepository
-     * @return UserDetails del usuario para la autenticacion
+     * @return repositorio de empleados para la autenticacion
      */
     @Autowired
     private EmployeeRepository employeeRepository;
 
     /**
      * Encriptador de contraseña para la autenticacion
+     * 
      * @param passwordEncoder
-     * @return UserDetails del usuario para la autenticacion
+     * @return devuelve el encriptador de contraseña
      */
-   
+
     private PasswordEncoder passwordEncoder;
- 
+
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
     /**
      * Metodo para obtener el usuario por email y encriptar la contraseña
+     * antes de devolverlo para la autenticacion del usuario en la aplicacion
+     * 
      * @param email
      * @return UserDetails del usuario
      */
