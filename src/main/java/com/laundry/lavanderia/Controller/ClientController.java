@@ -24,13 +24,14 @@ public class ClientController {
         model.addAttribute("clientes", clientService.getAllClients());
         model.addAttribute("totalClientes", clientService.getTotalClients());
         model.addAttribute("clientesActivos", clientService.getActiveClients());
+        model.addAttribute("cliente", new cliente());
         model.addAttribute("content", "clients/cliente.html");
         return SHARED_LAYOUT;
     }
 
     @GetMapping("/edit/{id}")
     public String editClient(@PathVariable Long id, Model model) {
-        clientService.getClientById(id);
+        model.addAttribute("cliente", clientService.getClientById(id));
         model.addAttribute("content", "clients/edit-client.html");
         return SHARED_LAYOUT;
     }
@@ -52,6 +53,4 @@ public class ClientController {
         clientService.registerClient(newClient);
         return "redirect:/client/index";
     }
-     
-
 }

@@ -26,15 +26,40 @@ public class ServiceLaundryManagementController {
     public String showMainServicesPage(Model model) {
         model.addAttribute("categories", serviceMangmentServiceLaundry.getAllCategorys());
         model.addAttribute("services", serviceMangmentServiceLaundry.getAllServices());
+        model.addAttribute("category", new Category());
+        model.addAttribute("service", new ServiceLaundry());
         model.addAttribute("content", "services-management/index.html");
         return SHARED_LAYOUT;
+    }
+
+    // Registrar nueva categoría
+    @PostMapping("/register-category")
+    public String registerCategory(@ModelAttribute Category newCategory) {
+        serviceMangmentServiceLaundry.saveCategory(newCategory);
+        return "redirect:/management/services-laundry";
+    }
+
+    // Registrar nuevo servicio
+    @PostMapping("/register-service")
+    public String registerService(@ModelAttribute ServiceLaundry newService) {
+        serviceMangmentServiceLaundry.saveService(newService);
+        return "redirect:/management/services-laundry";
     }
 
     // Pagina de edicion de categoría
     @GetMapping("/categories/edit/{id}")
     public String showCategoryPage(@PathVariable Long id, Model model) {
-        serviceMangmentServiceLaundry.getCategoryById(id);
+        model.addAttribute("category", serviceMangmentServiceLaundry.getCategoryById(id));
         model.addAttribute("content", "services-management/edit-category.html");
+        return SHARED_LAYOUT;
+    }
+
+    // Pagina de edicion de servicio
+    @GetMapping("/services/edit/{id}")
+    public String showServicePage(@PathVariable Long id, Model model) {
+        model.addAttribute("service", serviceMangmentServiceLaundry.getServiceById(id));
+        model.addAttribute("categories", serviceMangmentServiceLaundry.getAllCategorys());
+        model.addAttribute("content", "services-management/edit-service.html");
         return SHARED_LAYOUT;
     }
 
@@ -43,14 +68,6 @@ public class ServiceLaundryManagementController {
     public String saveCategory(@ModelAttribute Category updatedCategory) {
         serviceMangmentServiceLaundry.updateCategory(updatedCategory);
         return "redirect:/management/services-laundry";
-    }
-
-    // Pagina de edicion de servicio
-    @GetMapping("/services/edit/{id}")
-    public String showServicePage(@PathVariable Long id, Model model) {
-        serviceMangmentServiceLaundry.getServiceById(id);
-        model.addAttribute("content", "services-management/edit-service.html");
-        return SHARED_LAYOUT;
     }
 
     // Guardar cambios de servicio
@@ -63,7 +80,7 @@ public class ServiceLaundryManagementController {
     // Eliminar categoría
     @GetMapping("/categories/delete/{id}")
     public String deleteCategory(@PathVariable Long id) {
-        serviceMangmentServiceLaundry.deleteCategory(id); 
+        serviceMangmentServiceLaundry.deleteCategory(id);
         return "redirect:/management/services-laundry";
     }
 
@@ -73,5 +90,4 @@ public class ServiceLaundryManagementController {
         serviceMangmentServiceLaundry.deleteService(id);
         return "redirect:/management/services-laundry";
     }
-
 }

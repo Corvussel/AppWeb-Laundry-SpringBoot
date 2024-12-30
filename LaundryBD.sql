@@ -28,16 +28,49 @@ CREATE TABLE employee (
     FOREIGN KEY (role_id) REFERENCES role(id)
 );
 
+CREATE TABLE cliente (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    telefono VARCHAR(255) NOT NULL,
+    direccion VARCHAR(255) NOT NULL,
+    activo BOOLEAN NOT NULL,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE category (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(255),
+    active BOOLEAN NOT NULL
+);
+
+CREATE TABLE service_laundry (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    price DOUBLE NOT NULL,
+    description VARCHAR(255),
+    active BOOLEAN NOT NULL,
+    duration INT NOT NULL,
+    category_id BIGINT,
+    FOREIGN KEY (category_id) REFERENCES category(id)
+);
+
 SELECT * FROM persistent_logins;
 DROP TABLE employee;
 DROP TABLE role;
+DROP TABLE cliente;
+DROP TABLE category;
+DROP TABLE service_laundry;
 SELECT * FROM employee;
 SELECT * FROM role;
+SELECT * FROM cliente;
+SELECT * FROM category;
+SELECT * FROM service_laundry;
 
 INSERT INTO role (name) VALUES ('admin');
 INSERT INTO role (name) VALUES ('employee');
 
- 
+
 
 
 

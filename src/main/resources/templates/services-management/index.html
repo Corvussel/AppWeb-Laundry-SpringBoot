@@ -137,15 +137,15 @@
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
-                <form class="space-y-4">
+                <form th:action="@{/management/register-category}" method="POST" th:object="${category}" class="space-y-4">
                     <div>
                         <label class="text-sm font-medium text-gray-700">Nombre de la Categoría</label>
-                        <input type="text"
+                        <input type="text" th:field="*{name}"
                             class="mt-1 w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
                     </div>
                     <div>
                         <label class="text-sm font-medium text-gray-700">Descripción</label>
-                        <textarea
+                        <textarea th:field="*{description}"
                             class="mt-1 w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
                             rows="3"></textarea>
                     </div>
@@ -176,32 +176,30 @@
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
-                <form class="space-y-4">
+                <form th:action="@{/management/register-service}" method="POST" th:object="${service}" class="space-y-4">
                     <div>
                         <label class="text-sm font-medium text-gray-700">Nombre del Servicio</label>
-                        <input type="text"
+                        <input type="text" th:field="*{name}"
                             class="mt-1 w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
                     </div>
                     <div>
                         <label class="text-sm font-medium text-gray-700">Categoría</label>
-                        <select
+                        <select th:field="*{category.id}"
                             class="mt-1 w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
-                            <option value="">Seleccionar categoría</option>
-                            <option value="1">Ropa Normal</option>
-                            <option value="2">Ropa Delicada</option>
+                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
                         </select>
                     </div>
                     <div>
                         <label class="text-sm font-medium text-gray-700">Precio</label>
                         <div class="relative mt-1">
                             <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">S/</span>
-                            <input type="number"
+                            <input type="number" th:field="*{price}"
                                 class="w-full pl-8 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent">
                         </div>
                     </div>
                     <div>
                         <label class="text-sm font-medium text-gray-700">Descripción</label>
-                        <textarea
+                        <textarea th:field="*{description}"
                             class="mt-1 w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
                             rows="3"></textarea>
                     </div>
