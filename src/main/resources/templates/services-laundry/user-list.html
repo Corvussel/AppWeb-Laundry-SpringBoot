@@ -11,17 +11,9 @@
     <!--Lista de  Usuarios-->
     <div class="h-[250px] max-h-[250px] overflow-y-auto">
         <ul id="userList" class="list">
-            <li class="list-item" onclick="selectUser('Russel FLores')" @click="closeModalUser">
-                <i class="fas fa-user user-icon"></i> <!-- Ícono de usuario -->
-                Russel FLores
-            </li>
-            <li class="list-item" onclick="selectUser('Russel FLores')" @click="closeModalUser">
-                <i class="fas fa-user user-icon"></i> <!-- Ícono de usuario -->
-                Russel FLores
-            </li>
-            <li class="list-item" onclick="selectUser('Russel FLores')" @click="closeModalUser">
-                <i class="fas fa-user user-icon"></i> <!-- Ícono de usuario -->
-                Russel FLores
+            <li th:each="cliente : ${clientes}" class="list-item" th:onclick="selectUser(${cliente.nombre})" @click="closeModalUser">
+                <i class="fas fa-user user-icon"></i>
+                <span th:text="${cliente.nombre}"></span>
             </li>
         </ul>
     </div>
@@ -37,4 +29,3 @@
 </div>
  
 <script src="/js/services-laundry/user-list/funcionality.js"></script>
- 

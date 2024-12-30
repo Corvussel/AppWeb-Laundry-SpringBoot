@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/css/services-laundry/user-list.css">
+
 <div x-data="configuraciones()">
     <!-- Contenedor Principal con iD -->
     <section id="ContainerSalesRegistration" class="min-h-screen bg-gray-50/50 py-8">
@@ -9,7 +11,7 @@
                     <p class="text-gray-600">Complete los detalles del servicio</p>
                 </div>
 
-                <form id="form_Register" class="space-y-6" onsubmit="submitForm(event)">
+                <form id="form_Register" class="space-y-6" @submit.prevent="submitForm">
                     <!-- Tipo de Servicio -->
                     <div class="space-y-2">
                         <label class="text-sm font-medium text-gray-700">Tipo de Servicio</label>
@@ -32,7 +34,7 @@
                         <label class="text-sm font-medium text-gray-700">Cliente
                             <span class="text-red-500">*</span>
                         </label>
-                        <div class="relative" @click="openModalUser" id="openModalButton">
+                        <div class="relative" @click="loadUserList()" id="openModalButton">
                             <input type="text" id="usuario" readonly
                                 class="w-full px-4 py-2 bg-gray-50/10 border border-gray-200 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
                                 placeholder="Seleccionar cliente">
@@ -44,7 +46,7 @@
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label class="text-sm font-medium text-gray-700">Nombre
-                                 <span class="text-red-500">*</span>
+                                <span class="text-red-500">*</span>
                             </label>
                             <input type="text" id="nombreCliente" required value="flores"
                                 class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
@@ -57,7 +59,6 @@
                                 placeholder="Observaciones adicionales">
                         </div>
                     </div>
-
 
                     <!-- servicios -->
                     <div class="space-y-4 bg-gray-50 rounded-xl p-6">
@@ -76,12 +77,10 @@
                                 <table id="tableService" class="w-full">
                                     <thead class="bg-gray-50/50">
                                         <tr>
-
                                             <th class="px-6 py-4 text-xs font-medium text-gray-500 uppercase">Servicio
                                             </th>
                                             <th class="px-6 py-4 text-xs font-medium text-gray-500 uppercase">Precio
-                                                Unitario
-                                            </th>
+                                                Unitario</th>
                                             <th class="px-6 py-4 text-xs font-medium text-gray-500 uppercase">Subtotal
                                             </th>
                                             <th class="px-6 py-4 text-xs font-medium text-gray-500 uppercase">Detalles
@@ -184,7 +183,6 @@
         </div>
     </section>
 
-
     <!--Contenedor secundario-->
     <section>
         <!-- Contenedor de Servicios  -->
@@ -208,18 +206,40 @@
             </div>
             <!--body-->
             <div>
-                <div id="userListContainer">
-                    <!--lista de usuarios-->
+                <div>
+                    <!--input para busqueda de usuario-->
+                    <div class="icon mb-4">
+                        <input type="text" class="input-search" id="searchInput"
+                            placeholder="Buscar usuario por nombre">
+                        <i class="fas fa-search"></i>
+                    </div>
+
+                    <!--Lista de  Usuarios-->
+                    <div class="h-[250px] max-h-[250px] overflow-y-auto">
+                        <ul id="userList" class="list">
+                            <template x-for="cliente in listaUsuarios" :key="cliente.id">
+                                <li class="list-item" @click="selectUser(cliente)">
+                                    <i class="fas fa-user user-icon"></i>
+                                    <span x-text="cliente.nombre"></span>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+
+                    <!--button para Mostrar la vista Registrar Nuevo Usuario-->
+                    <div class="mt-5">
+                        <a class="btn-new-user" href="/client/register">
+                            <i class="fa fa-user-plus"></i>
+                            Añadir Usuario
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
-
 <script>
-
     document.addEventListener('alpine:init', () => {
         Alpine.data('configuraciones', () => ({
             ModalUser: false,
@@ -231,17 +251,132 @@
                 TRANSFERENCIA: 'Transferencia'
             },
             selectedTipoPago: 'Efectivo',
+            listaUsuarios: [],
+            client: null,
 
+
+            /**
+             * Abre la modal de seleccion de usuario.
+             * @function
+             */
             openModalUser() {
                 this.ModalUser = true;
+
             },
+            /**
+             * Cierra la modal de seleccion de usuario.
+             */
             closeModalUser() {
                 this.ModalUser = false;
+            },
+
+            /**
+             * Carga la lista de usuarios disponibles para registrar una nueva orden de servicio.
+             * Muestra la modal de seleccion de usuario.
+             * @returns {Promise<void>}
+             */
+            async loadUserList() {
+                try {
+                    const response = await fetch('/serviceLaundry/ListUsers');
+                    if (response.ok) {
+                        this.listaUsuarios = await response.json();
+                        this.ModalUser = true;
+                    }
+                } catch (error) {
+                    console.error('Error al cargar la lista de usuarios:', error);
+                }
+            },
+            /**
+             * Asigna el valor del usuario seleccionado en el formulario,
+             * y oculta el modal de seleccion de usuario.
+             * @param {Object} client - El objeto del usuario seleccionado.
+             */
+            selectUser(client) {
+                this.client = client;
+                document.getElementById('usuario').value = client.nombre;
+                document.getElementById('nombreCliente').value = client.nombre;
+                this.ModalUser = false;
+            },
+
+            /**
+             * Envia la informacion del formulario para registrar una nueva orden de servicio,
+             * y redirige a una nueva ventana para imprimir la boleta de pago.
+             * Limpia el formulario luego de procesar el registro.
+             * @returns {Promise<void>}
+             */
+            submitForm() {
+                const tabla = document.getElementById('tableService').getElementsByTagName('tbody')[0];
+                const filas = tabla.getElementsByTagName('tr');
+
+                // objeto  que contendra la lista de servicios
+                const registroData = {
+                    tipoServicio: "Tienda",
+                    client: this.client,
+                    nombreCliente: document.getElementById('nombreCliente').value,
+                    observacion: document.getElementById('observacion').value,
+                    servicios: [],
+                    totalServicio: parseFloat(document.getElementById('totalServicios').value),
+                    totalCobro: parseFloat(document.getElementById('totalCobro').value),
+                    metodoPago: this.selectedTipoPago,
+                    descuento: parseFloat(document.getElementById('descuento').value),
+                    precioTotal: parseFloat(document.getElementById('precioTotal').value)
+                };
+
+                // Recorrer las filas de la tabla y obtener los datos de cada servicio registrado
+                for (let i = 0; i < filas.length; i++) {
+                    const fila = filas[i];
+                    const celdas = fila.getElementsByTagName('td');
+
+                    const servicio = {
+                        nombre: celdas[0].getAttribute('data-servicio'),
+                        precioUnidad: parseFloat(celdas[1].getAttribute('data-precio')),
+                        cantidad: parseInt(celdas[2].getAttribute('data-cantidad')),
+                        subTotal: parseFloat(celdas[2].getAttribute('data-subtotal')),
+                        detalle: celdas[3].getAttribute('data-detalle')
+                    };
+
+                    registroData.servicios.push(servicio);
+                }
+
+                fetch('/serviceLaundry/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(registroData)
+                })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result.status === 'success') {
+                            // se hable la url en nueva ventana para imprimir la boleta
+                            window.open(result.boletaUrl, '_blank', 'width=800,height=600');
+                            // Limpiamos el formulario
+                            this.limpiarFormulario();
+                        } else {
+                            // Mostramos un mensaje de error
+                            alert('Error: ' + result.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        alert('Error al procesar el registro');
+                    });
+            },
+
+            /**
+             * Limpia el formulario de registro de servicio y oculta el contenedor de la tabla
+             * de servicios registrados.
+             */
+            limpiarFormulario() {
+                document.getElementById('form_Register').reset();
+                document.getElementById('tableService').getElementsByTagName('tbody')[0].innerHTML = '';
+                document.getElementById('tableContainer').classList.add('hidden');
             }
 
         }));
     });
 </script>
- 
+
 <!-- Script de funcionalidades -->
 <script src="/js/services-laundry/index/funcionality.js"></script>
+<script src="/js/services-laundry/user-list/funcionality.js"></script>

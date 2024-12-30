@@ -16,6 +16,10 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
+    public List<cliente> getAllActiveClients() {
+        return clientRepository.findByActivoTrue();
+    }
+
     public Long getTotalClients() {
         return clientRepository.count();
     }

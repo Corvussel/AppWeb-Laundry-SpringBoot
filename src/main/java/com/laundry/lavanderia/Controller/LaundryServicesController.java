@@ -3,9 +3,10 @@ package com.laundry.lavanderia.Controller;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap; 
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
-import com.laundry.lavanderia.Model.serviceLaundry.Categoria;
 import com.laundry.lavanderia.Model.serviceLaundry.RegistroServicioLavanderia;
-import com.laundry.lavanderia.Model.serviceLaundry.Servicio;
 import com.laundry.lavanderia.service.ServiceMangmentServiceLaundry;
-
+import com.laundry.lavanderia.Model.client.cliente;
+import com.laundry.lavanderia.service.ClientService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -29,7 +29,10 @@ public class LaundryServicesController {
 
     @Autowired
     private HttpSession httpSession;
-    
+
+    @Autowired
+    private ClientService clientService;
+
     @Autowired
     private ServiceMangmentServiceLaundry serviceMangmentServiceLaundry;
 
@@ -40,12 +43,17 @@ public class LaundryServicesController {
     }
 
     @GetMapping("/ListUsers")
-    public String showUserListFragment() {
-        return "services-laundry/user-list";
+    @ResponseBody
+    public ResponseEntity<List<cliente>> getAllActiveClients() {
+        List<cliente> clients = clientService.getAllActiveClients();
+        if (clients == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(clients);
     }
 
     @GetMapping("/selection")
-    public String showServiceSelectionFragment(Model model) { 
+    public String showServiceSelectionFragment(Model model) {
         model.addAttribute("categorias", serviceMangmentServiceLaundry.getAllCategorys());
         return "services-laundry/service-selection";
     }
@@ -54,7 +62,8 @@ public class LaundryServicesController {
     @ResponseBody
     public Map<String, Object> registerService(@RequestBody RegistroServicioLavanderia registro) {
         try {
-            // Guardar el registro en sesion con un Id unico
+            System.out.println("Registro: " + registro);
+            // Guardar el registro en sesion con un Id unico 
             String boletaId = generarNumeroBoleta();
             httpSession.setAttribute("boleta_" + boletaId, registro);
 
@@ -85,8 +94,7 @@ public class LaundryServicesController {
 
             // agregar datos al modelo
             model.addAttribute("numeroBoleta", boletaId);
-            model.addAttribute("fecha", new java.util.Date());
-            model.addAttribute("nombreCliente", registro.getNombreCliente());
+            model.addAttribute("fecha", new java.util.Date()); 
             model.addAttribute("servicios", registro.getServicios());
             model.addAttribute("totalServicio", registro.getTotalServicio());
             model.addAttribute("descuento", registro.getDescuento());
