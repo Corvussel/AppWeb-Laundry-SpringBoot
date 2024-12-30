@@ -42,7 +42,10 @@ public class UserAuthController {
             if (authentication.isAuthenticated()) {
                 // Si la autenticacion es correcta se redirige a la pagina principal
                 return "redirect:/home";
+            }else{
+                model.addAttribute("error", "Nombre de usuario o contraseña incorrectos");
             }
+
         } catch (AuthenticationException e) {
             // Si la autenticacion es incorrecta se muestra un mensaje de error y se
             // redirige a la pagina de login

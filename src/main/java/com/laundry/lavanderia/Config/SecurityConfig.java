@@ -69,8 +69,8 @@ public class SecurityConfig {
 
                 // se configura la pagina de logout
                 .logout(logout -> logout
-                        // se configura la ruta de logout
-                        .logoutUrl("/logout")
+                        // se configura la ruta de logout para cerrar la sesion
+                        .logoutUrl("/userAuth/logout")
                         // se redirige a la pagina de login si el logout es correcto
                         .logoutSuccessUrl("/userAuth/login")
                         .permitAll()) // se permite el acceso a la pagina de logout
@@ -112,8 +112,10 @@ public class SecurityConfig {
     // se asigna el repositorio de tokens de recuerdo de la sesion
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
+        // se configura el repositorio de tokens de recuerdo de la sesion
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-        tokenRepository.setDataSource(dataSource);
+        // se configura el datasource de la base de datos
+        tokenRepository.setDataSource(dataSource); 
         return tokenRepository;
     }
 }

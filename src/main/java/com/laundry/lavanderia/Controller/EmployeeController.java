@@ -28,6 +28,12 @@ public class EmployeeController {
         return SHARED_LAYOUT;
     }
 
+    @PostMapping("/register")
+    public String saveEmployee(Employee employee) {
+        employeeService.saveEmployee(employee);
+        return "redirect:/employees/index";
+    }
+
     @GetMapping("/edit/{id}")
     public String editEmployee(@PathVariable Long id, Model model) {
         employeeService.getEmployeeById(id);

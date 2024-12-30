@@ -21,6 +21,12 @@ public class EmployeeService {
         return employees;
     }
 
+    public void saveEmployee(Employee employee) {
+        System.out.println("Guardando empleado: " + employee.getFirstName() + " " + employee.getLastName() + " "
+                + employee.getEmail() + " " + employee.getPhone() + " " + employee.getRole() + " "
+                + employee.getPassword());
+    }
+
     public Employee getEmployeeById(Long id) {
         System.out.println("Buscando empleado con ID: " + id);
         return employees.stream()
