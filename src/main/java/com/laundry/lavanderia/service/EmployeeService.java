@@ -26,6 +26,9 @@ public class EmployeeService {
         employeeRepository.save(employee);
     }
 
+    public Employee getEmployeeByEmail(String email) {
+        return employeeRepository.findByEmail(email);
+    }
     public Employee getEmployeeById(Long id) {
         return employeeRepository.findById(id).orElse(null);
     }

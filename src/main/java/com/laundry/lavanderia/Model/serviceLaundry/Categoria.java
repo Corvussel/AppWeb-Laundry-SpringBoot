@@ -8,9 +8,9 @@ import lombok.Data;
 public class Categoria {
 
     private String nombre;    
-    private List<Servicio> servicios;
+    private List<OrderDetails> servicios;
     
-    public Categoria(String nombre, List<Servicio> servicios) {
+    public Categoria(String nombre, List<OrderDetails> servicios) {
         this.nombre = nombre;
         this.servicios = servicios;
     }

@@ -1,12 +1,13 @@
 package com.laundry.lavanderia.Controller;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +16,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
-import com.laundry.lavanderia.Model.serviceLaundry.RegistroServicioLavanderia;
+import com.laundry.lavanderia.Model.serviceLaundry.OrderService;
+import com.laundry.lavanderia.Model.serviceLaundry.Boleta;
+import com.laundry.lavanderia.Model.employee.Employee;
 import com.laundry.lavanderia.service.ServiceMangmentServiceLaundry;
 import com.laundry.lavanderia.Model.client.cliente;
 import com.laundry.lavanderia.service.ClientService;
+import com.laundry.lavanderia.service.OrdersService;
+import com.laundry.lavanderia.service.BoletaService;
 import jakarta.servlet.http.HttpSession;
+import com.laundry.lavanderia.service.EmployeeService;
 
 @Controller
 @RequestMapping("/serviceLaundry")
@@ -35,6 +41,15 @@ public class LaundryServicesController {
 
     @Autowired
     private ServiceMangmentServiceLaundry serviceMangmentServiceLaundry;
+
+    @Autowired
+    private OrdersService ordersService;
+
+    @Autowired
+    private BoletaService boletaService;
+
+    @Autowired
+    private EmployeeService employeeService;
 
     @GetMapping("index")
     public String showIndexPage(Model model) {
@@ -60,17 +75,34 @@ public class LaundryServicesController {
 
     @PostMapping("/register")
     @ResponseBody
-    public Map<String, Object> registerService(@RequestBody RegistroServicioLavanderia registro) {
+    public Map<String, Object> registerService(@RequestBody OrderService registro) {
         try {
-            System.out.println("Registro: " + registro);
-            // Guardar el registro en sesion con un Id unico 
+            
+            // Obtener el empleado de la sesión
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                    .getPrincipal();
+            Employee employee = employeeService.getEmployeeByEmail(userDetails.getUsername());
+            if (employee == null) {
+                throw new RuntimeException("Empleado no encontrado en la sesión");
+            }
+
+            registro.setEmployee(employee);
             String boletaId = generarNumeroBoleta();
+            Boleta boleta = new Boleta(boletaId);
+            boletaService.saveBoleta(boleta);
+            registro.setBoleta(boleta);
+
+            // Guardar el registro en sesión con un Id único
             httpSession.setAttribute("boleta_" + boletaId, registro);
+
+            ordersService.saveOrder(registro);
 
             Map<String, Object> repuesta = new HashMap<>();
             repuesta.put("status", "success");
             repuesta.put("boletaId", boletaId);
             repuesta.put("boletaUrl", "/serviceLaundry/boleta/" + boletaId);
+
+            System.out.println("Registro: " + registro);
 
             return repuesta;
         } catch (Exception e) {
@@ -84,24 +116,24 @@ public class LaundryServicesController {
     @GetMapping("/boleta/{boletaId}")
     public String generarBoleta(@PathVariable String boletaId, Model model) {
         try {
-            // Recuperar datos de la sesion
-            RegistroServicioLavanderia registro = (RegistroServicioLavanderia) httpSession
+            // Recuperar datos de la sesión
+            OrderService registro = (OrderService) httpSession
                     .getAttribute("boleta_" + boletaId);
 
             if (registro == null) {
-                throw new RuntimeException("boletaa no encontrada o esta expirada");
+                throw new RuntimeException("Boleta no encontrada o está expirada");
             }
 
-            // agregar datos al modelo
+            // Agregar datos al modelo
             model.addAttribute("numeroBoleta", boletaId);
-            model.addAttribute("fecha", new java.util.Date()); 
+            model.addAttribute("fecha", new java.util.Date());
             model.addAttribute("servicios", registro.getServicios());
             model.addAttribute("totalServicio", registro.getTotalServicio());
             model.addAttribute("descuento", registro.getDescuento());
             model.addAttribute("precioTotal", registro.getPrecioTotal());
             model.addAttribute("metodoPago", registro.getMetodoPago());
 
-            // se Limpiar la sesion despuess de usar
+            // Limpiar la sesión después de usar
             httpSession.removeAttribute("boleta_" + boletaId);
 
             return "services-laundry/boleta";

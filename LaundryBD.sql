@@ -55,6 +55,41 @@ CREATE TABLE service_laundry (
     FOREIGN KEY (category_id) REFERENCES category(id)
 );
 
+CREATE TABLE boleta (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    numero_boleta VARCHAR(255) NOT NULL,
+    fecha_generada TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE order_service (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    employee_id BIGINT,
+    client_id BIGINT,
+    boleta_id BIGINT,
+    total_servicio DOUBLE NOT NULL,
+    descuento DOUBLE,
+    precio_total DOUBLE NOT NULL,
+    metodo_pago VARCHAR(255),
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    observacion VARCHAR(255),
+    tipo_servicio VARCHAR(255),
+    FOREIGN KEY (employee_id) REFERENCES employee(id),
+    FOREIGN KEY (client_id) REFERENCES cliente(id),
+    FOREIGN KEY (boleta_id) REFERENCES boleta(id)
+);
+
+CREATE TABLE order_details (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order_service_id BIGINT,
+    nombre VARCHAR(255) NOT NULL,
+    precio_unidad DOUBLE NOT NULL,
+    cantidad INT NOT NULL,
+    sub_total DOUBLE NOT NULL,
+    detalle VARCHAR(255),
+    FOREIGN KEY (order_service_id) REFERENCES order_service(id)
+);
+ 
+
 SELECT * FROM persistent_logins;
 DROP TABLE employee;
 DROP TABLE role;

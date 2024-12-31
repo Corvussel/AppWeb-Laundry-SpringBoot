@@ -37,7 +37,7 @@ public class SecurityConfig {
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
-    }
+    } 
 
     // Configuracion de seguridad de la aplicacion cuando se accede a las rutas
     @Bean
