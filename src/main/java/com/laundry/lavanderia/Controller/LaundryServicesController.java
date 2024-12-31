@@ -17,13 +17,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.laundry.lavanderia.Model.serviceLaundry.OrderService;
-import com.laundry.lavanderia.Model.serviceLaundry.Boleta;
 import com.laundry.lavanderia.Model.employee.Employee;
 import com.laundry.lavanderia.service.ServiceMangmentServiceLaundry;
 import com.laundry.lavanderia.Model.client.cliente;
 import com.laundry.lavanderia.service.ClientService;
 import com.laundry.lavanderia.service.OrdersService;
-import com.laundry.lavanderia.service.BoletaService;
 import jakarta.servlet.http.HttpSession;
 import com.laundry.lavanderia.service.EmployeeService;
 
@@ -34,29 +32,37 @@ public class LaundryServicesController {
     private static final String SHARED_LAYOUT = "shared/layout";
 
     @Autowired
-    private HttpSession httpSession;
+    private ClientService clientService; // Inyectar el servicio de clientes
 
     @Autowired
-    private ClientService clientService;
+    private ServiceMangmentServiceLaundry serviceMangmentServiceLaundry; // Inyectar el servicio de servicios
 
     @Autowired
-    private ServiceMangmentServiceLaundry serviceMangmentServiceLaundry;
+    private OrdersService ordersService; // Inyectar el servicio de ordenes
 
     @Autowired
-    private OrdersService ordersService;
+    private HttpSession httpSession; // Inyectar el objeto HttpSession
 
     @Autowired
-    private BoletaService boletaService;
+    private EmployeeService employeeService; // Inyectar el servicio de empleados
 
-    @Autowired
-    private EmployeeService employeeService;
-
+    /**
+     * Muestra la pantalla principal de servicios de lavanderia.
+     * 
+     * @param model El objeto que contiene los datos de la vista.
+     * @return El nombre de la vista que se va a renderizar.
+     */
     @GetMapping("index")
     public String showIndexPage(Model model) {
         model.addAttribute("content", "services-laundry/index.html");
         return SHARED_LAYOUT;
     }
 
+    /**
+     * Retorna una lista de todos los clientes activos.
+     * 
+     * @return una lista de clientes activos o un 404 si no hay clientes.
+     */
     @GetMapping("/ListUsers")
     @ResponseBody
     public ResponseEntity<List<cliente>> getAllActiveClients() {
@@ -67,17 +73,31 @@ public class LaundryServicesController {
         return ResponseEntity.ok(clients);
     }
 
+    /**
+     * Muestra la pantalla parcial de seleccion de servicios de lavanderia.
+     * 
+     * @param model El objeto que contiene los datos de la vista.
+     * @return El nombre de la vista que se va a renderizar.
+     */
     @GetMapping("/selection")
     public String showServiceSelectionFragment(Model model) {
         model.addAttribute("categorias", serviceMangmentServiceLaundry.getAllCategorys());
         return "services-laundry/service-selection";
     }
 
+    /**
+     * Registra un servicio de lavanderia.
+     * 
+     * @param registro El objeto que contiene la informacion del servicio a
+     *                 registrar.
+     * @return Un mapa que contiene el Id unico de la boleta generada y la URL
+     *         para ver la boleta generada.
+     */
     @PostMapping("/register")
     @ResponseBody
     public Map<String, Object> registerService(@RequestBody OrderService registro) {
         try {
-            
+
             // Obtener el empleado de la sesión
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                     .getPrincipal();
@@ -85,27 +105,22 @@ public class LaundryServicesController {
             if (employee == null) {
                 throw new RuntimeException("Empleado no encontrado en la sesión");
             }
-
-            registro.setEmployee(employee);
-            String boletaId = generarNumeroBoleta();
-            Boleta boleta = new Boleta(boletaId);
-            boletaService.saveBoleta(boleta);
-            registro.setBoleta(boleta);
+            // Registrar el servicio en la base de datos y obtener el Id unico de la boleta
+            String boletaId = ordersService.RegisterOrder(registro, employee);
 
             // Guardar el registro en sesión con un Id único
             httpSession.setAttribute("boleta_" + boletaId, registro);
 
-            ordersService.saveOrder(registro);
-
+            // devolver el Id unico de la boleta y la URL de la boleta generada en la
+            // respuesta
             Map<String, Object> repuesta = new HashMap<>();
             repuesta.put("status", "success");
             repuesta.put("boletaId", boletaId);
             repuesta.put("boletaUrl", "/serviceLaundry/boleta/" + boletaId);
 
-            System.out.println("Registro: " + registro);
-
             return repuesta;
         } catch (Exception e) {
+            // devolver un mensaje de error en la respuesta si ocurre un error
             Map<String, Object> error = new HashMap<>();
             error.put("status", "error");
             error.put("message", "Error: " + e.getMessage());
@@ -113,10 +128,18 @@ public class LaundryServicesController {
         }
     }
 
+    /**
+     * Genera la boleta de un servicio de lavanderia
+     * 
+     * @param boletaId El Id unico de la boleta
+     * @param model    El objeto que contiene los datos de la vista
+     * @return El nombre de la vista que se va a renderizar, o un
+     *         Server Error si ocurre un error al generar la boleta
+     */
     @GetMapping("/boleta/{boletaId}")
     public String generarBoleta(@PathVariable String boletaId, Model model) {
         try {
-            // Recuperar datos de la sesión
+            // Obtener el registro de la sesión con el Id unico de la boleta
             OrderService registro = (OrderService) httpSession
                     .getAttribute("boleta_" + boletaId);
 
@@ -142,7 +165,4 @@ public class LaundryServicesController {
         }
     }
 
-    private String generarNumeroBoleta() {
-        return "B-" + System.currentTimeMillis();
-    }
 }

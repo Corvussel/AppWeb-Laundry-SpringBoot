@@ -102,6 +102,10 @@ SELECT * FROM cliente;
 SELECT * FROM category;
 SELECT * FROM service_laundry;
 
+SELECT * FROM boleta;
+SELECT * FROM order_service;
+SELECT * FROM order_details;
+
 INSERT INTO role (name) VALUES ('admin');
 INSERT INTO role (name) VALUES ('employee');
 
