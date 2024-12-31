@@ -5,14 +5,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import lombok.Data;
-import lombok.AllArgsConstructor;
+import lombok.Data; 
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Data 
 @Entity
+@NoArgsConstructor
 public class OrderDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +22,7 @@ public class OrderDetails {
     private double subTotal;
     private String detalle;
     @ManyToOne
+    @JsonBackReference
     private OrderService orderService;
 
     public OrderDetails(String nombre, String detalle, double precioUnidad) {

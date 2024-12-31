@@ -97,7 +97,6 @@ public class LaundryServicesController {
     @ResponseBody
     public Map<String, Object> registerService(@RequestBody OrderService registro) {
         try {
-
             // Obtener el empleado de la sesión
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                     .getPrincipal();

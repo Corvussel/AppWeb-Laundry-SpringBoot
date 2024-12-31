@@ -8,28 +8,33 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
+import lombok.NoArgsConstructor; 
+
 import com.laundry.lavanderia.Model.client.cliente;
 import com.laundry.lavanderia.Model.employee.Employee;
 
 @Data
 @Entity
+@NoArgsConstructor 
 public class OrderService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String tipoServicio;
-    @ManyToOne
-    private cliente client;
-    private String observacion;
-    @OneToMany(mappedBy = "orderService")
-    private List<OrderDetails> servicios;
-    private double totalServicio;
-    private double totalCobro;
-    private String metodoPago;
-    private double descuento;
-    private double precioTotal;
     @ManyToOne
     private Employee employee;
     @ManyToOne
-    private Boleta boleta;
+    private cliente client;
+    @ManyToOne
+    private Boleta boleta; 
+    private double totalServicio; 
+    private double descuento; 
+    private double precioTotal; 
+    private String metodoPago; 
+    private String observacion;  
+    private String status;  
+    private String fecha;
+    private double totalCobro;  
+    @OneToMany(mappedBy = "orderService")
+    private List<OrderDetails> servicios;
+    private String tipoServicio;
 }

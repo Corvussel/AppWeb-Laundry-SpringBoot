@@ -72,12 +72,14 @@ CREATE TABLE order_service (
     metodo_pago VARCHAR(255),
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     observacion VARCHAR(255),
-    tipo_servicio VARCHAR(255),
+    tipo_servicio VARCHAR(255), 
+    status VARCHAR(255),
+    total_Cobro DOUBLE NOT NULL,
     FOREIGN KEY (employee_id) REFERENCES employee(id),
     FOREIGN KEY (client_id) REFERENCES cliente(id),
     FOREIGN KEY (boleta_id) REFERENCES boleta(id)
 );
-
+ 
 CREATE TABLE order_details (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     order_service_id BIGINT,
@@ -95,6 +97,9 @@ DROP TABLE employee;
 DROP TABLE role;
 DROP TABLE cliente;
 DROP TABLE category;
+DROP TABLE boleta;
+DROP TABLE order_service;
+DROP TABLE order_details; 
 DROP TABLE service_laundry;
 SELECT * FROM employee;
 SELECT * FROM role;

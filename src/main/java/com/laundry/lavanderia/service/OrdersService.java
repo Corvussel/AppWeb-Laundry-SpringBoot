@@ -6,8 +6,9 @@ import org.springframework.stereotype.Service;
 import com.laundry.lavanderia.Model.employee.Employee;
 import com.laundry.lavanderia.Model.serviceLaundry.Boleta;
 import com.laundry.lavanderia.Model.serviceLaundry.OrderService;
+import com.laundry.lavanderia.Model.serviceLaundry.OrderDetails;
 import com.laundry.lavanderia.repository.OrdersRepository;
-
+import com.laundry.lavanderia.repository.OrderDetailsRepository;
 
 @Service
 public class OrdersService {
@@ -16,7 +17,10 @@ public class OrdersService {
     private OrdersRepository ordersRepository;
 
     @Autowired
-    private BoletaService boletaService; 
+    private BoletaService boletaService;
+
+    @Autowired
+    private OrderDetailsRepository orderDetailsRepository;
 
     /**
      * Registra un servicio de lavanderia.
@@ -28,15 +32,21 @@ public class OrdersService {
      */
     public String RegisterOrder(OrderService registro, Employee employee) {
 
-        
         Boleta boleta = new Boleta(generarNumeroBoleta()); // Crear una nueva boleta
         boletaService.saveBoleta(boleta); // Guardar la boleta en la base de datos
 
         registro.setBoleta(boleta);
         registro.setEmployee(employee);
- 
+        registro.setStatus("Pendiente"); 
+       
         // se guarda el registro en la base de datos
-        ordersRepository.save(registro);
+        OrderService savedOrder = ordersRepository.save(registro);
+
+        // Save each OrderDetails associated with the saved OrderService
+        for (OrderDetails details : registro.getServicios()){
+            details.setOrderService(savedOrder);
+            orderDetailsRepository.save(details);
+        }
 
         return boleta.getNumeroBoleta();
     }
