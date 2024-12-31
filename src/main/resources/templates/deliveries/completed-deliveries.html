@@ -41,7 +41,7 @@
 
 
         <div class="grid md:grid-cols-2 gap-6">
-            <article th:each="delivery : ${deliveries}"
+            <article th:each="order : ${orders}"
                 class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="p-6">
                     <!-- Header de la tarjeta -->
@@ -52,11 +52,11 @@
                             </div>
                             <div>
                                 <p class="text-xs text-gray-500">Orden</p>
-                                <h3 class="font-medium text-gray-800" th:text="${'#' + delivery.orderNumber}"></h3>
+                                <h3 class="font-medium text-gray-800" th:text="${'#' + order.id}"></h3>
                             </div>
                         </div>
                         <span class="px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full text-xs font-medium"
-                            th:text="${delivery.status}">
+                            th:text="${order.status}">
                         </span>
                     </div>
 
@@ -64,19 +64,19 @@
                     <div class="space-y-3">
                         <div class="flex items-center gap-2 text-sm text-gray-600">
                             <i class="fas far fa-user w-4"></i>
-                            <span class="font-medium text-gray-800" th:text="${delivery.customerName}"></span>
+                            <span class="font-medium text-gray-800" th:text="${order.client.nombre}"></span>
                         </div>
                         <div class="flex items-center gap-2 text-sm text-gray-600">
                             <i class="fas fa-calendar-alt w-4"></i>
-                            <span th:text="${delivery.completedDate}"></span>
+                            <span th:text="${order.fecha}"></span>
                         </div>
                         <div class="flex items-center gap-2 text-sm text-gray-600">
                             <i class="fas fa-phone w-4"></i>
-                            <span th:text="${delivery.phoneNumber}"></span>
+                            <span th:text="${order.client.telefono}"></span>
                         </div>
                         <div class="flex items-center gap-2 text-sm text-gray-600">
                             <i class="fas fa-money-bill w-4"></i>
-                            <span th:text="${delivery.paymentMethod}"></span>
+                            <span th:text="${order.metodoPago}"></span>
                         </div>
                     </div>
 
@@ -84,9 +84,9 @@
                     <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
                         <div>
                             <p class="text-sm text-gray-500">Total Pagado</p>
-                            <p class="text-lg font-bold text-[#0891b2]" th:text="${'S/ ' + delivery.totalAmount }"></p>
+                            <p class="text-lg font-bold text-[#0891b2]" th:text="${'S/ ' + order.precioTotal}"></p>
                         </div>
-                        <button th:data-id="${delivery.id}" @click="loadDeliveryDetails($el.dataset.id)"
+                        <button th:data-id="${order.id}" @click="loadDeliveryDetails($el.dataset.id)"
                             class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 flex items-center gap-2 transition-colors">
                             <i class="fas fa-eye"></i>
                             <span>Ver Detalles</span>
@@ -114,7 +114,7 @@
                             </div>
                             <div>
                                 <h3 class="text-lg font-semibold text-gray-800"
-                                    x-text="'Orden #' + (delivery?.orderNumber || '')"></h3>
+                                    x-text="'Orden #' + (delivery?.id || '')"></h3>
                                 <p class="text-sm text-gray-500">Detalles del pedido entregado</p>
                             </div>
                         </div>
@@ -133,31 +133,31 @@
                                 <div class="flex items-center gap-2">
                                     <i class="fas fa-user text-gray-400"></i>
                                     <span class="text-sm font-medium text-gray-700"
-                                        x-text="delivery?.customerName"></span>
+                                        x-text="delivery?.client?.nombre"></span>
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <i class="fas fa-phone text-gray-400"></i>
-                                    <span class="text-sm text-gray-600" x-text="delivery?.phoneNumber"></span>
+                                    <span class="text-sm text-gray-600" x-text="delivery?.client?.telefono"></span>
                                 </div>
                             </div>
                             <div class="space-y-2">
                                 <div class="flex items-center gap-2">
                                     <i class="fas fa-calendar text-gray-400"></i>
                                     <span class="text-sm text-gray-600"
-                                        x-text="'Entregado: ' + (delivery?.completedDate || '')"></span>
+                                        x-text="'Entregado: ' + (delivery?.fecha || '')"></span>
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <i class="fas fa-money-bill text-gray-400"></i>
                                     <span class="text-sm text-gray-600"
-                                        x-text="'Método Pago: ' + (delivery?.paymentMethod || '')"></span>
+                                        x-text="'Método Pago: ' + (delivery?.metodoPago || '')"></span>
                                 </div>
                             </div>
                         </div>
                     </article>
 
-                    <!-- Lista -->
+                    <!-- Lista de servicios -->
                     <div class="space-y-4">
-                        <template x-for="item in delivery?.items" :key="item.name">
+                        <template x-for="item in delivery?.servicios" :key="item.id">
                             <article class="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
                                 <div class="flex items-center justify-between mb-3">
                                     <div class="flex items-center gap-3">
@@ -165,20 +165,21 @@
                                             <i class="fas fa-tshirt text-blue-600"></i>
                                         </div>
                                         <div>
-                                            <h4 class="font-medium text-gray-800" x-text="item.name"></h4>
-                                            <p class="text-sm text-gray-500" x-text="item.serviceType"></p>
+                                            <h4 class="font-medium text-gray-800" x-text="item.nombre"></h4>
+                                            <p class="text-sm text-gray-500" x-text="delivery?.tipoServicio"></p>
                                         </div>
                                     </div>
                                     <div class="text-right">
-                                        <p class="font-medium text-gray-800" x-text="'S/ ' + item.price.toFixed(2)"></p>
+                                        <p class="font-medium text-gray-800"
+                                            x-text="'S/ ' + item.precioUnidad.toFixed(2)"></p>
                                         <p class="text-sm text-gray-500"
-                                            x-text="item.quantity + ' unidad' + (item.quantity > 1 ? 'es' : '')"></p>
+                                            x-text="item.cantidad + ' unidad' + (item.cantidad > 1 ? 'es' : '')"></p>
                                     </div>
                                 </div>
                                 <div class="text-sm flex gap-1 border-t border-gray-200 pt-2">
                                     <span class="font-medium">Notas:</span>
                                     <p class="text-gray-500 text-nowrap text-ellipsis overflow-hidden"
-                                        x-text="item.notes"></p>
+                                        x-text="item.detalle"></p>
                                 </div>
                             </article>
                         </template>
@@ -194,13 +195,16 @@
                                 <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
                                     <i class="fas fa-user text-indigo-600"></i>
                                 </div>
-                                <span class="text-sm font-medium text-gray-700" x-text="delivery?.employeeName"></span>
+                                <span class="text-sm font-medium text-gray-700"
+                                    x-text="delivery?.employee?.firstName + '  ' + delivery?.employee?.lastName">
+                                </span>
                             </div>
                         </div>
                         <div class="text-right">
                             <p class="text-sm text-gray-500">Total Pagado</p>
                             <p class="text-2xl font-bold text-[#0891b2]"
-                                x-text="'S/ ' + (delivery?.totalAmount || 0).toFixed(2)"></p>
+                                x-text="'S/ ' + (delivery?.precioTotal || 0).toFixed(2)">
+                            </p>
                         </div>
                     </div>
                     <div class="flex justify-end gap-3 mt-4">
@@ -222,6 +226,11 @@
         Alpine.data('deliveryDetails', () => ({
             openModal: false,
             delivery: null,
+            /**
+             * Carga los detalles de una entrega completada.
+             * @param {string|number} id Identificador de la entrega.
+             * @returns {Promise<void>}
+             */
             async loadDeliveryDetails(id) {
                 if (!id) return;
                 try {
@@ -234,7 +243,6 @@
                     console.error('Error loading delivery details:', error);
                 }
             },
-
         }))
     });
 </script>

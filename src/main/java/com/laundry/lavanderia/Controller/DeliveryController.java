@@ -41,7 +41,8 @@ public class DeliveryController {
 
     @GetMapping("/completed")
     public String showCompletedDeliveriesPage(Model model) {
-        model.addAttribute("deliveries", deliveryService.getAllCompletedOrders());
+        // Cambiar de "deliveries" a "orders" para que coincida con el HTML
+        model.addAttribute("orders", deliveryService.getAllCompletedOrders());
         model.addAttribute("content", "deliveries/completed-deliveries.html");
         return SHARED_LAYOUT;
     }
