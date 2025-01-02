@@ -44,19 +44,37 @@ public class ServiceMangmentServiceLaundry {
     }
 
     public void deleteCategory(Long id) {
-        categoryRepository.deleteById(id);
+        categoryRepository.findById(id).ifPresent(category -> {
+            category.setActive(false);
+            categoryRepository.save(category);
+        });
     }
 
     public void deleteService(Long id) {
-        serviceRepository.deleteById(id);
+        serviceRepository.findById(id).ifPresent(service -> {
+            service.setActive(false);
+            serviceRepository.save(service);
+        });
     }
 
     public void updateCategory(Category updatedCategory) {
-        categoryRepository.save(updatedCategory);
+        categoryRepository.findById(updatedCategory.getId()).ifPresent(category -> {
+            category.setName(updatedCategory.getName());
+            category.setDescription(updatedCategory.getDescription());
+            category.setActive(updatedCategory.isActive());
+            categoryRepository.save(category);
+        });
     }
 
     public void updateService(ServiceLaundry updatedService) {
-        serviceRepository.save(updatedService);
+        serviceRepository.findById(updatedService.getId()).ifPresent(service -> {
+            service.setName(updatedService.getName());
+            service.setDescription(updatedService.getDescription());
+            service.setPrice(updatedService.getPrice());
+            service.setCategory(updatedService.getCategory());
+            service.setActive(updatedService.isActive());
+            serviceRepository.save(service);
+        });
     }
 
 }

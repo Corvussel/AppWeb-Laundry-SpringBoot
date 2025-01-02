@@ -28,7 +28,6 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired
     private PaymentMethodRepository paymentMethodRepository;
 
-    
     /**
      * Crea los datos iniciales de la base de datos.
      * <p>
@@ -48,6 +47,13 @@ public class DataInitializer implements CommandLineRunner {
             adminRole.setName("admin");
             roleRepository.save(adminRole);
         }
+        // Crear rol empleado si no existe
+        Role employeeRole = roleRepository.findByName("empleado");
+        if (employeeRole == null) {
+            employeeRole = new Role();
+            employeeRole.setName("empleado");
+            roleRepository.save(employeeRole);
+        }
 
         // Crear usuario admin si no existe
         if (employeeRepository.findByEmail("admin@example.com") == null) {
@@ -57,7 +63,7 @@ public class DataInitializer implements CommandLineRunner {
             admin.setEmail("admin@example.com");
             admin.setPhone("1234567890");
             admin.setRole(adminRole);
-            admin.setStatus("activo");
+            admin.setStatus(true);
             admin.setPassword(passwordEncoder.encode("admin123"));
             employeeRepository.save(admin);
         }
@@ -86,4 +92,5 @@ public class DataInitializer implements CommandLineRunner {
             paymentMethodRepository.save(paymentMethod);
         }
     }
+
 }

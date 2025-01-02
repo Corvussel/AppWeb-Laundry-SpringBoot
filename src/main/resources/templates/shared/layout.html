@@ -90,7 +90,7 @@
                 x-transition:leave-start="opacity-100 translate-x-0"
                 x-transition:leave-end="opacity-0 -translate-x-full"
                 class="fixed inset-y-0 left-0 w-56 bg-white z-50  pt-14 sm:hidden">
-                <div class="px-4 bg-white h-screen">
+                <div class="px-4 bg-white min-h-screen h-full">
                     <div class="absolute top-4 right-3">
                         <button @click="open = !open" class=" text-neutral-600 focus:outline-none">
                             <i x-show="open" x-cloak class="fas fa-times text-base"></i>
@@ -116,7 +116,7 @@
 
             <!-- Overlay de fondo -->
             <div x-show="open" x-cloak @click="open = false"
-                class="fixed inset-0 bg-black/20  z-40 sm:hidden h-screen overflow-hidden ">
+                class="fixed inset-0 bg-black/20  backdrop-blur z-40 sm:hidden min-h-screen h-full overflow-hidden ">
             </div>
         </nav>
     </header>
