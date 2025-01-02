@@ -20,7 +20,7 @@ public class Employee {
     private String phone;
     @ManyToOne
     private Role role;
-    private String status;
+    private Boolean status;
     private String password;
     private String profileImage;
 
@@ -28,7 +28,7 @@ public class Employee {
     }
 
     public Employee(Long id, String firstName, String lastName, String email, String phone, Role role,
-            String status) {
+    Boolean status) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -38,7 +38,7 @@ public class Employee {
         this.status = status;
     }
 
-    public Employee(String firstName, String lastName, String email, String phone, Role role, String status) {
+    public Employee(String firstName, String lastName, String email, String phone, Role role, Boolean status) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

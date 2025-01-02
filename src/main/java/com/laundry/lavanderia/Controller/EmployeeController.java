@@ -35,8 +35,8 @@ public class EmployeeController {
 
     @PostMapping("/register")
     public String saveEmployee(Employee employee) {
-        if (employee.getStatus() == null || employee.getStatus().isEmpty()) {
-            employee.setStatus("activo");
+        if (employee.getStatus() == null ) {
+            employee.setStatus(true);
         }
         employeeService.saveEmployee(employee);
         return "redirect:/employees/index";
@@ -46,14 +46,15 @@ public class EmployeeController {
     public String editEmployee(@PathVariable Long id, Model model) {
         employeeService.getEmployeeById(id);
         model.addAttribute("roles", roleService.getAllRoles());
+        model.addAttribute("employee", employeeService.getEmployeeById(id));
         model.addAttribute("content", "auth/edit-employee.html");
         return SHARED_LAYOUT;
     }
 
     @PostMapping("/update")
     public String updateEmployee(Employee employee) {
-        if (employee.getStatus() == null || employee.getStatus().isEmpty()) {
-            employee.setStatus("activo");
+        if (employee.getStatus() == null) {
+            employee.setStatus(true);
         }
         employeeService.updateEmployee(employee);
         return "redirect:/employees/index";

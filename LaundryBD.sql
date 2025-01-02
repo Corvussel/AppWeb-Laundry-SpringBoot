@@ -1,4 +1,4 @@
--- Active: 1735511517208@@b0vg062se0kqukm3t4yx-mysql.services.clever-cloud.com@3306@b0vg062se0kqukm3t4yx
+-- Active: 1735826042611@@b0vg062se0kqukm3t4yx-mysql.services.clever-cloud.com@3306
 CREATE DATABASE sistema_ventas;
 
 USE sistema_ventas;
@@ -22,7 +22,7 @@ CREATE TABLE employee (
     email VARCHAR(255) NOT NULL,
     phone VARCHAR(255) NOT NULL,
     role_id BIGINT,
-    status VARCHAR(255) NOT NULL,
+    status BOOLEAN DEFAULT true,
     password VARCHAR(255) NOT NULL,
     profile_image VARCHAR(255),
     FOREIGN KEY (role_id) REFERENCES role(id)
@@ -108,7 +108,7 @@ DROP TABLE boleta;
 DROP TABLE order_service;
 DROP TABLE order_details; 
 DROP TABLE service_laundry;
-DROP TABLE payment_method;
+DROP TABLE payment_method; 
 
 -- SELECCIONAR TABLAS
 SELECT * FROM persistent_logins;
