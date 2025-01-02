@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import com.laundry.lavanderia.Model.client.cliente;
 import com.laundry.lavanderia.Model.employee.Employee;
+import com.laundry.lavanderia.Model.payment.PaymentMethod;
 
 @Data
 @Entity
@@ -29,7 +30,8 @@ public class OrderService {
     private double totalServicio; 
     private double descuento; 
     private double precioTotal; 
-    private String metodoPago; 
+    @ManyToOne
+    private PaymentMethod paymentMethod;
     private String observacion;  
     private String status;  
     private String fecha;

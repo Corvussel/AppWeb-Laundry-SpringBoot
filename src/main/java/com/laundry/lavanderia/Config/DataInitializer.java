@@ -7,8 +7,10 @@ import org.springframework.stereotype.Component;
 
 import com.laundry.lavanderia.Model.Security.Role;
 import com.laundry.lavanderia.Model.employee.Employee;
+import com.laundry.lavanderia.Model.payment.PaymentMethod;
 import com.laundry.lavanderia.repository.EmployeeRepository;
 import com.laundry.lavanderia.repository.RoleRepository;
+import com.laundry.lavanderia.repository.PaymentMethodRepository;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -22,14 +24,20 @@ public class DataInitializer implements CommandLineRunner {
     // Inyectar el encriptador de contraseñas para la autenticacion del admin
     @Autowired
     private PasswordEncoder passwordEncoder;
+    // Inyectar el repositorio de métodos de pago
+    @Autowired
+    private PaymentMethodRepository paymentMethodRepository;
 
+    
     /**
-     * Metodo para crear el rol admin y el usuario admin si no existen
+     * Crea los datos iniciales de la base de datos.
+     * <p>
+     * Crea el rol de administrador y el usuario administrador si no existen.
+     * Crea los métodos de pago por defecto si no existen.
+     * </p>
      * 
      * @param args
-     * @return void
      * @throws Exception
-     * 
      */
     @Override
     public void run(String... args) throws Exception {
@@ -52,6 +60,30 @@ public class DataInitializer implements CommandLineRunner {
             admin.setStatus("activo");
             admin.setPassword(passwordEncoder.encode("admin123"));
             employeeRepository.save(admin);
+        }
+
+        // Crear métodos de pago por defecto
+        createDefaultPaymentMethod("Yape", "Pago mediante Yape");
+        createDefaultPaymentMethod("Plin", "Pago mediante Plin");
+        createDefaultPaymentMethod("Efectivo", "Pago en efectivo");
+        createDefaultPaymentMethod("Transferencia", "Pago mediante transferencia bancaria");
+        createDefaultPaymentMethod("POS", "Pago mediante POS");
+
+    }
+
+    /**
+     * Crea un método de pago por defecto si no existe
+     * 
+     * @param name        nombre del método de pago
+     * @param description descripción del método de pago
+     */
+    private void createDefaultPaymentMethod(String name, String description) {
+        if (paymentMethodRepository.findByName(name) == null) {
+            PaymentMethod paymentMethod = new PaymentMethod();
+            paymentMethod.setName(name);
+            paymentMethod.setDescription(description);
+            paymentMethod.setActive(true);
+            paymentMethodRepository.save(paymentMethod);
         }
     }
 }

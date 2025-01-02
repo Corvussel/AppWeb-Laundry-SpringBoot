@@ -153,7 +153,7 @@ public class LaundryServicesController {
             model.addAttribute("totalServicio", registro.getTotalServicio());
             model.addAttribute("descuento", registro.getDescuento());
             model.addAttribute("precioTotal", registro.getPrecioTotal());
-            model.addAttribute("metodoPago", registro.getMetodoPago());
+            model.addAttribute("metodoPago", registro.getPaymentMethod().getName());
 
             // Limpiar la sesión después de usar
             httpSession.removeAttribute("boleta_" + boletaId);

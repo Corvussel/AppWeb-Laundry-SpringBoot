@@ -317,7 +317,9 @@
                     servicios: [],
                     totalServicio: parseFloat(document.getElementById('totalServicios').value),
                     totalCobro: parseFloat(document.getElementById('totalCobro').value),
-                    metodoPago: this.selectedTipoPago,
+                    paymentMethod: {
+                        name: this.selectedTipoPago
+                    },
                     descuento: parseFloat(document.getElementById('descuento').value),
                     precioTotal: parseFloat(document.getElementById('precioTotal').value)
                 };

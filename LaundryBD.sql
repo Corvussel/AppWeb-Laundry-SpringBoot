@@ -61,6 +61,13 @@ CREATE TABLE boleta (
     fecha_generada TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE payment_method (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(255),
+    active BOOLEAN DEFAULT true
+);
+
 CREATE TABLE order_service (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     employee_id BIGINT,
@@ -69,7 +76,7 @@ CREATE TABLE order_service (
     total_servicio DOUBLE NOT NULL,
     descuento DOUBLE,
     precio_total DOUBLE NOT NULL,
-    metodo_pago VARCHAR(255),
+    payment_method_id BIGINT,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     observacion VARCHAR(255),
     tipo_servicio VARCHAR(255), 
@@ -77,7 +84,8 @@ CREATE TABLE order_service (
     total_Cobro DOUBLE NOT NULL,
     FOREIGN KEY (employee_id) REFERENCES employee(id),
     FOREIGN KEY (client_id) REFERENCES cliente(id),
-    FOREIGN KEY (boleta_id) REFERENCES boleta(id)
+    FOREIGN KEY (boleta_id) REFERENCES boleta(id),
+    FOREIGN KEY (payment_method_id) REFERENCES payment_method(id)
 );
  
 CREATE TABLE order_details (
@@ -91,8 +99,7 @@ CREATE TABLE order_details (
     FOREIGN KEY (order_service_id) REFERENCES order_service(id)
 );
  
-
-SELECT * FROM persistent_logins;
+ -- ELIMINAR TABLAS
 DROP TABLE employee;
 DROP TABLE role;
 DROP TABLE cliente;
@@ -101,12 +108,16 @@ DROP TABLE boleta;
 DROP TABLE order_service;
 DROP TABLE order_details; 
 DROP TABLE service_laundry;
+DROP TABLE payment_method;
+
+-- SELECCIONAR TABLAS
+SELECT * FROM persistent_logins;
 SELECT * FROM employee;
 SELECT * FROM role;
 SELECT * FROM cliente;
 SELECT * FROM category;
 SELECT * FROM service_laundry;
-
+SELECT * FROM payment_method;
 SELECT * FROM boleta;
 SELECT * FROM order_service;
 SELECT * FROM order_details;

@@ -76,7 +76,7 @@
                         </div>
                         <div class="flex items-center gap-2 text-sm text-gray-600">
                             <i class="fas fa-money-bill w-4"></i>
-                            <span th:text="${order.metodoPago}"></span>
+                            <span th:text="${order.paymentMethod.name}"></span>
                         </div>
                     </div>
 
@@ -144,12 +144,14 @@
                                 <div class="flex items-center gap-2">
                                     <i class="fas fa-calendar text-gray-400"></i>
                                     <span class="text-sm text-gray-600"
-                                        x-text="'Entregado: ' + (delivery?.fecha || '')"></span>
+                                        x-text="'Entregado: ' + (delivery?.fecha || '')">
+                                    </span>
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <i class="fas fa-money-bill text-gray-400"></i>
                                     <span class="text-sm text-gray-600"
-                                        x-text="'Método Pago: ' + (delivery?.metodoPago || '')"></span>
+                                        x-text="'Método Pago: ' + (delivery?.paymentMethod?.name || '')">
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -179,7 +181,8 @@
                                 <div class="text-sm flex gap-1 border-t border-gray-200 pt-2">
                                     <span class="font-medium">Notas:</span>
                                     <p class="text-gray-500 text-nowrap text-ellipsis overflow-hidden"
-                                        x-text="item.detalle"></p>
+                                        x-text="item.detalle"> 
+                                    </p>
                                 </div>
                             </article>
                         </template>
