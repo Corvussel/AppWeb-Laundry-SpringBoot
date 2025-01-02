@@ -108,7 +108,7 @@ DROP TABLE boleta;
 DROP TABLE order_service;
 DROP TABLE order_details; 
 DROP TABLE service_laundry;
-DROP TABLE payment_method;
+DROP TABLE payment_method; 
 
 -- SELECCIONAR TABLAS
 SELECT * FROM persistent_logins;
