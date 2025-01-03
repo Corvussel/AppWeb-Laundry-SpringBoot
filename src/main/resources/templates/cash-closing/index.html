@@ -12,7 +12,7 @@
         <p class="text-gray-600">Gestiona el cierre diario de operaciones</p>
       </div>
 
-      <form class="space-y-8" action="/cashClosing/save" method="post">
+      <form class="space-y-8" action="/cashClosing/save" method="post" id="form">
         <div class="grid md:grid-cols-2 gap-6">
           <div class="space-y-2">
             <label
@@ -141,15 +141,18 @@
             class="bg-gradient-to-br from-emerald-50 to-emerald-100/50 p-6 rounded-xl"
           >
             <p class="text-sm text-emerald-600 mb-1">Ingresos Totales</p>
-            <p class="text-2xl font-bold text-emerald-700"
-            th:text="${posEarnings != null ? posEarnings : 0} + ${transferenciaEarnings != null ? transferenciaEarnings : 0} + ${plinEarnings != null ? plinEarnings : 0} + ${yapeEarnings != null ? yapeEarnings : 0} + ${efectivoEarnings != null ? efectivoEarnings : 0}">S/ 0.00</p>
-            
+            <p
+              class="text-2xl font-bold text-emerald-700"
+              th:text="${posEarnings != null ? posEarnings : 0} + ${transferenciaEarnings != null ? transferenciaEarnings : 0} + ${plinEarnings != null ? plinEarnings : 0} + ${yapeEarnings != null ? yapeEarnings : 0} + ${efectivoEarnings != null ? efectivoEarnings : 0}"
+            >
+              S/ 0.00
+            </p>
           </div>
           <div
             class="bg-gradient-to-br from-rose-50 to-rose-100/50 p-6 rounded-xl"
           >
             <p class="text-sm text-rose-600 mb-1">Gastos Totales</p>
-            <p
+            <p id="totalExpenses"
               class="text-2xl font-bold text-rose-700"
               th:text="${totalExpenses != null ? totalExpenses : 0}"
             >
@@ -160,8 +163,12 @@
             class="bg-gradient-to-br from-sky-50 to-sky-100/50 p-6 rounded-xl"
           >
             <p class="text-sm text-sky-600 mb-1">Balance Final</p>
-            <p class="text-2xl font-bold text-sky-700"
-            th:text="${ (posEarnings != null ? posEarnings : 0) + (transferenciaEarnings != null ? transferenciaEarnings : 0) + (plinEarnings != null ? plinEarnings : 0) + (yapeEarnings != null ? yapeEarnings : 0) + (efectivoEarnings != null ? efectivoEarnings : 0) - (totalExpenses != null ? totalExpenses : 0)}">S/ 0.00</p> 
+            <p
+              class="text-2xl font-bold text-sky-700"
+              th:text="${ (posEarnings != null ? posEarnings : 0) + (transferenciaEarnings != null ? transferenciaEarnings : 0) + (plinEarnings != null ? plinEarnings : 0) + (yapeEarnings != null ? yapeEarnings : 0) + (efectivoEarnings != null ? efectivoEarnings : 0) - (totalExpenses != null ? totalExpenses : 0)}"
+            >
+              S/ 0.00
+            </p>
           </div>
         </div>
 
@@ -174,7 +181,7 @@
             Observaciones
           </label>
           <textarea
-            name="observations"
+            id="observations"
             placeholder="Ingrese cualquier observación relevante..."
             class="w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-lg text-gray-700 h-32 resize-none"
           ></textarea>
@@ -206,5 +213,48 @@
         .substr(0, 5)}`;
       document.getElementById("fechaHora").value = fechaHora;
     }, 1000);
+  });
+
+  // Manejo del formulario
+  const form = document.querySelector("#form");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    // Calcular totales antes de enviar
+    const efectivo = parseFloat(document.getElementById("efectivo").value) || 0;
+    const yape = parseFloat(document.getElementById("yape").value) || 0;
+    const plin = parseFloat(document.getElementById("plin").value) || 0;
+    const transferencia = parseFloat(document.getElementById("transferencia").value) || 0;
+    const pos = parseFloat(document.getElementById("pos").value) || 0;
+    
+    const totalIngresos = efectivo + yape + plin + transferencia + pos;
+    const totalGastos = parseFloat(document.querySelector("#totalExpenses").textContent.replace("S/ ", "")) || 0;
+    const balanceFinal = totalIngresos - totalGastos;
+      
+    const cashClosingData = {
+      closingDate: new Date().toISOString(),
+      totalIncome: totalIngresos,
+      totalExpenses: totalGastos,
+      finalBalance: balanceFinal,
+      observations: document.querySelector("#observations").value,
+      employee: null,
+    };
+
+    try {
+      const response = await fetch("/cashClosing/save", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cashClosingData),
+      });
+      if (response.ok) {
+        alert("Cierre de caja registrado exitosamente");
+        window.location.reload();
+      } else { 
+      }
+    } catch (error) {
+      alert("Error: " + error.message);
+    }
   });
 </script>
