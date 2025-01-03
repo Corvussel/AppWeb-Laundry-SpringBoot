@@ -10,7 +10,6 @@ import com.laundry.lavanderia.repository.CashClosingRepository;
 import com.laundry.lavanderia.repository.OrdersRepository;
 import com.laundry.lavanderia.repository.SpendingRepository;
 
-
 @Service
 public class CashClosingService {
 
@@ -52,6 +51,7 @@ public class CashClosingService {
      * @return el total de gastos de la lavandería
      */
     public double getTotalExpenses() {
-        return spendingRepository.getTotalAmount();
+        Double totalAmount = spendingRepository.getTotalAmount();
+        return totalAmount != null ? totalAmount : 0.0;
     }
 }
