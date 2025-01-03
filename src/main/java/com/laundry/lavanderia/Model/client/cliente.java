@@ -18,9 +18,5 @@ public class cliente {
     private String direccion;
     private Boolean activo;
     private String fechaRegistro;
-
-    public String ToString() {
-        return "ID: " + id + ", Nombre: " + nombre + ", Telefono: " + telefono + ", Direccion: " + direccion
-                + ", Activo: " + activo + ", Fecha de Registro: " + fechaRegistro;
-    }
+ 
 }
