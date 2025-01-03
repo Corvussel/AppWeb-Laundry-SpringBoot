@@ -33,10 +33,10 @@ public class DeliveryController {
     }
 
     /**
-     * Displays the completed deliveries page.
+     * Muestra la pagina de Entregas Completadas
      * 
-     * @param model a Model object to store attributes for the view
-     * @return the name of the template to be rendered
+     * @param model objeto que almacena atributos para la vista
+     * @return el nombre de la plantilla que se va a renderizar
      */
 
     @GetMapping("/completed")
@@ -80,4 +80,15 @@ public class DeliveryController {
         return ResponseEntity.ok(order);
     }
 
+    /**
+     * Marca una orden como completada y redirige a la vista de entregas pendientes.
+     *
+     * @param id el id de la orden a marcar como entregada
+     * @return una cadena que redirige a la página de entregas pendientes
+     */
+    @GetMapping("/mark-as-delivered/{id}")
+    public String markAsDelivered(@PathVariable Long id) {
+        deliveryService.completeOrder(id);
+        return "redirect:/deliveries/pending";
+    }
 }

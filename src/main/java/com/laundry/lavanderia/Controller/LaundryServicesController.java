@@ -86,7 +86,7 @@ public class LaundryServicesController {
     }
 
     /**
-     * Registra un servicio de lavanderia.
+     * Registra un orden de lavanderia.
      * 
      * @param registro El objeto que contiene la informacion del servicio a
      *                 registrar.

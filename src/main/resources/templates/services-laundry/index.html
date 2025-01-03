@@ -191,7 +191,7 @@
         </div>
     </section>
 
-    <!-- Modal -->
+    <!-- Modal para seleccionar un Usuario  -->
     <div x-show="ModalUser" x-cloak="ModalUser"
         class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm"
         x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
@@ -220,7 +220,7 @@
                             <template x-for="cliente in listaUsuarios" :key="cliente.id">
                                 <li class="list-item" @click="selectUser(cliente)">
                                     <i class="fas fa-user user-icon"></i>
-                                    <span x-text="cliente.nombre"></span>
+                                    <span x-text="cliente?.nombre"></span>
                                 </li>
                             </template>
                         </ul>
@@ -228,7 +228,7 @@
 
                     <!--button para Mostrar la vista Registrar Nuevo Usuario-->
                     <div class="mt-5">
-                        <a class="btn-new-user" href="/client/register">
+                        <a class="btn-new-user" th:href="@{/client/index}">
                             <i class="fa fa-user-plus"></i>
                             Añadir Usuario
                         </a>

@@ -29,7 +29,6 @@ public class UserService implements UserDetailsService {
      * @param passwordEncoder
      * @return devuelve el encriptador de contraseña
      */
-
     private PasswordEncoder passwordEncoder;
 
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
@@ -49,7 +48,7 @@ public class UserService implements UserDetailsService {
         if (employee == null) {
             throw new UsernameNotFoundException("Usuario no encontrado");
         }
-
+        // se asigna el rol del empleado
         return User.builder()
                 .username(employee.getEmail())
                 .password(employee.getPassword())

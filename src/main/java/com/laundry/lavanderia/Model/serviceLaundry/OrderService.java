@@ -1,6 +1,11 @@
 package com.laundry.lavanderia.Model.serviceLaundry;
 
 import java.util.List;
+
+import com.laundry.lavanderia.Model.client.cliente;
+import com.laundry.lavanderia.Model.employee.Employee;
+import com.laundry.lavanderia.Model.payment.PaymentMethod;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,11 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
-import lombok.NoArgsConstructor; 
-
-import com.laundry.lavanderia.Model.client.cliente;
-import com.laundry.lavanderia.Model.employee.Employee;
-import com.laundry.lavanderia.Model.payment.PaymentMethod;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity

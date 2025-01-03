@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 
@@ -37,7 +38,7 @@ public class SecurityConfig {
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
-    } 
+    }
 
     // Configuracion de seguridad de la aplicacion cuando se accede a las rutas
     @Bean
@@ -50,11 +51,11 @@ public class SecurityConfig {
                 // se configura la seguridad rutas de la aplicacion y se asignan los roles
                 .authorizeHttpRequests(auth -> auth
                         // se permiten las rutas de los recursos estaticos
-                        .requestMatchers("/userAuth/**","/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/userAuth/**", "/css/**", "/js/**", "/images/**").permitAll()
                         // se asignan los roles a las rutas de la aplicacion
-                        .requestMatchers("/sales/**", "/spending/**").hasRole("ADMIN")
+                        .requestMatchers("/cashClosing/**", "/management/**", "/employees/**").hasRole("ADMIN")
                         // se asignan los roles a las rutas de la aplicacion
-                        .requestMatchers("/deliveries/**").hasAnyRole("ADMIN", "EMPLOYEE")
+                        .requestMatchers("/deliveries/**").hasAnyRole("ADMIN", "EMPLEADO")
                         .anyRequest().authenticated()) // se requiere autenticacion para cualquier otra ruta
 
                 // se configura el formulario de login
@@ -85,7 +86,18 @@ public class SecurityConfig {
                         .tokenValiditySeconds(1209600)
                         // se asigna el servicio de usuario para el recuerdo de la sesion
                         .userDetailsService(userService))
+
+                // se configura el manejador de excepciones
+                .exceptionHandling(exception -> exception
+                        .accessDeniedHandler(accessDeniedHandler()))
                 .build(); // se construye la configuracion de seguridad
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return (request, response, accessDeniedException) -> {
+            response.sendRedirect("/userAuth/access-denied");
+        };
     }
 
     // se encripta la contraseña del usuario
@@ -115,7 +127,7 @@ public class SecurityConfig {
         // se configura el repositorio de tokens de recuerdo de la sesion
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
         // se configura el datasource de la base de datos
-        tokenRepository.setDataSource(dataSource); 
+        tokenRepository.setDataSource(dataSource);
         return tokenRepository;
     }
 }

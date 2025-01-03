@@ -1,4 +1,4 @@
--- Active: 1735826042611@@b0vg062se0kqukm3t4yx-mysql.services.clever-cloud.com@3306
+-- Active: 1735511517208@@b0vg062se0kqukm3t4yx-mysql.services.clever-cloud.com@3306@b0vg062se0kqukm3t4yx
 CREATE DATABASE sistema_ventas;
 
 USE sistema_ventas;
@@ -68,6 +68,17 @@ CREATE TABLE payment_method (
     active BOOLEAN DEFAULT true
 );
 
+CREATE TABLE cash_closing (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    closing_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    total_income DOUBLE NOT NULL,
+    total_expenses DOUBLE NOT NULL,
+    final_balance DOUBLE NOT NULL,
+    observations VARCHAR(255),
+    employee_id BIGINT NOT NULL,
+    FOREIGN KEY (employee_id) REFERENCES employee(id)
+);
+
 CREATE TABLE order_service (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     employee_id BIGINT,
@@ -98,6 +109,16 @@ CREATE TABLE order_details (
     detalle VARCHAR(255),
     FOREIGN KEY (order_service_id) REFERENCES order_service(id)
 );
+
+CREATE TABLE spendings (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    date DATE NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    employee_id BIGINT NOT NULL,
+    amount DOUBLE NOT NULL,
+    FOREIGN KEY (employee_id) REFERENCES employee(id)
+);
  
  -- ELIMINAR TABLAS
 DROP TABLE employee;
@@ -121,6 +142,7 @@ SELECT * FROM payment_method;
 SELECT * FROM boleta;
 SELECT * FROM order_service;
 SELECT * FROM order_details;
+SELECT * FROM spendings;
 
 INSERT INTO role (name) VALUES ('admin');
 INSERT INTO role (name) VALUES ('employee');

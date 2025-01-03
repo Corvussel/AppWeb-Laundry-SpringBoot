@@ -62,4 +62,18 @@ public class DeliveryService {
                 .filter(order -> "Completado".equals(order.getStatus()))
                 .orElse(null);
     }
+
+    /**
+     * Actualiza el estado de una orden a Completado
+     * 
+     * @param id el id de la orden
+     * @return el objeto OrderService actualizado
+     */
+    public void completeOrder(Long id) {
+        ordersRepository.findById(id).ifPresent(order -> {
+            order.setStatus("Completado");
+            ordersRepository.save(order);
+        });
+
+    }
 }
