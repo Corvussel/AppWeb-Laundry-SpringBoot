@@ -19,7 +19,7 @@
                 </div>
                 <div>
                     <p class="md:text-3xl text-2xl font-bold text-[#0891b2] mb-1" 
-                       th:text="${'S/ ' + #numbers.formatDecimal(summary.totalAmount, 1, 2)}">S/ 2,500.00</p>
+                       th:text="${'S/ ' + summary.totalAmount != null ? summary.totalAmount : '0.00'}">S/ 2,500.00</p>
                     <p class="text-sm text-slate-600">Total Gastos del Mes</p>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                 </div>
                 <div>
                     <p class="md:text-3xl text-2xl  font-bold text-[#0891b2] mb-1" 
-                       th:text="${'S/ ' + #numbers.formatDecimal(summary.materialsAmount, 1, 2)}">S/ 1,200.00</p>
+                       th:text="${'S/ ' + summary.materialsAmount != null ? summary.materialsAmount : '0.00'}">S/ 1,200.00</p>
                     <p class="text-sm text-slate-600">Gastos en Materiales</p>
                 </div>
             </div>
@@ -50,7 +50,8 @@
                     <span class="text-xs font-medium text-[#7c3aed] bg-[#7c3aed]/10 px-2 py-1 rounded-full">Servicios</span>
                 </div>
                 <div>
-                    <p class="md:text-3xl text-2xl  font-bold text-[#0891b2] mb-1">S/ 800.00</p>
+                    <p class="md:text-3xl text-2xl  font-bold text-[#0891b2] mb-1"
+                       th:text="${'S/ ' + summary.servicesAmount != null ? summary.servicesAmount : '0.00'}">S/ 800.00</p>
                     <p class="text-sm text-slate-600">Gastos en Servicios</p>
                 </div>
             </div>
@@ -65,7 +66,8 @@
                     <span class="text-xs font-medium text-[#d97706] bg-[#d97706]/10 px-2 py-1 rounded-full">Otros</span>
                 </div>
                 <div>
-                    <p class="md:text-3xl text-2xl  font-bold text-[#0891b2] mb-1">S/ 500.00</p>
+                    <p class="md:text-3xl text-2xl  font-bold text-[#0891b2] mb-1"
+                       th:text="${'S/ ' + summary.othersAmount != null ? summary.othersAmount : '0.00'}">S/ 500.00</p>
                     <p class="text-sm text-slate-600">Otros Gastos</p>
                 </div>
             </div>
@@ -121,14 +123,14 @@
                 </thead>
                 <tbody class="divide-y divide-gray-200">
                     <tr th:each="spending : ${summary.recentSpendings}" class="hover:bg-gray-50">
-                        <td class="px-6 py-4 text-sm text-gray-500" th:text="${#temporals.format(spending.date, 'yyyy-MM-dd')}">2024-01-15</td>
+                        <td class="px-6 py-4 text-sm text-gray-500" th:text="${spending.date}">2024-01-15</td>
                         <td class="px-6 py-4">
-                            <div class="text-sm font-medium text-gray-900" th:text="${spending.description}">Detergente Industrial</div>
+                            <div class="text-sm font-medium text-gray-900 truncate" th:text="${spending.description}">Detergente Industrial</div>
                         </td>
                         <td class="px-6 py-4">
-                            <span th:class="${spending.category == 'Materiales' ? 
+                            <span th:class="${spending.category == 'materiales' ? 
                                 'px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800' :
-                                spending.category == 'Servicios' ? 
+                                spending.category == 'servicios' ? 
                                 'px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800' :
                                 'px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800'}"
                                 th:text="${spending.category}">
@@ -139,18 +141,17 @@
                                 <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
                                     <i class="fas fa-user text-indigo-600"></i>
                                 </div>
-                                <span class="text-sm text-gray-700" th:text="${spending.employeeName}">Flores</span>
+                                <span class="text-sm text-gray-700" th:text="${spending.employee.fullName}">Flores</span>
                             </div>
                         </td>
-                        <td class="px-6 py-4 text-sm text-gray-500" th:text="${'S/ ' + #numbers.formatDecimal(spending.amount, 1, 2)}">S/ 450.00</td>
+                        <td class="px-6 py-4 text-sm text-gray-500" th:text="${'S/ ' + spending.amount}">S/ 450.00</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ 
 <script th:inline="javascript">
     const monthlyData = /*[[${summary.monthlyTrends}]]*/ [];
     const categoryData = [

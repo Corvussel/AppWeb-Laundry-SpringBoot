@@ -14,7 +14,8 @@
             <!-- Grafico -->
             <div class="rounded-xl shadow p-4 w-full lg:w-6/12 sm:w-full md:w-7/12">
                 <h2 class="text-sm font-semibold text-gray-600 mb-4">Top Servicios Solicitados</h2>
-                <canvas id="topServiciosChart" height="200" th:data-labels="${chartLabels}" th:data-values="${chartValues}"></canvas>
+                <canvas id="topServiciosChart" height="200" th:data-labels="${chartLabels}"
+                    th:data-values="${chartValues}"></canvas>
             </div>
             <!-- Tarjetas -->
             <div class="flex-grow grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-3 md:px-5">
@@ -29,7 +30,8 @@
                         </div>
                     </div>
                     <div>
-                        <h3 class="md:text-2xl text-base font-serif text-[#1798b7]" th:text="${totalPrendasLavadas}">125</h3>
+                        <h3 class="md:text-2xl text-base font-serif text-[#1798b7]" th:text="${totalPrendasLavadas}">125
+                        </h3>
                     </div>
                 </div>
                 <!-- Tarjeta Ingreso Diario -->
@@ -71,7 +73,8 @@
                         </div>
                     </div>
                     <div>
-                        <h3 class="md:text-2xl text-base font-serif text-[#1798b7]" th:text="${totalClientesAtendidos}">85</h3>
+                        <h3 class="md:text-2xl text-base font-serif text-[#1798b7]" th:text="${totalClientesAtendidos}">
+                            85</h3>
                     </div>
                 </div>
             </div>
@@ -242,7 +245,7 @@
                             </div>
                         </article>
                     </template>
-                </div> 
+                </div>
             </div>
         </div>
     </section>
@@ -269,8 +272,10 @@
         }))
     });
 
+    // Script para la gráfica
     document.addEventListener('DOMContentLoaded', () => {
-        const ctx = document.getElementById('topServiciosChart').getContext('2d');
+        const ctx = document.getElementById('topServiciosChart').getContext('2d'); // Obtiene el contexto del canvas
+        // Obtiene los datos de la gráfica desde el dataset
         const labels = JSON.parse(document.getElementById('topServiciosChart').dataset.labels.replace(/&quot;/g, '"'));
         const values = JSON.parse(document.getElementById('topServiciosChart').dataset.values.replace(/&quot;/g, '"'));
         const topServiciosChart = new Chart(ctx, {
