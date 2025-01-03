@@ -14,7 +14,7 @@
             <!-- Grafico -->
             <div class="rounded-xl shadow p-4 w-full lg:w-6/12 sm:w-full md:w-7/12">
                 <h2 class="text-sm font-semibold text-gray-600 mb-4">Top Servicios Solicitados</h2>
-                <canvas id="topServiciosChart" height="200"></canvas>
+                <canvas id="topServiciosChart" height="200" th:data-labels="${chartLabels}" th:data-values="${chartValues}"></canvas>
             </div>
             <!-- Tarjetas -->
             <div class="flex-grow grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-3 md:px-5">
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div>
-                        <h3 class="md:text-2xl text-base font-serif text-[#1798b7]">125</h3>
+                        <h3 class="md:text-2xl text-base font-serif text-[#1798b7]" th:text="${totalPrendasLavadas}">125</h3>
                     </div>
                 </div>
                 <!-- Tarjeta Ingreso Diario -->
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     <div>
-                        <h3 class="md:text-2xl text-base font-serif text-[#1798b7]">10</h3>
+                        <h3 class="md:text-2xl text-base font-serif text-[#1798b7]" th:text="${totalEntregado}">10</h3>
                     </div>
                 </div>
                 <!-- Tarjeta Pendientes -->
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <div>
-                        <h3 class="md:text-2xl text-base font-serif text-[#1798b7]">15</h3>
+                        <h3 class="md:text-2xl text-base font-serif text-[#1798b7]" th:text="${totalPendientes}">15</h3>
                     </div>
                 </div>
                 <!-- Tarjeta Clientes Atendidos -->
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                     <div>
-                        <h3 class="md:text-2xl text-base font-serif text-[#1798b7]">85</h3>
+                        <h3 class="md:text-2xl text-base font-serif text-[#1798b7]" th:text="${totalClientesAtendidos}">85</h3>
                     </div>
                 </div>
             </div>
@@ -268,66 +268,67 @@
             }
         }))
     });
-</script>
 
-<!-- Script del grafico -->
-<script>
-    const ctx = document.getElementById('topServiciosChart').getContext('2d');
-    const topServiciosChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Lavado Rápido', 'Lavado y Planchado', 'Lavado en Seco', 'Lavado de Sábanas'],
-            datasets: [{
-                data: [35, 28, 20, 15],
-                backgroundColor: ['#1E3A8A', '#10B981', '#F59E0B', '#8B5CF6'],
-                borderColor: '#FFFFFF',
-                borderWidth: 2,
-                borderRadius: 2,
-                barThickness: 30
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    backgroundColor: '#1F2937',
-                    titleColor: '#F9FAFB',
-                    bodyColor: '#F9FAFB',
-                    borderColor: '#4B5563',
-                    borderWidth: 1
-                }
+    document.addEventListener('DOMContentLoaded', () => {
+        const ctx = document.getElementById('topServiciosChart').getContext('2d');
+        const labels = JSON.parse(document.getElementById('topServiciosChart').dataset.labels.replace(/&quot;/g, '"'));
+        const values = JSON.parse(document.getElementById('topServiciosChart').dataset.values.replace(/&quot;/g, '"'));
+        const topServiciosChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: values,
+                    backgroundColor: ['#1E3A8A', '#10B981', '#F59E0B', '#8B5CF6'],
+                    borderColor: '#FFFFFF',
+                    borderWidth: 2,
+                    borderRadius: 2,
+                    barThickness: 30
+                }]
             },
-            scales: {
-                x: {
-                    grid: {
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
                         display: false
                     },
-                    ticks: {
-                        color: '#4B5563',
-                        font: {
-                            family: 'Arial',
-                            size: 12,
-                            weight: 'bold'
-                        }
+                    tooltip: {
+                        backgroundColor: '#1F2937',
+                        titleColor: '#F9FAFB',
+                        bodyColor: '#F9FAFB',
+                        borderColor: '#4B5563',
+                        borderWidth: 1
                     }
                 },
-                y: {
-                    grid: {
-                        color: '#E5E7EB'
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#4B5563',
+                            font: {
+                                family: 'Arial',
+                                size: 12,
+                                weight: 'bold'
+                            }
+                        }
                     },
-                    ticks: {
-                        color: '#4B5563',
-                        font: {
-                            family: 'Arial',
-                            size: 12,
-                            weight: 'bold'
+                    y: {
+                        grid: {
+                            color: '#E5E7EB'
+                        },
+                        ticks: {
+                            color: '#4B5563',
+                            font: {
+                                family: 'Arial',
+                                size: 12,
+                                weight: 'bold'
+                            }
                         }
                     }
                 }
             }
-        }
+        });
     });
 </script>
