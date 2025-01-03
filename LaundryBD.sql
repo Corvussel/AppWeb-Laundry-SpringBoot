@@ -68,6 +68,17 @@ CREATE TABLE payment_method (
     active BOOLEAN DEFAULT true
 );
 
+CREATE TABLE cash_closing (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    closing_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    total_income DOUBLE NOT NULL,
+    total_expenses DOUBLE NOT NULL,
+    final_balance DOUBLE NOT NULL,
+    observations VARCHAR(255),
+    employee_id BIGINT NOT NULL,
+    FOREIGN KEY (employee_id) REFERENCES employee(id)
+);
+
 CREATE TABLE order_service (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     employee_id BIGINT,

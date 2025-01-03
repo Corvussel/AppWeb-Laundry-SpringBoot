@@ -31,6 +31,5 @@ public interface SpendingRepository extends JpaRepository<Spending, Long> {
      * 
      * @return Los gastos mas recientes.
      */
-
     List<Spending> findTop10ByOrderByDateDesc();
 }
