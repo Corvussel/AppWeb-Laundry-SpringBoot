@@ -1,5 +1,7 @@
 package com.laundry.lavanderia.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,18 +51,27 @@ public class ServiceLaundryManagementController {
     // Pagina de edicion de categoría
     @GetMapping("/categories/edit/{id}")
     public String showCategoryPage(@PathVariable Long id, Model model) {
-        model.addAttribute("category", serviceMangmentServiceLaundry.getCategoryById(id));
-        model.addAttribute("content", "services-management/edit-category.html");
-        return SHARED_LAYOUT;
+        Category category = serviceMangmentServiceLaundry.getCategoryById(id);
+        if (category != null) {
+            model.addAttribute("category", category);
+            model.addAttribute("content", "services-management/edit-category.html");
+            return SHARED_LAYOUT;
+        }
+        return "redirect:/management/services-laundry";
     }
 
     // Pagina de edicion de servicio
     @GetMapping("/services/edit/{id}")
     public String showServicePage(@PathVariable Long id, Model model) {
-        model.addAttribute("service", serviceMangmentServiceLaundry.getServiceById(id));
-        model.addAttribute("categories", serviceMangmentServiceLaundry.getAllCategorys());
-        model.addAttribute("content", "services-management/edit-service.html");
-        return SHARED_LAYOUT;
+        ServiceLaundry service = serviceMangmentServiceLaundry.getServiceById(id);
+        List<Category> category = serviceMangmentServiceLaundry.getAllCategorys();
+        if (service != null) {
+            model.addAttribute("service", service);
+            model.addAttribute("categories", category);
+            model.addAttribute("content", "services-management/edit-service.html");
+            return SHARED_LAYOUT;
+        }
+        return "redirect:/management/services-laundry";
     }
 
     // Guardar cambios de categoría

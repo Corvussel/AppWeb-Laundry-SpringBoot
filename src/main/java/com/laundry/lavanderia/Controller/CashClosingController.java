@@ -1,14 +1,21 @@
 package com.laundry.lavanderia.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.laundry.lavanderia.Model.employee.Employee;
 import com.laundry.lavanderia.Model.serviceLaundry.CashClosing;
+import com.laundry.lavanderia.Model.serviceLaundry.OrderService;
 import com.laundry.lavanderia.service.CashClosingService;
+import com.laundry.lavanderia.service.EmployeeService;
 
 @Controller
 @RequestMapping("/cashClosing")
@@ -16,6 +23,9 @@ public class CashClosingController {
 
     @Autowired
     private CashClosingService cashClosingService;
+
+    @Autowired
+    private EmployeeService employeeService;
 
     private static final String SHARED_LAYOUT = "shared/layout";
 
@@ -41,8 +51,17 @@ public class CashClosingController {
     }
 
     @PostMapping("/save")
-    public String saveCashClosing(CashClosing cashClosing) {
+    @ResponseBody
+    public ResponseEntity<OrderService> saveCashClosing(CashClosing cashClosing) {
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        Employee employee = employeeService.getEmployeeByEmail(userDetails.getUsername());
+        if (employee == null) {
+            cashClosing.setEmployee(employee);
+            return ResponseEntity.notFound().build();
+        }
         cashClosingService.saveCashClosing(cashClosing);
-        return "redirect:/cashClosing/index";
+        return ResponseEntity.ok().build(); 
     }
 }

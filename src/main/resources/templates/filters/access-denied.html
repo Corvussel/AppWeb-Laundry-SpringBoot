@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acceso Denegado - Lavandería</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body
+    class="bg-gradient-to-br from-slate-50 to-gray-100 min-h-screen flex items-center justify-center p-4"
+  >
+    <div class="max-w-md w-full bg-white rounded-xl shadow-lg overflow-hidden">
+      <!-- Header con icono -->
+      <header class="bg-[#0891b2] p-6 text-center">
+        <div class="inline-block p-4 bg-white/10 rounded-full mb-4">
+          <i class="fas fa-lock text-white text-4xl"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-white mb-2">Acceso Denegado</h1>
+        <p class="text-cyan-100">
+          No tienes los permisos necesarios para acceder a esta página
+        </p>
+      </header>
+
+      <!-- Contenido -->
+      <div class="p-6 space-y-6">
+        <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div class="flex items-center text-red-800">
+            <i class="fas fa-exclamation-circle mr-2"></i>
+            <p class="text-sm">
+              Por favor, contacta con el administrador si crees que esto es un
+              error.
+            </p>
+          </div>
+        </div>
+
+        <!-- Botón de regreso -->
+        <div class="text-center">
+          <a
+            th:href="@{/home}"
+            class="inline-flex items-center justify-center px-6 py-3 bg-[#0891b2] text-white rounded-lg hover:bg-[#0891b2]/90 transition-colors duration-200 gap-2"
+          >
+            <i class="fas fa-home"></i>
+            <span>Volver al Inicio</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="border-t border-gray-100 p-4">
+        <p class="text-center text-gray-500 text-sm">
+          <i class="fas fa-info-circle mr-1"></i>
+          Si necesitas ayuda, contacta al soporte técnico
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
