@@ -1,10 +1,4 @@
- 
-// Evento para asignar el valor al input usuario, interaccion entre vista index de servicio
-function selectUser(userName) {
-    document.getElementById('usuario').value = userName;
   
-}
-
 
 // Evento para filtrar - busqueda
 document.getElementById('searchInput').addEventListener('input', filterUsers);

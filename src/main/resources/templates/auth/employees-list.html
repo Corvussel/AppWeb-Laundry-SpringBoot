@@ -1,0 +1,396 @@
+<style>
+  body {
+    background-color: rgb(249 250 251 / 0.5);
+  }
+</style>
+
+<div class="min-h-screen py-8" x-data="employeeConfig" x-cloak>
+  <div class="max-w-7xl mx-auto px-4">
+    <!-- Header -->
+    <header class="mb-8 flex justify-between items-center">
+      <div class="basis-2/5">
+        <h1 class="md:text-2xl text-xl font-bold text-gray-800 mb-2">
+          Gestion de Personal
+        </h1>
+        <p class="md:text-base text-sm text-gray-600">
+          Administra las cuentas del personal
+        </p>
+      </div>
+
+      <div x-cloak>
+        <!-- Boton de Registro modal -->
+        <button
+          type="button"
+          @click="openEmployeeModal"
+          class="bg-[#0891b2] text-white md:text-base text-sm px-4 py-2 rounded-lg hover:bg-[#0891b2]/90 transition-colors flex items-center gap-2"
+        >
+          <i class="fas fa-user-plus"></i>
+          <span>Nuevo Empleado</span>
+        </button>
+
+        <!-- Modal de Registro -->
+        <div
+          x-show="employeeModal"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          x-transition:leave="transition ease-in duration-300"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+          class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50"
+        >
+          <div
+            class="relative top-20 mx-auto p-5 max-w-2xl"
+            @click.away="closeEmployeeModal"
+          >
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+              <!-- Header del Modal -->
+              <header class="flex justify-between items-center mb-8">
+                <div>
+                  <h2 class="text-2xl font-bold text-gray-800">
+                    Registro de Personal
+                  </h2>
+                  <p class="text-gray-600">
+                    Ingresa la información del nuevo empleado
+                  </p>
+                </div>
+                <button
+                  @click="closeEmployeeModal"
+                  class="text-gray-600 hover:text-gray-800"
+                >
+                  <i class="fas fa-times text-xl"></i>
+                </button>
+              </header>
+
+              <!-- Formulario -->
+              <form
+                th:action="@{/employees/register}"
+                method="POST"
+                th:object="${employee}"
+                class="space-y-6"
+              >
+                <!-- perfil -->
+                <div class="flex justify-center">
+                  <div>
+                    <div
+                      class="h-24 w-24 rounded-full bg-gray-100 flex items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#0891b2] transition-colors"
+                    >
+                      <div class="text-center">
+                        <i class="fas fa-user text-gray-400 text-2xl mb-1"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- informacion del Personal -->
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label class="text-sm font-medium text-gray-700"
+                      >Nombres</label
+                    >
+                    <div class="mt-1 relative">
+                      <input
+                        type="text"
+                        th:field="*{firstName}"
+                        required
+                        class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
+                      />
+                      <i
+                        class="fas fa-user absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+                      ></i>
+                    </div>
+                  </div>
+                  <div>
+                    <label class="text-sm font-medium text-gray-700"
+                      >Apellidos</label
+                    >
+                    <div class="mt-1 relative">
+                      <input
+                        type="text"
+                        th:field="*{lastName}"
+                        required
+                        class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
+                      />
+                      <i
+                        class="fas fa-user absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Contacto -->
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label class="text-sm font-medium text-gray-700"
+                      >Correo Electrónico</label
+                    >
+                    <div class="mt-1 relative">
+                      <input
+                        type="email"
+                        th:field="*{email}"
+                        required
+                        class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
+                      />
+                      <i
+                        class="fas fa-envelope absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+                      ></i>
+                    </div>
+                  </div>
+                  <div>
+                    <label class="text-sm font-medium text-gray-700"
+                      >Teléfono</label
+                    >
+                    <div class="mt-1 relative">
+                      <input
+                        type="tel"
+                        th:field="*{phone}"
+                        required
+                        class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
+                      />
+                      <i
+                        class="fas fa-phone absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Rol -->
+                <div class="grid md:grid-cols-1">
+                  <div>
+                    <label class="text-sm font-medium text-gray-700">Rol</label>
+                    <div class="mt-1 space-x-4">
+                      <select
+                        th:field="*{role.id}"
+                        required
+                        class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
+                      >
+                        <option
+                          th:each="role : ${roles}"
+                          th:value="${role.id}"
+                          th:text="${role.name}"
+                        ></option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Estado --> 
+                <div class="flex gap-4">
+                  <label class="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      th:field="*{status}"
+                      th:value="true"
+                      class="text-[#0891b2] focus:ring-[#0891b2]"
+                    />
+                    <span class="text-sm text-gray-700">Activo</span>
+                  </label>
+                  <label class="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      th:field="*{status}"
+                      th:value="false"
+                      class="text-[#0891b2] focus:ring-[#0891b2]"
+                    />
+                    <span class="text-sm text-gray-700">Inactivo</span>
+                  </label>
+                </div>
+
+                <!-- Contraseña -->
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label class="text-sm font-medium text-gray-700"
+                      >Contraseña</label
+                    >
+                    <div class="mt-1 relative">
+                      <input
+                        type="password"
+                        th:field="*{password}"
+                        required
+                        class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
+                      />
+                      <i
+                        class="fas fa-lock absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+                      ></i>
+                    </div>
+                  </div>
+                  <div>
+                    <label class="text-sm font-medium text-gray-700"
+                      >Confirmar Contraseña</label
+                    >
+                    <div class="mt-1 relative">
+                      <input
+                        type="password"
+                        name="confirmPassword"
+                        required
+                        class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#0891b2] focus:border-transparent"
+                      />
+                      <i
+                        class="fas fa-lock absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Botones de accion -->
+                <div class="flex justify-end gap-4 pt-4">
+                  <button
+                    type="button"
+                    @click="closeEmployeeModal"
+                    class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    class="px-6 py-2 bg-[#0891b2] text-white rounded-lg hover:bg-[#0891b2]/90 transition-colors flex items-center gap-2"
+                  >
+                    <i class="fas fa-user-plus"></i>
+                    Registrar Empleado
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- filtros y Busqueda -->
+    <div class="bg-white rounded-xl shadow-sm p-4 mb-6">
+      <div class="flex flex-wrap gap-4 items-center justify-between">
+        <div class="relative flex-grow max-w-md">
+          <input
+            type="text"
+            placeholder="Buscar empleado..."
+            class="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0891b2] focus:border-transparent transition-all"
+          />
+          <i
+            class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+          ></i>
+        </div>
+        <div class="flex gap-3 flex-wrap">
+          <select
+            class="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-gray-700"
+          >
+            <option>Todos los roles</option>
+            <option>Administrador</option>
+            <option>Empleado</option>
+          </select>
+          <select
+            class="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-gray-700"
+          >
+            <option>Todos los estados</option>
+            <option>Activo</option>
+            <option>Inactivo</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de Empleados -->
+    <div
+      class="grid md:grid-cols-2 sm:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-6"
+    >
+      <!-- Tarjeta de Empleado -->
+      <article
+        th:each="employee : ${employees}"
+        class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden"
+      >
+        <div class="p-6">
+          <div class="flex items-start gap-4">
+            <div
+              class="h-12 w-12 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0"
+            >
+              <i class="fas fa-user text-indigo-600"></i>
+            </div>
+            <div class="flex-grow">
+              <div class="flex items-center justify-between flex-wrap pr-3">
+                <!-- Nombre del empleado -->
+                <div>
+                  <h3
+                    class="font-semibold text-gray-800 text-nowrap text-ellipsis overflow-hidden"
+                    th:text="${employee.fullName}"
+                  >
+                    James Caballero
+                  </h3>
+                </div>
+                <!-- Estado del empleado -->
+                <div class="flex gap-2">
+                  <span
+                    th:classappend="${employee.status == true ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}"
+                    class="px-2 py-1 text-xs rounded-full"
+                  >
+                    <span
+                      th:text="${employee.status == true ? 'Activo' : 'Inactivo'}"
+                    >
+                      Activo
+                    </span>
+                  </span>
+                  <!-- Rol del empleado -->
+                  <span
+                    th:classappend="${employee.role.name == 'empleado' ? 'bg-blue-50 text-blue-700' : 'bg-purple-50 text-purple-700'}"
+                    class="px-2 py-1 text-xs rounded-full"
+                  >
+                    <!-- rol del empleado -->
+                    <span th:text="${employee.role.name}">Empleado</span>
+                  </span>
+                </div>
+              </div>
+              <!-- Correo y Telefono -->
+              <p
+                class="text-sm text-gray-500 mt-1 text-nowrap text-ellipsis overflow-hidden"
+                th:text="${employee.email}"
+              >
+                james@email.com
+              </p>
+              <div class="flex items-center gap-2 mt-2 text-sm text-gray-600">
+                <i class="fas fa-phone"></i>
+                <span th:text="${employee.phone}">992-676-986</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Botones de acción -->
+        <div class="h-full w-full">
+          <div class="px-6 py-4 bg-gray-50 flex justify-end gap-2">
+            <a
+              th:href="@{/employees/edit/{id}(id=${employee.id})}"
+              class="text-gray-600 hover:text-[#0891b2] p-2 rounded-lg transition-colors"
+            >
+              <i class="fas fa-edit"></i>
+            </a>
+            <a
+              th:href="@{/employees/delete/{id}(id=${employee.id})}"
+              class="text-gray-600 hover:text-red-500 p-2 rounded-lg transition-colors"
+              onclick="return confirm('¿Estás seguro de eliminar este empleado?')"
+            >
+              <i class="fas fa-trash-alt"></i>
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("alpine:init", () => {
+    Alpine.data("employeeConfig", () => ({
+      employeeModal: false,
+      /**
+       * Abre la modal de registro de empleado.
+       * @function
+       */
+      openEmployeeModal() {
+        this.employeeModal = true;
+      },
+      /**
+       * Cierra la modal de registro de empleado.
+       */
+      closeEmployeeModal() {
+        this.employeeModal = false;
+      },
+    }));
+  });
+</script>

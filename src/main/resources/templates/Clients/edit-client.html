@@ -1,0 +1,118 @@
+<link rel="stylesheet" href="/css/client/register-client.css" />
+
+<div>
+  <div class="flex justify-center">
+    <div class="w-11/12 sm:w-11/12 md:w-10/12 lg:w-8/12 my-9">
+      <div class="main-container">
+        <div class="form-header">
+          <h2 class="font-medium text-base">Cliente</h2>
+        </div>
+
+        <form
+          method="POST"
+          th:action="@{/client/update}"
+          th:object="${cliente}"
+        >
+          <!--Codigo del cliente-->
+          <input
+            th:field="*{id}"
+            type="hidden"
+            class="form-control"
+            readonly
+            id="cod_cliente"
+            placeholder="Codigo Cliente"
+          />
+          <!--Nombre y Apellido del cliente-->
+          <div class="mb-3 flex flex-col gap-2">
+            <label for="nombre" class="required text-gray-700"
+              >Nombre y Apellido</label
+            >
+            <div class="input-icon">
+              <input
+                th:field="*{nombre}"
+                type="text"
+                class="form-control w-full"
+                id="nombre"
+                placeholder="Nombre"
+                required
+              />
+              <i class="fas fa-user"></i>
+            </div>
+          </div>
+          <!--Telefono del cliente-->
+          <div class="mb-3 flex flex-col gap-2">
+            <label for="telefono" class="text-gray-700">Teléfono</label>
+            <div class="input-icon">
+              <input
+                th:field="*{telefono}"
+                type="number"
+                class="form-control w-full"
+                required
+                id="telefono"
+                placeholder="Teléfono"
+              />
+              <i class="fas fa-phone"></i>
+            </div>
+          </div>
+          <!--Direccion del cliente-->
+          <div class="mb-3 flex flex-col gap-2">
+            <label for="direccion" class="text-gray-700">Dirección</label>
+            <div class="input-icon">
+              <input
+                th:field="*{direccion}"
+                type="text"
+                class="form-control w-full"
+                id="direccion"
+                placeholder="Dirección"
+              />
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+          </div>
+          <!--Estado de la cuenta del cliente-->
+          <div class="flex gap-4">
+            <label class="flex items-center gap-2">
+              <input
+                type="radio"
+                th:field="*{activo}"
+                th:value="true"
+                class="text-[#0891b2] focus:ring-[#0891b2]"
+              />
+              <span class="text-sm text-gray-700">Activo</span>
+            </label>
+            <label class="flex items-center gap-2">
+              <input
+                type="radio"
+                th:field="*{activo}"
+                th:value="false"
+                class="text-[#0891b2] focus:ring-[#0891b2]"
+              />
+              <span class="text-sm text-gray-700">Inactivo</span>
+            </label>
+          </div>
+          <!--Acciones-->
+          <div class="flex justify-end gap-4 pt-4">
+            <button
+              type="button"
+              onclick="history.back()"
+              class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              class="px-6 py-2 bg-[#0891b2] text-white rounded-lg hover:bg-[#0891b2]/90 transition-colors flex items-center gap-2"
+            >
+              <i class="fas fa-user-plus"></i>
+              Registrar Cliente
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Apariencia-->
+<script src="/js/client/apparence.js"></script>
+<!--Funcionalidad-->
+<script src="/js/client/funcionality.js"></script>

@@ -1,15 +1,14 @@
-
 // Eventos y interaccion entre vista parcial de usuario
 // Evento cuando se muestra la modal 
 const openModalButton = document.getElementById('openModalButton');
 
-// Evento para abrir el modal
+// Evento insertar contenido en la modal
 openModalButton.addEventListener('click', () => {
     $.ajax({
-        url: '/services/ListUsers',
+        url: '/serviceLaundry/ListUsers',
         type: 'get',
         success: function (data) {
-            // insertarr el html en el contenedor del modal
+            // insertar el html en el contenedor del modal
             $('#userListContainer').html(data);
         },
         error: function () {
@@ -20,12 +19,12 @@ openModalButton.addEventListener('click', () => {
 });
 
 
-// Eventos y interaccion entre vista seleccion de servicio
+// Eventos y interaccion entre vista seleccion de servicio y el index 
 
 document.addEventListener('DOMContentLoaded', function () {
 
     $.ajax({
-        url: '/services/selection',
+        url: '/serviceLaundry/selection',
         type: 'get',
         success: function (data) {
             $('#ContainerServiceSelection').html(data);
@@ -36,15 +35,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (buttonCancelar) {
                 buttonCancelar.addEventListener('click', function () {
-                    hideServiceSelection();
+                    hideServiceSelection(); // Ocultamos la vista parcial
                 });
             }
 
             if (buttonRegistrar) {
                 buttonRegistrar.addEventListener('click', function (e) {
 
-                    hideServiceSelection();
-                    registrarServicio();
+                    hideServiceSelection(); // Ocultamos la vista parcial
+                    registrarServicio(); // Registramos el servicio 
+                    CalcularPrecioServicios(); // Calculamos el precio total de los servicios registrados en la tabla
                 });
             }
 
@@ -57,10 +57,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// Contenedor de la vista Parcial- Servicio seleccion
-const serviceSelectionContainer = document.getElementById('ContainerServiceSelection');
-// Contenedor de la vista principal - ventas
-const registroVentaContainer = document.getElementById('ContainerSalesRegistration');
+
+const serviceSelectionContainer = document.getElementById('ContainerServiceSelection');// Contenedor de la vista - Servicio seleccion 
+const registroVentaContainer = document.getElementById('ContainerSalesRegistration');// Contenedor de la vista principal - ventas
 
 // Evento para mostrar la vista parcial de selección de servicio
 function showServiceSelection() {
@@ -75,12 +74,11 @@ function hideServiceSelection() {
 };
 
 
-
 // Funcion Para la realizacion de registro de Servicio
 function registrarServicio() {
 
     // Valores De la vista Parcial Seleccion de Servicios
-    const cantidad = document.getElementById('spinner').value;
+    const cantidad = document.getElementById('cantidad').textContent;
     const servicio = document.getElementById('servicio').textContent;
     const precioUnidad = document.getElementById('precioUnidad').textContent;
     const subTotal = document.getElementById('total').textContent;
@@ -88,87 +86,125 @@ function registrarServicio() {
 
     // Mostramos el contenedor La tabla
     document.getElementById('tableContainer').classList.remove('hidden');
-    // Modificamos el tamaño de button BtnNuevoServicio
-    document.getElementById('BtnNuevoServicio').classList.remove('w-100');
 
     // Referencia a la tabla y al tbody
     const tablaServicio = document.getElementById('tableService').getElementsByTagName("tbody")[0];
 
     // creacion de una nueva fila
     const Nuevafila = tablaServicio.insertRow();
-    Nuevafila.classList.add("table-row");
-
-    // Cantidad
-    const celdaCantidad = Nuevafila.insertCell(0);
-    const spanCantidad = document.createElement("span");
-    spanCantidad.classList.add("precio");
-    spanCantidad.textContent = cantidad;
-    celdaCantidad.appendChild(spanCantidad);
+    Nuevafila.classList.add("hover:bg-gray-50/50", "transition-colors"); // Añadimos las clases de estilo
 
     // Servicio
-    const celdaServicio = Nuevafila.insertCell(1);
-    const spanServicio = document.createElement("span");
-    spanServicio.classList.add("nombre-servicio");
-    spanServicio.textContent = servicio;
-    celdaServicio.appendChild(spanServicio);
+    const celdaServicio = Nuevafila.insertCell(0);
+    celdaServicio.classList.add("px-6", "py-4");
+    celdaServicio.setAttribute("data-servicio", servicio);
+
+    const divServicio = document.createElement("div");
+    divServicio.classList.add("text-sm", "font-medium", "text-gray-900");
+    divServicio.textContent = servicio;
+    const subDivServicio = document.createElement("div");
+    subDivServicio.classList.add("text-xs", "text-gray-500");
+    subDivServicio.textContent = detalle;
+    celdaServicio.appendChild(divServicio);
+    celdaServicio.appendChild(subDivServicio);
 
     // Precio Unitario
-    const celdaPrecioUnitario = Nuevafila.insertCell(2);
-    const spanPrecioUnitario = document.createElement("span");
-    spanPrecioUnitario.classList.add("precio");
-    spanPrecioUnitario.textContent = precioUnidad;
-    celdaPrecioUnitario.appendChild(spanPrecioUnitario);
+    const celdaPrecioUnitario = Nuevafila.insertCell(1);
+    celdaPrecioUnitario.classList.add("px-6", "py-4");
+    celdaPrecioUnitario.setAttribute("data-precio", precioUnidad);
+
+    const divPrecioUnitario = document.createElement("div");
+    divPrecioUnitario.classList.add("text-sm", "text-gray-900");
+    divPrecioUnitario.textContent = `S/ ${precioUnidad}`;
+    celdaPrecioUnitario.appendChild(divPrecioUnitario);
 
     // Subtotal
-    const celdaSubTotal = Nuevafila.insertCell(3);
-    const spanSubTotal = document.createElement("span");
-    spanSubTotal.classList.add("precio");
-    spanSubTotal.textContent = subTotal;
-    celdaSubTotal.appendChild(spanSubTotal);
+    const celdaSubTotal = Nuevafila.insertCell(2);
+    celdaSubTotal.classList.add("px-6", "py-4");
+    celdaSubTotal.setAttribute("data-subtotal", subTotal);
+    celdaSubTotal.setAttribute("data-cantidad", cantidad);
+
+    const divSubTotal = document.createElement("div");
+    divSubTotal.classList.add("text-sm", "font-medium", "text-gray-900");
+    divSubTotal.textContent = `S/ ${subTotal}`;
+    const subDivSubTotal = document.createElement("div");
+    subDivSubTotal.classList.add("text-xs", "text-gray-500");
+    subDivSubTotal.textContent = `${cantidad} unidades`;
+    celdaSubTotal.appendChild(divSubTotal);
+    celdaSubTotal.appendChild(subDivSubTotal);
 
     // Detalles
-    const celdaDetalles = Nuevafila.insertCell(4);
-    const spanDetalles = document.createElement("span");
-    spanDetalles.classList.add("detalles");
-    spanDetalles.textContent = detalle;
-    celdaDetalles.appendChild(spanDetalles);
+    const celdaDetalles = Nuevafila.insertCell(3);
+    celdaDetalles.classList.add("px-6", "py-4");
+    celdaDetalles.setAttribute("data-detalle", detalle);
 
-    //btn de edicion
-    const celdaAcciones = Nuevafila.insertCell(5);
-    celdaAcciones.classList.add('d-flex');
+    const pDetalles = document.createElement("p");
+    pDetalles.classList.add("text-sm", "text-gray-600");
+    pDetalles.textContent = detalle;
+    celdaDetalles.appendChild(pDetalles);
 
-    // boton de Eliminar
-    const btnEliminar = document.createElement('button');
-    // Ícono para el boton de eliminar
-    const iconEliminar = document.createElement('i');
-    iconEliminar.classList.add("fas", "fa-trash");
-    btnEliminar.classList.add("btn-table-delete");
-    btnEliminar.appendChild(iconEliminar);
+    // Acciones
+    const celdaAcciones = Nuevafila.insertCell(4);
+    celdaAcciones.classList.add("px-6", "py-4");
 
-    btnEliminar.addEventListener('click', function () {
+    const divAcciones = document.createElement("div");
+    divAcciones.classList.add("flex");
+
+    const botonEliminar = document.createElement("button");
+    botonEliminar.classList.add("p-2", "text-red-600", "hover:text-red-800", "rounded-lg");
+    botonEliminar.setAttribute("type", "button");
+
+    const iconoEliminar = document.createElement("i");
+    iconoEliminar.classList.add("fas", "fa-trash");
+
+    botonEliminar.appendChild(iconoEliminar);
+    divAcciones.appendChild(botonEliminar);
+
+    // Evento para eliminar la fila 
+    botonEliminar.addEventListener('click', function () {
         tablaServicio.deleteRow(Nuevafila.rowIndex - 1);
+        CalcularPrecioServicios(); // actualizamos el total
     });
-    celdaAcciones.appendChild(btnEliminar); // Añadimos el botón a la celda de acciones
+    celdaAcciones.appendChild(divAcciones);
 
-    // Boton para Editar
-    const btnEditar = document.createElement('button');
-    // Ícono para el boton de editar
-    const iconEditar = document.createElement('i');
-    iconEditar.classList.add("fas", "fa-edit");
-    btnEditar.classList.add("btn-table-edit");
-    btnEditar.appendChild(iconEditar);
+};
 
-    btnEditar.addEventListener('click', function () {
-        const datos = {
-            cantidad: spanCantidad.textContent,
-            servicio: spanServicio.textContent,
-            precioUnidad: spanPrecioUnitario.textContent,
-            subTotal: spanSubTotal.textContent,
-            detalle: spanDetalles.textContent
-        };
-        console.log("Datos de la fila: ", datos);
-        alert(JSON.stringify(datos, null, 2));
-    });
-    celdaAcciones.appendChild(btnEditar); // Añadimos el botón a la celda de acciones
 
+// Variables para el descuento y el total de los servicios
+let descuento = 0;
+let precioTotal = 0;
+let totalServicio = 0;
+
+function CalcularPrecioServicios() { // Funcion para calcular el precio total de los servicios registrados en la tabla
+    const tabla = document.getElementById('tableService').getElementsByTagName('tbody')[0];
+    const filas = tabla.getElementsByTagName('tr');
+    let total = 0;
+    for (let i = 0; i < filas.length; i++) {
+        const fila = filas[i];
+        const celdas = fila.getElementsByTagName('td');
+        total += parseFloat(celdas[2].getAttribute('data-subtotal'));
+    }
+    totalServicio = total;
+    // Actualizamos el total del servicio
+    document.getElementById('totalServicios').value = totalServicio;
+
+    CalcularDescuento(); // Calculamos el descuento
+};
+
+// Evento para calcular el descuento
+document.getElementById('descuento').addEventListener('input', CalcularDescuento);
+
+// Funcion para calcular el descuento
+function CalcularDescuento() {
+    // Obtenemos el valor del descuento
+    const descuento_input = parseFloat(document.getElementById('descuento').value);
+    descuento = descuento_input ? descuento_input : 0;
+    // Calculamos el precio total en base al descuento  
+    precioTotal = totalServicio - descuento;
+    // Actualizamos el precio total    
+    document.getElementById('precioTotal').value = precioTotal;
 }
+
+
+
+ 

@@ -6,9 +6,11 @@ import lombok.Data;
 
 @Data
 public class Categoria {
-    private String nombre;
-    private List<Servicio> servicios;
-    public Categoria(String nombre, List<Servicio> servicios) {
+
+    private String nombre;    
+    private List<OrderDetails> servicios;
+    
+    public Categoria(String nombre, List<OrderDetails> servicios) {
         this.nombre = nombre;
         this.servicios = servicios;
     }

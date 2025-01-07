@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -96,11 +96,11 @@
             <div class="col-10 col-sm-10 col-md-8 col-lg-6">
                 <div class="login-card">
                     <h2 class="mb-4">Iniciar Sesión</h2>
-                    <form action="/userAuth/login" method="POST">
+                    <form th:action="@{/userAuth/authenticate}" th:object="${loginForm}" method="POST">
                         <div class="mb-3">
-                            <label for="email" class="form-label">Correo Electrónico</label>
+                            <label for="username" class="form-label">Correo Electrónico</label>
                             <div class="input-icon">
-                                <input type="email" class="form-control" id="email" name="email"
+                                <input type="text" class="form-control" id="username" th:field="*{username}"
                                     placeholder="correo@ejemplo.com" required>
                                 <i class="far fa-envelope"></i>
                             </div>
@@ -108,13 +108,13 @@
                         <div class="mb-3">
                             <label for="password" class="form-label">Contraseña</label>
                             <div class="input-icon">
-                                <input type="password" class="form-control" id="password" name="password"
+                                <input type="password" class="form-control" id="password" th:field="*{password}"
                                     placeholder="********" required>
                                 <i class="fas fa-lock"></i>
                             </div>
                         </div>
                         <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                            <input type="checkbox" class="form-check-input" id="remember" name="remember" th:field="*{remember}">
                             <label class="form-check-label" for="remember">Recordar sesión</label>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>

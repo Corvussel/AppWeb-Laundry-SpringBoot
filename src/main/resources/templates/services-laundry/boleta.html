@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Boleta de Servicio</title>
+    <!--Tailwind estilos-->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!--FontAwesome iconos-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+        :root {
+            --primary-color: #0891b2;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text-primary);
+        }
+
+        @media print {
+            @page {
+                margin: 0;
+                size: 80mm 297mm;
+            }
+
+            body {
+                margin: 5mm;
+                width: 70mm;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .print-only {
+                display: block !important;
+            }
+
+            .receptor-container {
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+            }
+
+
+            .grid {
+                display: block !important;
+            }
+
+            .grid>* {
+                margin-bottom: 0.5rem;
+            }
+
+            th,
+            td {
+                padding: 0.25rem !important;
+            }
+        }
+
+        .receptor-container {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .print-only {
+            display: none;
+        }
+
+
+        .hover-scale:hover {
+            transform: scale(1.01);
+            transition: transform 0.2s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div
+        class="receptor-container w-full max-w-md mx-auto bg-white rounded-3xl shadow-xl p-6 hover-scale transition-all duration-300">
+        <!-- Logo y encabezado -->
+        <header class="text-center space-y-4 mb-8">
+            <div
+                class="mx-auto h-20 w-20 bg-gradient-to-tr from-cyan-600 to-cyan-500 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-cyan-100">
+                <i class="fas fa-tshirt text-white text-3xl"></i>
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold bg-gradient-to-r from-cyan-600 to-cyan-500 bg-clip-text text-transparent">
+                    LAVANDERÍA RFS</h1>
+                <div class="text-gray-500 text-sm mt-1">Calidad y Confianza</div>
+            </div>
+        </header>
+
+        <!-- informacion de la boleta -->
+        <div class="bg-gray-50 rounded-2xl p-4 mb-6">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <div class="flex items-center space-x-2 text-gray-600 mb-2">
+                        <i class="fas fa-receipt text-cyan-600"></i>
+                        <span th:text="'#' + ${numeroBoleta}" class="font-medium"></span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-gray-600">
+                        <i class="fas fa-user text-cyan-600"></i>
+                        <span th:text="${nombreCliente}" class="font-medium"></span>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div class="text-gray-600 mb-1" th:text="${#dates.format(fecha, 'dd/MM/yyyy')}"></div>
+                    <div class="text-gray-500 text-sm" th:text="${#dates.format(fecha, 'HH:mm')}"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla Servicios -->
+        <div class="overflow-hidden rounded-xl mb-6">
+            <table class="w-full">
+                <thead>
+                    <tr class="border-b border-gray-100">
+                        <th class="py-2 text-left text-xs uppercase tracking-wider text-gray-500">Servicio</th>
+                        <th class="py-2 text-right text-xs uppercase tracking-wider text-gray-500">Cant</th>
+                        <th class="py-2 text-right text-xs uppercase tracking-wider text-gray-500">Total</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-50">
+                    <tr th:each="servicio : ${servicios}">
+                        <td class="py-3">
+                            <div class="font-medium text-gray-800" th:text="${servicio.nombre}"></div>
+                            <div class="text-xs text-gray-500" th:text="${servicio.detalle}"></div>
+                        </td>
+                        <td class="py-3 text-right text-gray-600" th:text="${servicio.cantidad}"></td>
+                        <td class="py-3 text-right font-medium" th:text="'S/ ' + ${servicio.subTotal}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Totales -->
+        <div class="bg-gray-50 rounded-2xl p-4 space-y-2">
+            <div class="flex justify-between text-gray-600">
+                <span>Subtotal</span>
+                <span th:text="'S/ ' + ${totalServicio}"></span>
+            </div>
+            <div class="flex justify-between text-gray-600">
+                <span>Descuento</span>
+                <span class="text-red-500" th:text="'- S/ ' + ${descuento}"></span>
+            </div>
+            <div class="flex justify-between text-lg font-bold pt-2 border-t border-gray-200">
+                <span>Total</span>
+                <span class="text-cyan-600" th:text="'S/ ' + ${precioTotal}"></span>
+            </div>
+            <div class="flex items-center justify-between text-sm text-gray-500 pt-2">
+                <span>Método de pago:</span>
+                <div class="flex items-center space-x-1">
+                    <i class="fas fa-circle text-xs text-green-500"></i>
+                    <span th:text="${metodoPago}"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Boton para imprimir -->
+        <div class="mt-6 no-print">
+            <button onclick="window.print()"
+                class="w-full bg-gradient-to-r from-cyan-600 to-cyan-500 text-white py-3 rounded-xl hover:shadow-lg hover:from-cyan-500 hover:to-cyan-400 transition-all duration-300 flex items-center justify-center space-x-2">
+                <i class="fas fa-print"></i>
+                <span>Imprimir Comprobante</span>
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-6 text-center text-gray-500 text-sm">
+            <div class="space-y-1">
+                <p>¡Gracias por su preferencia!</p>
+                <p class="text-xs">Av. Principal 123, Comas Peru</p>
+                <div class="flex items-center justify-center space-x-4 text-xs mt-2">
+                    <span><i class="fas fa-phone mr-1"></i>123-456-789</span>
+                    <span><i class="fas fa-globe mr-1"></i>www.lavanderia.com</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

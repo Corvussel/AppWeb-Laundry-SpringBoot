@@ -3,13 +3,13 @@
 
  container_btnCategorias.addEventListener('click', function (e) {
 
-     const button_presionado = e.target.closest('.nav-link');
+     const button_presionado = e.target.closest('.nav-button');
 
      if (button_presionado) {
          const value = button_presionado.value;
-         removerActiveButtons();
+        // removerActiveButtons();
          mostrarTabPestaña(value);
-         button_presionado.classList.add('active');
+       //  button_presionado.classList.add('active'); 
 
      }
  });
@@ -20,10 +20,10 @@
 
  function mostrarTabPestaña(tabCategoria) {
      // Se Itera por todas las pestañas
-     document.querySelectorAll('.tab-panes').forEach(tabPage => {
+     document.querySelectorAll('.tab-pane').forEach(tabPage => {
          const value = tabPage.id; // el Id de la pestaña
          // Mostrar u ocultar la pestaña segun coincida con la categoria
-         if (value.includes(tabCategoria)) {
+         if (!value.includes(tabCategoria)) {
              tabPage.classList.add('hidden');
          } else {
              tabPage.classList.remove('hidden');
@@ -32,23 +32,19 @@
  }
 
 
-// Evento para la activacion y seleccion de servicio - card
+// Evento para la activacion tarjetas de servicios
 const cardContainer = document.getElementById('card-container');
 
 cardContainer.addEventListener('click', (event) => {
 
     // Verificar si el clic ocurrio en una tarjeta
-    const card = event.target.closest('.card');
+    const card = event.target.closest('.card-service');
 
     if (card) {
 
         desmarcarTarjetas();//Desmarcar tarjetas anteriores
         card.classList.add('card-active');//Marcar Tarjeta actual
-
-        // Obtener el servicio desde el atributo data-servicio
-        const servicio = card.dataset.servicio;
-        // Llamar a la función de seleccion
-        seleccionarServicio(servicio);
+ 
     }
 
 });
@@ -59,43 +55,7 @@ function desmarcarTarjetas() {
     cards.forEach(card => { card.classList.remove('card-active') });
 };
 
-// función para seleccion de servicio
-function seleccionarServicio(servicio) {
-    document.getElementById('resumenServicio').classList.remove('hidden');
-    document.getElementById('detalleServicio').textContent = servicio; 
-
-}
-
-
-
-// Evento Relacionado al Spinner
-
-const spinner = document.getElementById("spinner");
-const btnIncrement = document.getElementById("btnIncrement");
-const btnDecrement = document.getElementById("btnDecrement");
-
-btnIncrement.addEventListener('click', () => {
-
-    const value = Number(spinner.value); // Valor del input spinner
-    const step = Number(spinner.dataset.step);// El valor del incremento
-    const increment = value + step; // resultado
-
-    if (increment <= 20) {
-        spinner.value = increment; // Mostramos
-    }
-
-});
-
-btnDecrement.addEventListener('click', () => {
-    const value = Number(spinner.value); // Valor del input spinner
-    const step = Number(spinner.dataset.step);// El valor del incremento
-    const decrement = value - step; // resultado
-    if (decrement > 0) {
-        spinner.value = decrement; // Mostramos
-    }
-});
-
-
+ 
 //Evento Relacionado a la Busqueda de Servicio
 
 const searchInput = document.getElementById('searchInput');
@@ -105,7 +65,7 @@ searchInput.addEventListener('input', filterCards);
 function filterCards() {
 
     const searchInput = document.getElementById('searchInput'); // input de busqueda
-    const cards = document.querySelectorAll('.card'); // cards
+    const cards = document.querySelectorAll('.card-service'); // cards
 
     cards.forEach((card) => {
 
