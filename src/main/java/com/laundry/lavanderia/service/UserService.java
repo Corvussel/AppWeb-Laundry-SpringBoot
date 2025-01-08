@@ -3,8 +3,7 @@ package com.laundry.lavanderia.service;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException; 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,18 +21,7 @@ public class UserService implements UserDetailsService {
      */
     @Autowired
     private EmployeeRepository employeeRepository;
-
-    /**
-     * Encriptador de contraseña para la autenticacion
-     * 
-     * @param passwordEncoder
-     * @return devuelve el encriptador de contraseña
-     */
-    private PasswordEncoder passwordEncoder;
-
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+ 
 
     /**
      * Metodo para obtener el usuario por email y encriptar la contraseña
@@ -45,7 +33,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Employee employee = employeeRepository.findByEmail(email);
-        if (employee == null) {
+        if (employee == null) { 
             throw new UsernameNotFoundException("Usuario no encontrado");
         }
         // se asigna el rol del empleado

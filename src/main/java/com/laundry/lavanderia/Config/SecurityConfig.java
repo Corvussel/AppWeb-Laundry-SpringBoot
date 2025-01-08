@@ -29,22 +29,34 @@ public class SecurityConfig {
 
     private UserService userService;
 
-    // inyecta el datasource de la base de datos para la autenticacion y
-    // almacenamiento de tokens
+    // se inyecta el datasource de la base de datos para el repositorio de tokens de
+    // recuerdo de la sesion en la base de datos de la aplicacion de Spring Security
     @Autowired
     private DataSource dataSource;
 
-    // inyecta el servicio de usuario
+    /**
+     * Inyecta el servicio de autenticacion de usuario y se asigna al campo
+     * de la clase. Este servicio se utiliza en la autenticacion y en el
+     * control de acceso de la aplicacion.
+     * 
+     * @param userService el servicio de autenticacion de usuario
+     */
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
-    // Configuracion de seguridad de la aplicacion cuando se accede a las rutas
+    /**
+     * Configura la seguridad de la aplicacion para que no se requiera csrf y
+     * asigna los roles a las rutas de la aplicacion.
+     * 
+     * @param http objeto de configuracion de seguridad
+     * @return configuracion de seguridad
+     * @throws Exception si ocurre un error en la configuracion de seguridad
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        userService.setPasswordEncoder(passwordEncoder());
         return http
                 // se configura la seguridad de la aplicacion para que no se requiera csrf
                 .csrf(csrf -> csrf.disable())
@@ -93,6 +105,29 @@ public class SecurityConfig {
                 .build(); // se construye la configuracion de seguridad
     }
 
+    /**
+     * Se encarga de asignar el manager de autenticacion para
+     * realizar la autenticacion de los usuarios. Se utiliza el
+     * manager de autenticacion por defecto de Spring Security.
+     * 
+     * @param config la configuracion de autenticacion
+     * @return el manager de autenticacion
+     * @throws Exception si ocurre un error al obtener el manager
+     *                   de autenticacion
+     */
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+    
+
+    /**
+     * Manejador de excepciones de acceso denegado.
+     * Se encarga de redirigir a la pagina de acceso denegado
+     * cuando se produce una excepcion de acceso denegado.
+     * 
+     * @return el manejador de excepciones de acceso denegado
+     */
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return (request, response, accessDeniedException) -> {
@@ -100,34 +135,53 @@ public class SecurityConfig {
         };
     }
 
-    // se encripta la contraseña del usuario
+    /**
+     * Se encarga de asignar el servicio de autenticacion
+     * para realizar la autenticacion de los usuarios.
+     * Se utiliza el servicio de autenticacion por defecto
+     * de Spring Security con el algoritmo de encriptacion
+     * BCrypt.
+     * 
+     * @return el proveedor de autenticacion
+     */
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        // se crea el proveedor de autenticacion
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        // se asigna el servicio de autenticacion de usuario
+        authProvider.setUserDetailsService(userService);
+        // se asigna el encoder de contraseñas
+        authProvider.setPasswordEncoder(passwordEncoder());
+        // se retorna el proveedor de autenticacion
+        return authProvider;
+    }
+
+    /**
+     * Se encarga de encriptar las contraseñas de los usuarios.
+     * Se utiliza el algoritmo de encriptacion BCrypt.
+     * 
+     * @return el encoder de contraseñas
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // se asigna el servicio de autenticacion
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
-
-    // se asigna el manager de autenticacion
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
-
-    // se asigna el repositorio de tokens de recuerdo de la sesion
+    /**
+     * Se encarga de asignar el repositorio de tokens de recuerdo
+     * de la sesion. Se utiliza el repositorio de tokens de recuerdo
+     * por defecto de Spring Security que almacena los tokens
+     * de recuerdo en la base de datos.
+     * 
+     * @return el repositorio de tokens de recuerdo
+     */
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         // se configura el repositorio de tokens de recuerdo de la sesion
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
         // se configura el datasource de la base de datos
         tokenRepository.setDataSource(dataSource);
+        // se retorna el repositorio de tokens de recuerdo de la sesion
         return tokenRepository;
     }
 }

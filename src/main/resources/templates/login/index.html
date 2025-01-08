@@ -27,7 +27,7 @@
         }
 
         .login-card {
-            background: #ffffff; 
+            background: #ffffff;
             box-shadow: 0 0 42px rgba(0, 0, 0, 0.1);
             padding: 5rem;
             width: auto;
@@ -64,7 +64,7 @@
         }
 
         .form-control:focus {
-            border-color:  #132b50;
+            border-color: #132b50;
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
             transform: translateY(-2px);
         }
@@ -77,13 +77,13 @@
         }
 
         .login-card .btn-primary:hover {
-            background-color: #0d203d; 
+            background-color: #0d203d;
         }
 
         @media(max-width:500px) {
-            .login-card { 
-                padding: 2rem 3rem; 
-                border-radius: 1rem; 
+            .login-card {
+                padding: 2rem 3rem;
+                border-radius: 1rem;
             }
 
         }
@@ -113,8 +113,12 @@
                                 <i class="fas fa-lock"></i>
                             </div>
                         </div>
+                        <div class="mb-3">
+                            <p th:text="${error}" class="text-danger">err</p>
+                        </div>
                         <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="remember" name="remember" th:field="*{remember}">
+                            <input type="checkbox" class="form-check-input" id="remember" name="remember"
+                                th:field="*{remember}">
                             <label class="form-check-label" for="remember">Recordar sesión</label>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>

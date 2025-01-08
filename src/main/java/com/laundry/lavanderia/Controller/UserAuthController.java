@@ -22,46 +22,67 @@ public class UserAuthController {
 
     private final AuthenticationManager authenticationManager;
 
+    /**
+     * Muestra la vista de autenticaci n de un usuario.
+     * 
+     * @param model El modelo de la vista.
+     * @return La vista de autenticaci n del usuario.
+     */
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("loginForm", new Login());
         return "/login/index";
     }
 
-    // Se encarga de autenticar el usuario
+    /**
+     * Autentica un usuario con su nombre de usuario y contraseña.
+     * 
+     * Si el usuario y la contrase a son correctos, redirige al home,
+     * de lo contrario, muestra un mensaje de error en la vista /login/index.
+     * 
+     * @param login El nombre de usuario y la contrase a del usuario.
+     * @param model El modelo de la vista.
+     * @return La vista /login/index si el usuario no se autentica
+     *         correctamente, o redirect:/home si se autentica
+     *         correctamente.
+     */
     @PostMapping("/authenticate")
     public String authenticate(@ModelAttribute("loginForm") Login login, Model model) {
-
         try {
-            /// se autentica el usuario con el nombre de usuario y contraseña ingresados en
-            /// el formulario y en el securityConfig, el userService consulta a la base de
-            /// datos para verificar si el usuario existe 
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()));
 
-            if (authentication.isAuthenticated()) {
-                // Si la autenticacion es correcta se redirige a la pagina principal
+            if (authentication.isAuthenticated()) { 
                 return "redirect:/home";
-            }else{
+            } else { 
                 model.addAttribute("error", "Nombre de usuario o contraseña incorrectos");
             }
-
         } catch (AuthenticationException e) {
-            // Si la autenticacion es incorrecta se muestra un mensaje de error y se
-            // redirige a la pagina de login
             model.addAttribute("error", "Nombre de usuario o contraseña incorrectos");
             return "/login/index";
         }
         return "/login/index";
     }
 
-    // Se encarga de cerrar la sesion
+    /**
+     * Cierra la sesi n actual del usuario y redirige a la pantalla de
+     * autenticaci n.
+     * 
+     * @return La URL de la pantalla de autenticaci n.
+     */
     @GetMapping("/logout")
     public String logout() {
-        
         return "redirect:/userAuth/login?logout";
     }
 
+    /**
+     * Muestra la pantalla de acceso denegado.
+     * 
+     * Esta pantalla se muestra cuando el usuario intenta acceder a una
+     * pantalla que requiere permisos que no tiene.
+     * 
+     * @return La vista de acceso denegado.
+     */
     @GetMapping("/access-denied")
     public String accessDenied() {
         return "filters/access-denied";

@@ -1,4 +1,4 @@
--- Active: 1735826042611@@b0vg062se0kqukm3t4yx-mysql.services.clever-cloud.com@3306@b0vg062se0kqukm3t4yx
+-- Active: 1735511517208@@b0vg062se0kqukm3t4yx-mysql.services.clever-cloud.com@3306@b0vg062se0kqukm3t4yx
 CREATE DATABASE sistema_ventas;
 
 USE sistema_ventas;
