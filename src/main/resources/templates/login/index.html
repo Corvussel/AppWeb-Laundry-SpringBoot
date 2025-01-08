@@ -100,7 +100,7 @@
                         <div class="mb-3">
                             <label for="username" class="form-label">Correo Electrónico</label>
                             <div class="input-icon">
-                                <input type="text" class="form-control" id="username" th:field="*{username}"
+                                <input type="email" class="form-control" id="username" th:field="*{username}"
                                     placeholder="correo@ejemplo.com" required>
                                 <i class="far fa-envelope"></i>
                             </div>
@@ -114,7 +114,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <p th:text="${error}" class="text-danger">err</p>
+                            <p th:if="${param.error}" th:text="${param.error}" class="text-danger"></p>
                         </div>
                         <div class="mb-3 form-check">
                             <input type="checkbox" class="form-check-input" id="remember" name="remember"

@@ -15,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import com.laundry.lavanderia.service.UserService;
 
@@ -68,7 +69,8 @@ public class SecurityConfig {
                         .requestMatchers("/cashClosing/**", "/management/**", "/employees/**").hasRole("ADMIN")
                         // se asignan los roles a las rutas de la aplicacion
                         .requestMatchers("/deliveries/**").hasAnyRole("ADMIN", "EMPLEADO")
-                        .anyRequest().authenticated()) // se requiere autenticacion para cualquier otra ruta
+                        // se requiere autenticacion para cualquier otra ruta
+                        .anyRequest().authenticated())
 
                 // se configura el formulario de login
                 .formLogin(form -> form
@@ -78,15 +80,20 @@ public class SecurityConfig {
                         .loginProcessingUrl("/userAuth/authenticate")
                         // se redirige a la pagina principal si la autenticacion es correcta
                         .defaultSuccessUrl("/home", true)
-                        .permitAll()) // se permite el acceso a la pagina de login
+                        // se redirige a la pagina de login con un parametro de error si la
+                        // autenticacion falla
+                        .failureHandler(customAuthenticationFailureHandler())
+                        // se permite el acceso a la pagina de login
+                        .permitAll())
 
-                // se configura la pagina de logout
+                // se configura al logout
                 .logout(logout -> logout
                         // se configura la ruta de logout para cerrar la sesion
                         .logoutUrl("/userAuth/logout")
                         // se redirige a la pagina de login si el logout es correcto
                         .logoutSuccessUrl("/userAuth/login")
-                        .permitAll()) // se permite el acceso a la pagina de logout
+                        // se permite el acceso a al logout
+                        .permitAll())
 
                 // se configura el recuerdo de la sesion
                 .rememberMe(rememberMe -> rememberMe
@@ -102,7 +109,8 @@ public class SecurityConfig {
                 // se configura el manejador de excepciones
                 .exceptionHandling(exception -> exception
                         .accessDeniedHandler(accessDeniedHandler()))
-                .build(); // se construye la configuracion de seguridad
+                // se construye la autenticacion Security filterChain
+                .build();
     }
 
     /**
@@ -119,7 +127,18 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-    
+
+    /**
+     * Manejador de fallo de autenticacion personalizado.
+     * Redirige al usuario a la pantalla de inicio de sesion con un mensaje de error
+     * si la autenticacion falla.
+     * 
+     * @return el manejador de fallo de autenticacion personalizado
+     */
+    @Bean
+    public AuthenticationFailureHandler customAuthenticationFailureHandler() {
+        return new CustomAuthenticationFailureHandler();
+    }
 
     /**
      * Manejador de excepciones de acceso denegado.
