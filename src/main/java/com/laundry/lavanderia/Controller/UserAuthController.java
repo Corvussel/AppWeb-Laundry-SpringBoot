@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.laundry.lavanderia.Model.LoginDates.Login;
 
@@ -47,19 +48,16 @@ public class UserAuthController {
      *         correctamente.
      */
     @PostMapping("/authenticate")
-    public String authenticate(@ModelAttribute("loginForm") Login login, Model model) {
+    public String authenticate(@ModelAttribute("loginForm") Login login, RedirectAttributes redirectAttributes) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()));
 
-            if (authentication.isAuthenticated()) { 
-                return "redirect:/home";
-            } else { 
-                model.addAttribute("error", "Nombre de usuario o contraseña incorrectos");
+            if (!authentication.isAuthenticated()) {
+                redirectAttributes.addFlashAttribute("error", "Nombre de usuario o contraseña incorrectos");
             }
         } catch (AuthenticationException e) {
-            model.addAttribute("error", "Nombre de usuario o contraseña incorrectos");
-            return "/login/index";
+            redirectAttributes.addFlashAttribute("error", "Nombre de usuario o contraseña incorrectos");
         }
         return "/login/index";
     }
