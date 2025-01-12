@@ -1,5 +1,6 @@
 package com.laundry.lavanderia.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.laundry.lavanderia.Model.LoginDates.Login;
+import com.laundry.lavanderia.service.AuthServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +23,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserAuthController {
 
-    private final AuthenticationManager authenticationManager;
+    
+    @Autowired
+    private AuthServiceImpl authService;
 
     /**
      * Muestra la vista de autenticaci n de un usuario.
@@ -50,8 +54,7 @@ public class UserAuthController {
     @PostMapping("/authenticate")
     public String authenticate(@ModelAttribute("loginForm") Login login, RedirectAttributes redirectAttributes) {
         try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()));
+            Authentication authentication = authService.authenticate(login.getUsername(), login.getPassword());
 
             if (!authentication.isAuthenticated()) {
                 redirectAttributes.addFlashAttribute("error", "Nombre de usuario o contraseña incorrectos");
@@ -63,7 +66,7 @@ public class UserAuthController {
     }
 
     /**
-     * Cierra la sesi n actual del usuario y redirige a la pantalla de
+     * Cierra la sesion actual del usuario y redirige a la pantalla de
      * autenticaci n.
      * 
      * @return La URL de la pantalla de autenticaci n.

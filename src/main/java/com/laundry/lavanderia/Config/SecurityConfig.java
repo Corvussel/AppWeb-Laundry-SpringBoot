@@ -16,7 +16,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-
+ 
 import com.laundry.lavanderia.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +28,11 @@ import javax.sql.DataSource;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private UserService userService;
-
-    // se inyecta el datasource de la base de datos para el repositorio de tokens de
-    // recuerdo de la sesion en la base de datos de la aplicacion de Spring Security
+     
     @Autowired
     private DataSource dataSource;
+  
+    private UserService userService;
 
     /**
      * Inyecta el servicio de autenticacion de usuario y se asigna al campo
@@ -46,7 +45,7 @@ public class SecurityConfig {
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
-
+ 
     /**
      * Configura la seguridad de la aplicacion para que no se requiera csrf y
      * asigna los roles a las rutas de la aplicacion.
