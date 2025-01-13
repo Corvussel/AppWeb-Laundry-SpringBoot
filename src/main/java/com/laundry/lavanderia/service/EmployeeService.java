@@ -6,9 +6,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.laundry.lavanderia.Model.employee.Employee;
 import com.laundry.lavanderia.repository.EmployeeRepository;
+import com.laundry.lavanderia.service.interfaces.IEmployeeService;
 
 @Service
-public class EmployeeService {
+public class EmployeeService implements IEmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -21,6 +22,7 @@ public class EmployeeService {
      * 
      * @return lista de empleados
      */
+    @Override
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
@@ -31,8 +33,8 @@ public class EmployeeService {
      *
      * @param employee el empleado a guardar
      */
+    @Override
     public void saveEmployee(Employee employee) {
-        // Encriptar la contraseña antes de guardar 
         employee.setPassword(passwordEncoder.encode(employee.getPassword()));
         employeeRepository.save(employee);
     }
@@ -43,6 +45,7 @@ public class EmployeeService {
      * @param email el email del empleado a buscar
      * @return el empleado con el email especificado o null si no existe
      */
+    @Override
     public Employee getEmployeeByEmail(String email) {
         return employeeRepository.findByEmail(email);
     }
@@ -53,7 +56,7 @@ public class EmployeeService {
      * @param id el Id del empleado a buscar
      * @return el empleado con el Id especificado o null si no existe
      */
-
+    @Override
     public Employee getEmployeeById(Long id) {
         return employeeRepository.findById(id).orElse(null);
     }
@@ -63,6 +66,7 @@ public class EmployeeService {
      * 
      * @param employee el empleado actualizado con los nuevos datos.
      */
+    @Override
     public void updateEmployee(Employee employee) {
 
         employeeRepository.findById(employee.getId()).ifPresent(updatedEmployee -> {
@@ -70,7 +74,7 @@ public class EmployeeService {
             updatedEmployee.setLastName(employee.getLastName());
             updatedEmployee.setPhone(employee.getPhone());
             updatedEmployee.setRole(employee.getRole());
-            updatedEmployee.setStatus(employee.getStatus()); 
+            updatedEmployee.setStatus(employee.getStatus());
             employeeRepository.save(updatedEmployee);
         });
     }
@@ -82,6 +86,7 @@ public class EmployeeService {
      * 
      * @param id el Id del empleado a eliminar
      */
+    @Override
     public void deleteEmployee(Long id) {
         employeeRepository.findById(id).ifPresent(employee -> {
             employee.setStatus(false);

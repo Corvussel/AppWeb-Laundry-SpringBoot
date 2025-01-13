@@ -8,34 +8,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.laundry.lavanderia.Model.employee.Employee;
-import com.laundry.lavanderia.service.EmployeeService;
-import com.laundry.lavanderia.service.RoleService;
+import com.laundry.lavanderia.Model.employee.Employee; 
+import com.laundry.lavanderia.service.interfaces.IEmployeeService;
+import com.laundry.lavanderia.service.interfaces.IRoleService;
 
 @Controller
 @RequestMapping("/employees")
 public class EmployeeController {
 
     @Autowired
-    private EmployeeService employeeService;
+    private IEmployeeService employeeService;
 
     @Autowired
-    private RoleService roleService;
+    private IRoleService roleService;
 
     private static final String SHARED_LAYOUT = "shared/layout";
 
     @GetMapping("/index")
     public String listEmployees(Model model) {
-        model.addAttribute("employees", employeeService.getAllEmployees());
-        model.addAttribute("employee", new Employee());
+        model.addAttribute("employees", employeeService.getAllEmployees()); 
         model.addAttribute("roles", roleService.getAllRoles());
+        model.addAttribute("employee", new Employee());
         model.addAttribute("content", "auth/employees-list.html");
         return SHARED_LAYOUT;
     }
 
     @PostMapping("/register")
     public String saveEmployee(Employee employee) {
-        if (employee.getStatus() == null ) {
+        if (employee.getStatus() == null) {
             employee.setStatus(true);
         }
         employeeService.saveEmployee(employee);
