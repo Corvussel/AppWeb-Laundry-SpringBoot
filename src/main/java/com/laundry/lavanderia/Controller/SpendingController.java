@@ -4,15 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.laundry.lavanderia.Model.Spending.*;
-import com.laundry.lavanderia.service.SpendingService;
+import com.laundry.lavanderia.Model.Spending.*; 
+import com.laundry.lavanderia.service.interfaces.ISpendingService;
 
 @Controller
 @RequestMapping("/spending")
 public class SpendingController {
 
     @Autowired
-    private SpendingService spendingService;
+    private ISpendingService spendingService;
     private static final String SHARED_LAYOUT = "shared/layout";
 
     /**
