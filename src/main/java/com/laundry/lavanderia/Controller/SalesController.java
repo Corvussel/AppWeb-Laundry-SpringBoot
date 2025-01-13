@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.laundry.lavanderia.Model.serviceLaundry.OrderDetails;
-import com.laundry.lavanderia.Model.serviceLaundry.OrderService;
-import com.laundry.lavanderia.service.SalesService;
+import com.laundry.lavanderia.Model.serviceLaundry.OrderService; 
+import com.laundry.lavanderia.service.interfaces.ISalesService;
 
 @Controller
 @RequestMapping("/sales")
 public class SalesController {
 
     @Autowired
-    private SalesService salesService;
+    private ISalesService salesService;
     private static final String SHARED_LAYOUT = "shared/layout";
 
     /**

@@ -9,7 +9,7 @@ import com.laundry.lavanderia.repository.CategoryRepository;
 import com.laundry.lavanderia.repository.ServiceRepository;
 
 @Service
-public class ServiceMangmentServiceLaundry {
+public class LaundryManagementService {
 
     @Autowired
     private CategoryRepository categoryRepository;

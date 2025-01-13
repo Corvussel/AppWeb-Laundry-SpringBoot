@@ -7,17 +7,20 @@ import org.springframework.stereotype.Service;
 
 import com.laundry.lavanderia.Model.serviceLaundry.OrderService;
 import com.laundry.lavanderia.repository.OrdersRepository;
+import com.laundry.lavanderia.service.interfaces.ISalesService;
 
 @Service
-public class SalesService {
+public class SalesServiceImpl implements ISalesService {
 
     @Autowired
     private OrdersRepository ordersRepository;
 
+    @Override
     public List<OrderService> getAllSales() {
         return ordersRepository.findAll();
     }
 
+    @Override
     public OrderService getSaleDetailById(Long id) {
         return ordersRepository.findById(id).orElse(null);
     }

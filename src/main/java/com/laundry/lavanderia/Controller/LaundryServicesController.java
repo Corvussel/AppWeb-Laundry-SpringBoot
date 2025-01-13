@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.laundry.lavanderia.Model.serviceLaundry.OrderService;
 import com.laundry.lavanderia.Model.employee.Employee;
-import com.laundry.lavanderia.service.ServiceMangmentServiceLaundry;
+import com.laundry.lavanderia.service.LaundryManagementService;
 import com.laundry.lavanderia.Model.client.cliente;
 import com.laundry.lavanderia.service.ClientService;
 import com.laundry.lavanderia.service.OrdersService;
@@ -35,7 +35,7 @@ public class LaundryServicesController {
     private ClientService clientService; // Inyectar el servicio de clientes
 
     @Autowired
-    private ServiceMangmentServiceLaundry serviceMangmentServiceLaundry; // Inyectar el servicio de servicios
+    private LaundryManagementService serviceMangmentServiceLaundry; // Inyectar el servicio de servicios
 
     @Autowired
     private OrdersService ordersService; // Inyectar el servicio de ordenes

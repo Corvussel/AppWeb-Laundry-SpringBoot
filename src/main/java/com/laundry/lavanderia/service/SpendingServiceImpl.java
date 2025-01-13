@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class SpendingService implements ISpendingService {
+public class SpendingServiceImpl implements ISpendingService {
 
     @Autowired
     private SpendingRepository spendingRepository; // Inyectar el repositorio de gastos
