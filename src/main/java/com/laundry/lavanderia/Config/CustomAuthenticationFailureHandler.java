@@ -19,8 +19,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
      * @param response  la respuesta que se enviará al cliente
      * @param exception la excepción que se lanzó durante la autenticación
      */
-    @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException exception) throws IOException, ServletException {
         String errorMessage = "Usuario o contraseña incorrectos";
 
