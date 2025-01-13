@@ -1,6 +1,6 @@
 package com.laundry.lavanderia.Controller;
-
-import com.laundry.lavanderia.service.DeliveryService;
+ 
+import com.laundry.lavanderia.service.interfaces.IDeliveryService;
 import com.laundry.lavanderia.Model.serviceLaundry.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 public class DeliveryController {
 
     @Autowired
-    private DeliveryService deliveryService;
+    private IDeliveryService deliveryService;
     private final static String SHARED_LAYOUT = "shared/layout";
 
     /**
