@@ -9,7 +9,7 @@ import com.laundry.lavanderia.repository.EmployeeRepository;
 import com.laundry.lavanderia.service.interfaces.IEmployeeService;
 
 @Service
-public class EmployeeService implements IEmployeeService {
+public class EmployeeServiceImpl implements IEmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;

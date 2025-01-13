@@ -22,8 +22,9 @@ import com.laundry.lavanderia.service.LaundryManagementService;
 import com.laundry.lavanderia.Model.client.cliente;
 import com.laundry.lavanderia.service.ClientService;
 import com.laundry.lavanderia.service.OrdersService;
+import com.laundry.lavanderia.service.interfaces.IEmployeeService;
+
 import jakarta.servlet.http.HttpSession;
-import com.laundry.lavanderia.service.EmployeeService;
 
 @Controller
 @RequestMapping("/serviceLaundry")
@@ -44,7 +45,7 @@ public class LaundryServicesController {
     private HttpSession httpSession; // Inyectar el objeto HttpSession
 
     @Autowired
-    private EmployeeService employeeService; // Inyectar el servicio de empleados
+    private IEmployeeService employeeService; // Inyectar el servicio de empleados
 
     /**
      * Muestra la pantalla principal de servicios de lavanderia.

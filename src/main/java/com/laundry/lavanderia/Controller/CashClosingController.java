@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.laundry.lavanderia.Model.employee.Employee;
 import com.laundry.lavanderia.Model.serviceLaundry.CashClosing;
 import com.laundry.lavanderia.Model.serviceLaundry.OrderService;
-import com.laundry.lavanderia.service.CashClosingService;
-import com.laundry.lavanderia.service.EmployeeService;
+import com.laundry.lavanderia.service.CashClosingService; 
+import com.laundry.lavanderia.service.interfaces.IEmployeeService;
 
 @Controller
 @RequestMapping("/cashClosing")
@@ -25,7 +25,7 @@ public class CashClosingController {
     private CashClosingService cashClosingService;
 
     @Autowired
-    private EmployeeService employeeService;
+    private IEmployeeService employeeService;
 
     private static final String SHARED_LAYOUT = "shared/layout";
 
