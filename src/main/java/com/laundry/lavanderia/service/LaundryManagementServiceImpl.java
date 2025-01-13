@@ -7,9 +7,10 @@ import com.laundry.lavanderia.Model.serviceMangment.Category;
 import com.laundry.lavanderia.Model.serviceMangment.ServiceLaundry;
 import com.laundry.lavanderia.repository.CategoryRepository;
 import com.laundry.lavanderia.repository.ServiceRepository;
+import com.laundry.lavanderia.service.interfaces.ILaundryServiceManagement;
 
 @Service
-public class LaundryManagementService {
+public class LaundryManagementServiceImpl implements ILaundryServiceManagement {
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -22,6 +23,7 @@ public class LaundryManagementService {
      * 
      * @return una lista de objetos de la clase Category
      */
+    @Override
     public List<Category> getAllCategorys() {
         return categoryRepository.findAll();
     }
@@ -31,6 +33,7 @@ public class LaundryManagementService {
      * 
      * @return una lista de objetos de la clase ServiceLaundry
      */
+    @Override
     public List<ServiceLaundry> getAllServices() {
         return serviceRepository.findAll();
     }
@@ -42,6 +45,7 @@ public class LaundryManagementService {
      * @param newCategory objeto de la clase Category que se
      *                    dese a guardar
      */
+    @Override
     public void saveCategory(Category newCategory) {
         newCategory.setActive(true);
         categoryRepository.save(newCategory);
@@ -54,6 +58,7 @@ public class LaundryManagementService {
      * @param newService objeto de la clase ServiceLaundry que se
      *                   desea guardar
      */
+    @Override
     public void saveService(ServiceLaundry newService) {
         newService.setActive(true);
         serviceRepository.save(newService);
@@ -66,6 +71,7 @@ public class LaundryManagementService {
      * @return el objeto de la clase Category que se encontr , o null si no
      *         existe
      */
+    @Override
     public Category getCategoryById(Long id) {
         return categoryRepository.findById(id).orElse(null);
     }
@@ -76,7 +82,7 @@ public class LaundryManagementService {
      * @param id the ID of the laundry service to retrieve
      * @return the ServiceLaundry object if found, or null if not found
      */
-
+    @Override
     public ServiceLaundry getServiceById(Long id) {
         return serviceRepository.findById(id).orElse(null);
     }
@@ -86,6 +92,7 @@ public class LaundryManagementService {
      * 
      * @param id el id de la categor a a desactivar
      */
+    @Override
     public void deleteCategory(Long id) {
         categoryRepository.findById(id).ifPresent(category -> {
             category.setActive(false);
@@ -98,6 +105,7 @@ public class LaundryManagementService {
      * 
      * @param id el id del servicio a desactivar
      */
+    @Override
     public void deleteService(Long id) {
         serviceRepository.findById(id).ifPresent(service -> {
             service.setActive(false);
@@ -105,6 +113,7 @@ public class LaundryManagementService {
         });
     }
 
+    @Override
     public void updateCategory(Category updatedCategory) {
         categoryRepository.findById(updatedCategory.getId()).ifPresent(category -> {
             category.setName(updatedCategory.getName());
@@ -114,6 +123,7 @@ public class LaundryManagementService {
         });
     }
 
+    @Override
     public void updateService(ServiceLaundry updatedService) {
         serviceRepository.findById(updatedService.getId()).ifPresent(service -> {
             service.setName(updatedService.getName());

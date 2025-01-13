@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.laundry.lavanderia.Model.serviceMangment.Category;
-import com.laundry.lavanderia.Model.serviceMangment.ServiceLaundry;
-import com.laundry.lavanderia.service.LaundryManagementService;
+import com.laundry.lavanderia.Model.serviceMangment.ServiceLaundry; 
+import com.laundry.lavanderia.service.interfaces.ILaundryServiceManagement;
 
 @Controller
 @RequestMapping("/management")
 public class ServiceLaundryManagementController {
 
     @Autowired
-    private LaundryManagementService serviceMangmentServiceLaundry;
+    private ILaundryServiceManagement serviceMangmentServiceLaundry;
     private static final String SHARED_LAYOUT = "shared/layout";
 
     // Pagina principal de servicios-categorias

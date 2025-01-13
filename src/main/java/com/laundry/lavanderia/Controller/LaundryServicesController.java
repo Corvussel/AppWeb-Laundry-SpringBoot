@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.laundry.lavanderia.Model.serviceLaundry.OrderService;
-import com.laundry.lavanderia.Model.employee.Employee;
-import com.laundry.lavanderia.service.LaundryManagementService;
+import com.laundry.lavanderia.Model.employee.Employee; 
 import com.laundry.lavanderia.Model.client.cliente;
-import com.laundry.lavanderia.service.ClientService;
-import com.laundry.lavanderia.service.OrdersService;
+import com.laundry.lavanderia.service.ClientService; 
 import com.laundry.lavanderia.service.interfaces.IEmployeeService;
+import com.laundry.lavanderia.service.interfaces.ILaundryServiceManagement;
+import com.laundry.lavanderia.service.interfaces.IOrdersService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -36,10 +36,10 @@ public class LaundryServicesController {
     private ClientService clientService; // Inyectar el servicio de clientes
 
     @Autowired
-    private LaundryManagementService serviceMangmentServiceLaundry; // Inyectar el servicio de servicios
+    private ILaundryServiceManagement serviceMangmentServiceLaundry; // Inyectar el servicio de servicios
 
     @Autowired
-    private OrdersService ordersService; // Inyectar el servicio de ordenes
+    private IOrdersService ordersService; // Inyectar el servicio de ordenes
 
     @Autowired
     private HttpSession httpSession; // Inyectar el objeto HttpSession
