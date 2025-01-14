@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.laundry.lavanderia.Model.employee.Employee;
 import com.laundry.lavanderia.Model.serviceLaundry.CashClosing;
-import com.laundry.lavanderia.Model.serviceLaundry.OrderService;
-import com.laundry.lavanderia.service.CashClosingService; 
+import com.laundry.lavanderia.Model.serviceLaundry.OrderService; 
+import com.laundry.lavanderia.service.interfaces.ICashClosingService;
 import com.laundry.lavanderia.service.interfaces.IEmployeeService;
 
 @Controller
@@ -22,7 +22,7 @@ import com.laundry.lavanderia.service.interfaces.IEmployeeService;
 public class CashClosingController {
 
     @Autowired
-    private CashClosingService cashClosingService;
+    private ICashClosingService cashClosingService;
 
     @Autowired
     private IEmployeeService employeeService;

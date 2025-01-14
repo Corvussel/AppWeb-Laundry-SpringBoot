@@ -5,9 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.laundry.lavanderia.Model.serviceLaundry.Boleta;
 import com.laundry.lavanderia.repository.BoletaRepository;
+import com.laundry.lavanderia.service.interfaces.IBoletaService;
 
 @Service
-public class BoletaService {
+public class BoletaServiceImpl implements IBoletaService {
 
     @Autowired
     private BoletaRepository boletaRepository;

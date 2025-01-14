@@ -13,6 +13,7 @@ import com.laundry.lavanderia.Model.serviceLaundry.OrderService;
 import com.laundry.lavanderia.Model.serviceLaundry.OrderDetails;
 import com.laundry.lavanderia.repository.OrdersRepository;
 import com.laundry.lavanderia.repository.PaymentMethodRepository;
+import com.laundry.lavanderia.service.interfaces.IBoletaService;
 import com.laundry.lavanderia.service.interfaces.IOrdersService;
 import com.laundry.lavanderia.repository.OrderDetailsRepository;
 
@@ -23,7 +24,7 @@ public class OrdersServiceImpl implements IOrdersService {
     private OrdersRepository ordersRepository;
 
     @Autowired
-    private BoletaService boletaService;
+    private IBoletaService boletaService;
 
     @Autowired
     private OrderDetailsRepository orderDetailsRepository;
