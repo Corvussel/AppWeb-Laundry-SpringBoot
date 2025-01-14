@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.laundry.lavanderia.Model.serviceLaundry.OrderService;
 import com.laundry.lavanderia.Model.employee.Employee; 
-import com.laundry.lavanderia.Model.client.cliente;
-import com.laundry.lavanderia.service.ClientService; 
+import com.laundry.lavanderia.Model.client.cliente; 
+import com.laundry.lavanderia.service.interfaces.IClientService;
 import com.laundry.lavanderia.service.interfaces.IEmployeeService;
 import com.laundry.lavanderia.service.interfaces.ILaundryServiceManagement;
 import com.laundry.lavanderia.service.interfaces.IOrdersService;
@@ -33,7 +33,7 @@ public class LaundryServicesController {
     private static final String SHARED_LAYOUT = "shared/layout";
 
     @Autowired
-    private ClientService clientService; // Inyectar el servicio de clientes
+    private IClientService clientService; // Inyectar el servicio de clientes
 
     @Autowired
     private ILaundryServiceManagement serviceMangmentServiceLaundry; // Inyectar el servicio de servicios

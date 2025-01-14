@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.laundry.lavanderia.Model.client.cliente;
-import com.laundry.lavanderia.service.ClientService;
+import com.laundry.lavanderia.Model.client.cliente; 
+import com.laundry.lavanderia.service.interfaces.IClientService;
 
 @Controller
 @RequestMapping("/client")
 public class ClientController {
 
     @Autowired
-    private ClientService clientService;
+    private IClientService clientService;
     private static final String SHARED_LAYOUT = "shared/layout";
 
     /**
