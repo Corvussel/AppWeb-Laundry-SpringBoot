@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
-import com.laundry.lavanderia.service.impl.UserService;
+import com.laundry.lavanderia.service.impl.UserDetailsServiceImpl;
 
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -32,7 +32,7 @@ public class SecurityConfig {
     @Autowired
     private DataSource dataSource;
   
-    private UserService userService;
+    private UserDetailsServiceImpl  userService;
 
     /**
      * Inyecta el servicio de autenticacion de usuario y se asigna al campo
@@ -42,7 +42,7 @@ public class SecurityConfig {
      * @param userService el servicio de autenticacion de usuario
      */
     @Autowired
-    public void setUserService(UserService userService) {
+    public void setUserService(UserDetailsServiceImpl userService) {
         this.userService = userService;
     }
  

@@ -11,7 +11,7 @@ import com.laundry.lavanderia.Model.employee.Employee;
 import com.laundry.lavanderia.repository.EmployeeRepository;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     /**
      * Repositorio de empleados para la autenticacion
