@@ -1,6 +1,5 @@
-package com.laundry.lavanderia.service;
-
-import org.springframework.beans.factory.annotation.Autowired;
+package com.laundry.lavanderia.service.impl;
+ 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,8 +12,7 @@ import com.laundry.lavanderia.service.interfaces.IAuthService;
 public class AuthServiceImpl implements IAuthService {
 
     private final AuthenticationManager authenticationManager;
-
-    @Autowired
+ 
     public AuthServiceImpl(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }

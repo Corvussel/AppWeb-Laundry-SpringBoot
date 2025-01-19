@@ -14,11 +14,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import com.laundry.lavanderia.service.impl.UserService;
+
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
- 
-import com.laundry.lavanderia.service.UserService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;

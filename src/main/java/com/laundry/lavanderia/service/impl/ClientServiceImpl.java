@@ -1,4 +1,4 @@
-package com.laundry.lavanderia.service;
+package com.laundry.lavanderia.service.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,11 +75,10 @@ public class ClientServiceImpl implements IClientService {
     }
 
     /**
-     * Marca un cliente como inactivo en la base de datos.
+     * Elimina un cliente por su Id.
      * 
-     * @param id el Id del cliente que se va a marcar como inactivo
-     */
-    @Override
+     * @param id el Id del cliente que se va a eliminar
+     */ 
     public void deleteClientbyId(Long id) {
         clientRepository.findById(id).ifPresent(cliente -> {
             cliente.setActivo(false);
@@ -92,7 +91,7 @@ public class ClientServiceImpl implements IClientService {
      * 
      * @param updatedClient el cliente actualizado que se va a guardar
      */
-    @Override 
+    @Override
     public void updateClient(cliente updatedClient) {
         clientRepository.save(updatedClient);
     }

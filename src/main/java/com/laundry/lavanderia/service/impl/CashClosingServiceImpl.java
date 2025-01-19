@@ -1,4 +1,4 @@
-package com.laundry.lavanderia.service;
+package com.laundry.lavanderia.service.impl;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class CashClosingServiceImpl implements ICashClosingService {
     public CashClosing saveCashClosing(CashClosing cashClosing) {
         return cashClosingRepository.save(cashClosing);
     }
-
+    
     @Override
     public CashClosing getLastCashClosing() {
         return cashClosingRepository.findTopByOrderByClosingDateDesc();

@@ -1,4 +1,4 @@
-package com.laundry.lavanderia.service;
+package com.laundry.lavanderia.service.impl;
 
 import java.util.List;
 
